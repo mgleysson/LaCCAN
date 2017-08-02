@@ -201,44 +201,78 @@ denominadas aqui de regiões homogêneas, heterogêneas e extremamente heterogê
 %***********SECTION 3************%
 %********************************%
 
-\section{Classificação por Máxima Verossimilhança}
+\section{Introdução a números pseudoaleatórios}
 
-A classificação por Máxima Verossimilhança (MaxVer) é uma das técnicas de
-classificação supervisionada comumente utilizada em dados de Sensoriamento Remoto.
-Os principais passos para efetuar esta classificação são:
+Numeros aleatórios perfazem uma das partes mais importantes em aplicações computacionais nos varios campos do conhecimento, como aborda [Knuth 1998]. Existem dois tipos básicos de geradores: Geradores de Números Aleatórios, do inglês Random Number Generators (RNGs) e Geradores de Numeros Pseudoaleat órios, do inglês Pseudorandom Number Generators (PRNGs). Computadores sao máquinas determinísticas e, portanto,
+não e possível gerar sequencias aleatórias de forma algorítmica. Para construir RNGs utiliza-se uma fonte nao determinística de dados juntamente com algumas funções de 
+processamento para produzir as sequências. A maior parte dos RNGs utiliza fenômenos físicos naturais como decaimento radioativo, ruídos térmicos em semicondutores, amostras de som em um local ruidoso, ruído no espectro eletromagnético, dentre outros; tais 
+fontes de aleatoriedade não fazem parte do hardware usual de computadores. Como consequência, quando há necessidade de se dispor de dados que exibam aleatoriedade, lança-
+se mão de PRNGs.
 
-\begin{itemize}
-   \item  Decidir entre os possíveis conjuntos de classes da cobertura terrestre, aquele que
-será utilizado para particionar a imagem a ser classificada;
-   \item  Associar uma distribuição a cada classe;
-   \item Selecionar e retirar amostras de regiões representativas de cada classe na imagem;
-   \item Estimar os parâmetros das distribuições associadas a cada classe;
-   \item Opcionalmente, pode-se testar o ajuste das distribuições associadas a cada classe;
-   \item Classificar a imagem, atribuindo cada pixel da imagem à classe com maior
-verossimilhança.
- \end{itemize}
+A maneira mais conveniente e confiável de se gerar números pseudoaleatórios em máquinas determinísticas é através de algoritmos que produzem sequências com comportamento semelhante as produzidas por RNGs. Tais algoritmos produzem sequências de 
+numeros não aleatórios, mas que, sob certas condições, comportam-se como aleatórios. Como define [L’Ecuyer 2007], essas sequências podem ser chamadas pseudoaleatórias,
+e os programas utilizados em sua produção de geradores de números pseudoaleatórios. Esses geradores sao geralmente mais convenientes do que os RNGs pois não necessitam de hardware adicional e possibilitam a reproducibilidade.
+
+Os PRNGs sao a principal fonte de aleatoriede em jogos por computador, e no desenvolvimento de técnicas computacionais intensivas como os métodos Monte Carlo [Cipra 2000] e MCMC – Monte Carlo Markov Chain [Diaconis 2009].
+
 
 %********************************%
 %***********SECTION 4************%
 %********************************%
 
-\section{Classificação ICM}
+\subsection{Principais técnicas de geração de número pseudo-aleatórios}
 
-O critério de Máxima Verossimilhança é de maximizar uma função que somente
-depende da radiometria observada e do modelo (densidade) escolhido para cada classe.
-Esse critério não considera a informação contextual já que supõe que as radiometrias dadas as classes são eventos independentes. Na literatura várias propostas para incorporar
-informação contextual, mas a maioria delas leva algoritmos computacionalmente muito
-difíceis de serem usados. Em (Frery, 1993) é mostrada uma versão de um algoritmo de
-classificação contextual que apresenta alto desempenho e facilidade de uso. Esta técnica,
-o algoritmo ICM (Iterated Conditional Modes) foi melhorada em (Vieira, 1996) e aplicada a
-várias imagens de radar.
+Os números pseudoaleatórios muitas vezes parecem ser mais aleatórios do que números
+aleatórios obtidos de fontes físicas, pois se uma pseudo-sequência está bem construída,
+cada valor na sequência é produzido a partir do valor anterior por meio de transformações
+que parecem introduzir uma aleatoriedade adicional [Rukhin et al., 2010].
 
-O algoritmo ICM é um método iterativo de refinamento de classificações que consiste
-em substituir a classe associada a cada coordenada por aquela classe que maximiza um
-certo critério. Esse critério é a distribuição a posteriori da classe, dadas a radiometria
-(componente MaxVer) e as classes vizinhas (componente de contexto). A influencia das
-classes vizinhas é quantificada por um parâmetro real que é estimado iterativamente
-supondo um modelo para distribuição espacial das classes.
+Segundo [Vieira et al., 2004], os tipos de geradores de números aleatórios e pseudoaleatórios
+mais conhecidos e utilizados são:
+
+\begin{itemize}
+
+\item \textbf{Geradores Congruentes Lineares} [Press et al., 1992]: É um dos mais antigos e conhecidos
+algoritmos para a criação de números aleatórios, sendo o número gerado pela fórmula:
+
+\begin{equation}
+	x_{n+1} = (ax_{n} + c) \quad \textit{mod} \quad  m, \qquad n >= 0
+\end{equation}
+
+onde, \begin{math} x_{n+1} \end{math} é o número gerado, \begin{math} x_{n} \end{math} é o número anterior, \begin{math} x_{0} \end{math} é a semente (que deve ser
+fornecida por um RNG) e a, c e m são constantes.
+
+\item \textbf{Geradores de Atraso de Fibonacci} [Marsaglia, 1985]: Tem-se esse nome por causa
+similaridade com a sequência de Fiboncacci, sendo o número gerado pela fórmula:
+
+\begin{equation}
+x_{n} = x_{n-1} \quad op \quad x_{n-k}, \qquad 0<k<l
+\end{equation}
+
+onde \begin{math} x _{n} \end{math} é o número gerado e \textit{op} pode ser uma adição, subtração, multiplicação módulo m ou a operação \textit{ou exclusivo}.
+
+\item \textbf{Geradores de Registradores de Deslocamento} [Marsaglia, 1985]: Consideram os bits
+de uma palavra de computador como os elementos de um vetor binário, na qual,
+iterativamente, através de transformações lineares
+, geram sequências de vetores
+binários interpretadas como sequências de números inteiros aleatórios uniformes.
+
+\item \textbf{Geradores Híbridos} [Marsaglia, 1985]: É a combinação de dois ou mais geradores
+com o objetivo de obter um gerador melhor.
+
+\end{itemize}
+
+\section{Projeto PIBIC}
+
+O foco do meu projeto consiste em desenvolver técnicas de simulação e de estimação de parâmetros para distribuições de interesse na análise de imagens de radar de abertura sintética (Synthetic Aperture Radar — SAR). Essas
+distribuições seguem o modelo multiplicativo, e suas ocorrências podem ser obtidas por diversas maneiras.
+A estimação dos parâmetros dessas distribuições é, frequentemente, sujeita a instabilidades numéricas, viés
+e alta variabilidade. Por esse motivo, a literatura discute diversas técnicas para construir estimadores (por 
+analogia, máxima verossimilhança, e com kernels), bem como para melhorá-los (com robustez, reamostragem e modificações analíticas).
+
+Minha frente de trabalho será desenvolvida na plataforma computacional R e como ferramenta para controle de versões será utilizado o Git. Especificamente o título do plano de trabalho é \textit{Desenvolvimento de Bibliotecas para Simulação e Inferência em Modelos para Imagens SAR} e o objetivo central do meu trabalho é implementar uma biblioteca de funções para a estimação de parâmetros de modelos para dados SAR.
+
+Para verificar a qualidade numérica das funções implementadas será utilizado um protocolo próprio baseado em dados simulados. No tocante à robustez dos algoritmos, verificaremos o comportamento do sistema diante de possíveis problemas dos dados de entrada de modo deixar o \textit{software} produzido o mais robusto possível. Por fim para o desenvolvimento dos trabalhos será adotado uma versão do Modelo em Espiral do desenvolvimento de \textit{software}, adaptado às necessidades do \textit{software} científico.
 
 
 
