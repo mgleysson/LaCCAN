@@ -1,3 +1,5 @@
+# Gerando variáveis aleatórias GI0 como razão de variáveis aleatórias gama
+
 X <- function(alpha, gamma) {
   return(rgamma(shape = -alpha, rate = gamma, n = 100))
 }

@@ -1,3 +1,5 @@
+# Explorando a função densidade da GI0
+
 densGI0 <- function(z, alpha, gamma, Looks) {
   
   return(((Looks^Looks * gamma(Looks-alpha))/ (gamma^alpha * gamma(Looks-1) * gamma(-alpha))) *

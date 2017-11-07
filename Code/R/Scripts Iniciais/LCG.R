@@ -1,3 +1,5 @@
+# Analisando o funcionamento dos Geradores Lineares Congruenciais
+
 lcg <- function(M, a, c, seed, size) {
   r = numeric(size)
   r[1] = seed
