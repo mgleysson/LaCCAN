@@ -1,0 +1,118 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Para iniciar este RNotebook vamos começar explorando a função densidade da GI0 implementada a seguir.
+
+```{r}
+
+# Definindo a densidade da GIO como uma função cujos parâmetros são z, alpha, gamma e Looks
+
+densGI0 <- function(z, alpha, gamma, Looks) {
+  
+  return(((Looks^Looks * gamma(Looks-alpha))/ (gamma^alpha * gamma(Looks-1) * gamma(-alpha))) *
+    (z^(Looks-1) / (gamma + Looks * z)^(Looks-alpha)))
+}
+
+```
+
+```{r}
+
+# Realizando alguns testes para analisar o retorno gerado pela função definida acima
+
+densGI0(0.07996402, -2, 4, 3)
+
+densGI0(0.51461313, -10, 8, 4)
+
+densGI0(0.3716623, -50, 25, 10)
+
+```
+
+
+A seguir, temos a geração de variáveis aleatórias GI0 como razão de variáveis aleatórias gama. Como base para alcançar estes resultados utilizou-se o Método Multiplicativo e daí foi possível concluir que poderíamos gerar variáveis aleatórias GI0 da forma escrita a seguir.
+
+```{r}
+
+# Gerando variáveis aleatórias GI0 como razão de variáveis aleatórias gama
+
+X <- function(alpha, gamma) {
+  return(rgamma(shape = -alpha, rate = gamma, n = 100))
+}
+
+Y <- function(Looks) {
+  return(rgamma(shape = Looks, rate = 1, n = 100))
+}
+
+Z <- function(X, Y) {
+  return(X/Y)
+}
+
+```
+
+De modo análogo ao primeiro código deste RNotebook, foram feitos alguns testes para alguns parâmetros particulares e foram analisadas as respectivas saídas geradas das funções.
+
+```{r}
+
+# Realizando alguns testes com diferentes entradas de parâmetros.
+
+x = X(-2,4)
+y = Y(3)
+
+Z(x,y)
+
+x = X(-10,8)
+y = Y(4)
+
+Z(x,y)
+
+
+x = X(-50,25)
+y = Y(10)
+
+Z(x,y)
+
+```
+
+Por fim, temos o último código implementado que tem por objetivo explorar o funcionamento dos geradores congruenciais lineares. A seguir encontra-se o código implementado.
+
+```{r}
+
+# Função em R que recebe os parâmetros necessários que caracterizam um Gerador Congruencial Linear.
+
+# O parâmetro 'size' nesta função nos permite escolher a quantidade de números pseudoaleatórios que queremos gerar.
+
+lcg <- function(M, a, c, seed, size) {
+  r = numeric(size)
+  r[1] = seed
+  
+  for(i in 1:(size-1))
+    r[i+1] = (a*r[i] + c) %% M
+  
+  return (r/M)
+}
+
+
+```
+
+```{r}
+
+# Foram realizados alguns testes e gerou-se três sequências de tamanhos variados, cada uma contendo números pseudoaleatórios gerados a partir da implementação anterior do Gerador Congruencial Linear.
+
+seq1 <- lcg(M = 16, a = 5, c = 1, seed = 5, size = 34)
+seq2 <- lcg(M = 86436, a = 1093, c = 18257, seed = 7, size = 100)
+seq3 <- lcg(M = 394, a = 34, c = -102, seed = 404, size = 50)
+
+```
+
+
+```{r}
+
+# Por fim, plotou-se os histogramas referentes a cada uma das 3 sequências com o objetivo de se analisar os números gerados em cada uma das sequências.
+
+hist(seq1)
+hist(seq2)
+hist(seq3)
+
+
+```
