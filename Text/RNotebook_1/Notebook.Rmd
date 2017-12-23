@@ -1,9 +1,10 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_notebook: default
+  pdf_document: default
 ---
-
-Para iniciar este RNotebook vamos começar explorando a função densidade da GI0 implementada a seguir.
+Vamos iniciar explorando a função densidade da distribuição GI0 que está implementada a seguir.
 
 ```{r}
 
@@ -17,18 +18,35 @@ densGI0 <- function(z, alpha, gamma, Looks) {
 
 ```
 
+A distribuição GI0 entra no contexto das distribuições para intensidade do retorno. As distribuições da intensidade do retorno Z para dados multilook são resultantes do produto de duas variáveis aleatórias independentes Z = XY decorrentes do conhecido Modelo Multiplicativo. As distribuições associadas a X e a Y podem variar conforme a região alvo e produzirem diferentes distribuições para cada dado observado Z. Nesse sentido, a distribuição GI0 representa o sinal de retorno de regiões heterogêneas e é obtida pelo produto de duas variáveis aleatórias independentes, onde X segue uma distribuição Gama inversa de parâmetros alpha e gamma e Y segue uma distribuição Gama com o parâmetro Looks. 
+
+Abaixo encontram-se alguns exemplos de resultados gerados a partir da implementação acima, onde foram respeitadas as restrições de que os parâmetros -alpha, gamma e z devem ser maiores que 0 (zero) e de que o parâmetro Looks deve ser maior ou igual a 1 (um).
+
 ```{r}
 
 # Realizando alguns testes para analisar o retorno gerado pela função definida acima
 
-densGI0(0.07996402, -2, 4, 3)
+densGI0(0.07996402, -2, 4, 7)
 
-densGI0(0.51461313, -10, 8, 4)
+densGI0(0.07996402, -2, 4, 8)
 
-densGI0(0.3716623, -50, 25, 10)
+densGI0(0.07996402, -2, 4, 9)
+
+densGI0(0.07996402, -2, 1, 9)
+
+densGI0(0.07996402, -2, 2, 9)
+
+densGI0(0.07996402, -2, 3, 9)
+
+densGI0(0.07996402, -3, 3, 9)
+
+densGI0(0.07996402, -2, 3, 9)
+
+densGI0(0.07996402, -1, 3, 9)
 
 ```
 
+Em análise aos dados gerados percebe-se claramente que a medida que aumentou-se individualmente os valores de cada um dos parâmetros alpha, gamma e Looks deixando os demais fixos, a densidade teve o seu valor diminuído, o que indica que se quisermos uma densidade elevada para uma dada variável aleatória GI0 podemos simplesmente diminuir um dos valores dos parâmetros da função densidade, deixando os demais fixos.
 
 A seguir, temos a geração de variáveis aleatórias GI0 como razão de variáveis aleatórias gama. Como base para alcançar estes resultados utilizou-se o Método Multiplicativo e daí foi possível concluir que poderíamos gerar variáveis aleatórias GI0 da forma escrita a seguir.
 
@@ -110,9 +128,20 @@ seq3 <- lcg(M = 394, a = 34, c = -102, seed = 404, size = 50)
 
 # Por fim, plotou-se os histogramas referentes a cada uma das 3 sequências com o objetivo de se analisar os números gerados em cada uma das sequências.
 
-hist(seq1)
-hist(seq2)
-hist(seq3)
+hist(seq1, breaks = 10)
+hist(seq2, breaks = 15)
+hist(seq3,breaks = 20)
 
 
 ```
+
+Diante dos exemplos acima feitos agora com a opção breaks="FD" para que os intervalos ficassem mais finos, conseguimos perceber de forma mais clara o comportamento dos Geradores Congruenciais Lineares. Para a primeira sequência acima temos que uma característica evidenciada é que somente os 16 primeiros valores são únicos. O décimo sétimo é igual ao primeiro e o restante da sequência é apenas uma repetição cíclica dos primeiros 16 números. O ciclo, portanto, é igual a 16 valores. A parte inicial do ciclo que não se repete é chamada de cauda. Logo, o comprimento do período é a soma dos comprimentos da cauda e do ciclo.
+
+As propriedades desejáveis em um gerador de números aleatórios são:
+
+1. Deve ser computacionalmente eficiente: Pode ser preciso milhões de números aleatórios em cada execução, assim, o tempo para processar cada geração deve ser mínimo;
+2. Período deve ser muito longo: Um período curto pode fazer com que haja a reciclagem da seqüência de números aleatórios, resultando em uma repetição da seqüência de eventos.
+3. Os sucessivos valores devem ser independentes e uniformemente distribuídos: A
+correlação entre os diversos valores gerados deve ser pequena.
+
+Diante das propriedades acima, temos que em relação a segunda propriedade, a segunda sequência de números pseudoaleatórios gerada, indicada por seq2, é a que possui um maior período e que seria a mais desejável nesse sentido de oferecer uma pequena repetição da sequência de números pseudoaleatórios gerada.
