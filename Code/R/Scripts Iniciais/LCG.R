@@ -14,7 +14,8 @@ seq1 <- lcg(M = 16, a = 5, c = 1, seed = 5, size = 34)
 seq2 <- lcg(M = 86436, a = 1093, c = 18257, seed = 7, size = 100)
 seq3 <- lcg(M = 394, a = 34, c = -102, seed = 404, size = 50)
 
-hist(seq1)
-hist(seq2)
-hist(seq3)
+
+hist(seq1, breaks = 10)
+hist(seq2, breaks = 15)
+hist(seq3,breaks = 20)
 
