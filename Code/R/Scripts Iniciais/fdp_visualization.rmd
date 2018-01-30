@@ -1,0 +1,328 @@
+---
+title: "Visualization of probability density functions of Exponential, Normal, Gamma, t, Cauchy and G-Zero Intensity distributions"
+output: html_notebook
+---
+
+```{r}
+library(ggplot2)
+```
+
+
+### Exponential Distribution
+
+The following is the probability density function characteristic of the Exponential distribution. The random variable $X$ follows an Exponential distribution with parameter $\lambda$  if it has the probability density function below where $\lambda$ must be greater than zero.
+
+```{r}
+densExp <- function(x, lambda) {
+  
+  ifelse(x>=0, (1/lambda) * exp(-x/lambda), 0)
+  
+}
+```
+
+Below are the views of the probability density functions for this distribution. For the generation of the graphs, values 1, 2 and 3 were used for the $lambda$ parameter. The notation used is $X$ ~ $Exp(\lambda)$.
+
+```{r}
+x <- seq(from=0.001, to=4, by = 0.001)
+
+dens1 <- densExp(x, 1)
+dens2 <- densExp(x, 2)
+dens3 <- densExp(x, 3)
+
+qplot (xlab="x", ylab="density") +
+  ggtitle("Probability density function of a Exponencial distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x, dens1, colour="black"), size=1.3) +
+  geom_line(aes(x, dens2, colour="blue"), size=1.3) +
+  geom_line(aes(x, dens3, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("Exp(1)", "Exp(2)", "Exp(3)"))
+```
+
+### Normal Distribution
+
+A continuous random variable $X$ has Normal distribution if its probability density function is given by:
+
+```{r}
+densNormal <- function (x, mi, sigmaQuad) {
+  
+  return ((1/sqrt(2*pi*sigmaQuad)) * exp ((-1/(2*sigmaQuad))*(x - mi)^2))
+  
+}
+```
+
+ This case we use the notation $X$ ~ $N(\mu, \sigma^2)$. Below are density plots for this distribution.
+ 
+ 
+ 
+```{r}
+x <- seq(from=-6, to=6, by = 0.001)
+
+dens1 <- densNormal(x, 0, 1)
+dens2 <- densNormal(x, 0, 4)
+dens3 <- densNormal(x, 0, 9)
+ 
+qplot (xlab="x", ylab="density") +
+  ggtitle("Probability density function of a Normal distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens1, colour="black"), size=1.3) +
+  geom_line(aes(x,dens2, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens3, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("N(0,1)", "N(0,4)", "N(0,9)"))
+
+
+dens4 <- densNormal(x, 0, 1)
+dens5 <- densNormal(x, 1, 1)
+dens6 <- densNormal(x, 1, 4)
+
+qplot (xlab="x", ylab="density") +
+  ggtitle("Probability density function of a Normal distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens4, colour="black"), size=1.3) +
+  geom_line(aes(x,dens5, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens6, colour="red"), size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("N(0,1)", "N(1,1)", "N(1,4)"))
+
+
+
+dens7 <- densNormal(x, 1, 1)
+dens8 <- densNormal(x, 2, 1)
+dens9 <- densNormal(x, 1, 9)
+
+
+qplot (xlab="x", ylab="density") +
+  ggtitle("Probability density function of a Normal distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens7, colour="black"), size=1.3) +
+  geom_line(aes(x,dens8, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens9, colour="red"), size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("N(1,1)", "N(2,1)", "N(1,9)"))
+```
+
+### Gamma Distribution
+
+A random variable $X$ has Gamma distribution with parameters $\alpha > 0$ (also called shape parameter) and $\beta > 0$ (rate parameter), with notation $X$ ~ $Gamma(\alpha,\beta)$, if its density function is given by
+
+```{r}
+densGama <- function (x, alpha, beta) {
+ 
+  ifelse(x>=0, (beta^alpha * x^(alpha-1) * exp(-beta*x))/gamma(alpha),0)
+  
+}
+```
+
+
+Below are density plots for this distribution.
+
+```{r}
+x <- seq(from=0, to=10, by = 0.001)
+
+dens1 <- densGama(x, 2, 0.5)
+dens2 <- densGama(x, 2, 1)
+dens3 <- densGama(x, 2, 2)
+
+qplot (xlab="x", ylab="density") +
+  ggtitle("Probability density function of a Gama distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens1, colour="black"), size=1.3) +
+  geom_line(aes(x,dens2, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens3, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("Gama(2,1/2)", "Gama(2,1)", "Gama(2,2)"))
+
+dens4 <- densGama(x, 4, 0.5)
+dens5 <- densGama(x, 4, 1)
+dens6 <- densGama(x, 4, 2)
+
+qplot (xlab="x", ylab="density") +
+  ggtitle("Probability density function of a Gama distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens4, colour="black"), size=1.3) +
+  geom_line(aes(x,dens5, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens6, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("Gama(4,1/2)", "Gama(4,1)", "Gama(4,2)"))
+
+
+dens7 <- densGama(x, 2, 0.5)
+dens8 <- densGama(x, 4, 0.5)
+dens9 <- densGama(x, 4, 2)
+
+qplot (xlab="x", ylab="density") +
+  ggtitle("Probability density function of a Gama distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens7, colour="black"), size=1.3) +
+  geom_line(aes(x,dens8, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens9, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("Gama(2,1/2)", "Gama(4,1/2)", "Gama(4,2)"))
+
+
+```
+
+
+### t Distribution
+
+A continuous random variable $X$ has Student distribution $t$ with $v$ degrees of freedom if its probability density function is given by:
+
+```{r}
+densT <- function(x, v) {
+  return  (((gamma((v+1)/2))/(sqrt(v*pi) * gamma(v/2))) * (1 + (x^2/v))^(-1*((v+1)/2)))
+}
+```
+
+The notation in this case is given by $X$ ~ $t_{v}$. The density function of Student's t distribution has the same shape in bell of the Normal distribution, but reflects the greater variability (with wider curves) than is expected in small samples.
+
+The higher the degree of freedom, the more Student's t distribution approaches the Normal distribution. Below are density plots for this distribution.
+
+```{r}
+x <- seq(from=-4, to=4, by = 0.001)
+
+dens1 <- densT(x, 1)
+dens2 <- densT(x, 5)
+dens3 <- densT(x, 15)
+
+qplot (xlab="x", ylab="density") +
+  ggtitle("Probability density function of a T distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens1, colour="black"), size=1.3) +
+  geom_line(aes(x,dens2, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens3, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("t(1)", "t(5)", "t(15)"))
+```
+
+### Cauchy Distribution
+
+A continuous random variable $X$ has Cauchy distribution with parameters $\alpha$ and $\beta$ if its probability density function and its distribution function are respectively defined by:
+
+```{r}
+densCauchy <- function(x, alpha, beta) {
+  
+  return (1/(pi*beta*(1 + ((x - alpha)/beta)^2)))
+  
+}
+```
+
+Where $\alpha$ and $\beta$ are location and scale parameters, respectively. Below are density plots for this distribution.
+
+```{r}
+x <- seq(from = -5, to = 5, by = 0.001)
+
+dens1 <- densCauchy(x, 0, 4)
+dens2 <- densCauchy(x, 0, 2)
+dens3 <- densCauchy(x, 0, 1/2)
+
+qplot (xlab="x", ylab="density") +
+  ggtitle("Probability density function of a Cauchy distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens1, colour="black"), size=1.3) +
+  geom_line(aes(x,dens2, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens3, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("Cauchy(alpha=0, beta=4)", "Cauchy(alpha=0, beta=2)", "Cauchy(alpha=0, beta=1/2)"))
+
+
+dens4 <- densCauchy(x, 0, 2)
+dens5 <- densCauchy(x, 2, 2)
+dens6 <- densCauchy(x, 2, 1/2)
+
+qplot (xlab="x", ylab="density") +
+  ggtitle("Probability density function of a Cauchy distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens4, colour="black"), size=1.3) +
+  geom_line(aes(x,dens5, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens6, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("Cauchy(alpha=0, beta=2)", "Cauchy(alpha=2, beta=2)", "Cauchy(alpha=2, beta=1/2)"))
+
+
+dens7 <- densCauchy(x, -2.5, 1/4)
+dens8 <- densCauchy(x, 0, 1/3)
+dens9 <- densCauchy(x, 2.5, 1/2)
+
+qplot (xlab="x", ylab="density") +
+  ggtitle("Probability density function of a Cauchy distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens7, colour="black"), size=1.3) +
+  geom_line(aes(x,dens8, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens9, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("Cauchy(alpha=-2.5, beta=1/4)", "Cauchy(alpha=0, beta=1/3)", "Cauchy(alpha=2.5, beta=1/2)"))
+```
+
+### G-Zero Intensity ($G_I^0$) Distribution
+
+A random variable $X$ follows a G-Intensity Zero distribution with parameters $\alpha$, $\gamma$, and $Looks$, denoted by $X$ ~ $G_I^0(\alpha,\gamma, Looks)$, if its probability density function is defined as follows:
+
+```{r}
+densGI0 <- function(x, alpha, gamma, Looks) {
+  
+  return(((Looks^Looks * gamma(Looks-alpha))/ (gamma^alpha * gamma(Looks) * gamma(-alpha))) *
+    (x^(Looks-1) / (gamma + Looks * x)^(Looks-alpha)))
+  
+}
+
+```
+
+The necessary restrictions in this case are: $\alpha$ < 0 and $\gamma$ > 0. Below are density plots for this distribution.
+
+```{r}
+x <- seq(from=0.001, to=4, by = 0.001)
+
+
+dens1 <- densGI0(x, -3, 2, 1)
+dens2 <- densGI0(x, -3, 2, 3)
+dens3 <- densGI0(x, -3, 2, 8)
+
+qplot (xlab="Intensity", ylab="GI0 Densities") +
+  ggtitle("Probability density function of a GI0 distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens1, colour="black"), size=1.3) +
+  geom_line(aes(x,dens2, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens3, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("GI0(-3,2,1)", "GI0(-3,2,3)", "GI0(-3,2,8)"))
+
+
+dens4 <- densGI0(x, -1.5, 0.5, 1)
+dens5 <- densGI0(x, -3, 2, 1)
+dens6 <- densGI0(x, -8, 7, 1)
+
+qplot (xlab="Intensity", ylab="GI0 Densities") +
+  ggtitle("Probability density function of a GI0 distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens4, colour="black"), size=1.3) +
+  geom_line(aes(x,dens5, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens6, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("GI0(-1.5,0.5,1)", "GI0(-3,2,1)", "GI0(-8,7,1)"))
+
+
+dens7 <- densGI0(x, -1.5, 0.5, 3)
+dens8 <- densGI0(x, -3, 2, 3)
+dens9 <- densGI0(x, -8, 7, 3)
+
+qplot (xlab="Intensity", ylab="GI0 Densities") +
+  ggtitle("Probability density function of a GI0 distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens7, colour="black"), size=1.3) +
+  geom_line(aes(x,dens8, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens9, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("GI0(-1.5,0.5,3)", "GI0(-3,2,3)", "GI0(-8,7,3)"))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

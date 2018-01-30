@@ -1,36 +1,49 @@
 # Explorando a função densidade da GI0
 
-densGI0 <- function(z, alpha, gamma, Looks) {
+library(ggplot2)
+
+densGI0 <- function(x, alpha, gamma, Looks) {
   
-  return(((Looks^Looks * gamma(Looks-alpha))/ (gamma^alpha * gamma(Looks-1) * gamma(-alpha))) *
-    (z^(Looks-1) / (gamma + Looks * z)^(Looks-alpha)))
+  return(((Looks^Looks * gamma(Looks-alpha))/ (gamma^alpha * gamma(Looks) * gamma(-alpha))) *
+    (x^(Looks-1) / (gamma + Looks * x)^(Looks-alpha)))
 }
 
-d1 <- densGI0(0.07996402, -2, 4, 7)
+x <- seq(from=0.001, to=4, by = 0.01)
 
-d2 <- densGI0(0.07996402, -2, 4, 8)
+dens1 <- densGI0(x, -3, 2, 1)
+dens2 <- densGI0(x, -3, 2, 3)
+dens3 <- densGI0(x, -3, 2, 8)
 
-d3 <- densGI0(0.07996402, -2, 4, 9)
-
-d4 <- densGI0(0.07996402, -2, 1, 9)
-
-d5 <- densGI0(0.07996402, -2, 2, 9)
-
-d6 <- densGI0(0.07996402, -2, 3, 9)
-
-d7 <- densGI0(0.07996402, -3, 3, 9)
-
-d8 <- densGI0(0.07996402, -2, 3, 9)
-
-d9 <- densGI0(0.07996402, -1, 3, 9)
-
-dn <- c(d1, d2, d3, d4, d5, d6, d7, d8, d9) 
-
-densityGIO <- data.frame(y = dn)
-
-ggplot(densityGIO, aes(y)) + geom_density(adjust = 1) +
-  xlab("Densidades") + ylab("Frequencia")
+qplot (xlab="Intensity", ylab="GI0 Densities") +
+  ggtitle("Probability density function of a GI0 distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens1, colour="black"), size=1.3) +
+  geom_line(aes(x,dens2, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens3, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("GI0(-3,2,1)", "GI0(-3,2,3)", "GI0(-3,2,8)"))
 
 
+dens4 <- densGI0(x, -1.5, 0.5, 1)
+dens5 <- densGI0(x, -3, 2, 1)
+dens6 <- densGI0(x, -8, 7, 1)
 
+qplot (xlab="Intensity", ylab="GI0 Densities") +
+  ggtitle("Probability density function of a GI0 distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens4, colour="black"), size=1.3) +
+  geom_line(aes(x,dens5, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens6, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("GI0(-1.5,0.5,1)", "GI0(-3,2,1)", "GI0(-8,7,1)"))
+
+dens7 <- densGI0(x, -1.5, 0.5, 3)
+dens8 <- densGI0(x, -3, 2, 3)
+dens9 <- densGI0(x, -8, 7, 3)
+
+qplot (xlab="Intensity", ylab="GI0 Densities") +
+  ggtitle("Probability density function of a GI0 distribution") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_line(aes(x,dens7, colour="black"), size=1.3) +
+  geom_line(aes(x,dens8, colour="blue"), size=1.3) +
+  geom_line(aes(x,dens9, colour="red") , size=1.3) +
+  scale_color_discrete(name = "parameters", labels = c("GI0(-1.5,0.5,3)", "GI0(-3,2,3)", "GI0(-8,7,3)"))
 
