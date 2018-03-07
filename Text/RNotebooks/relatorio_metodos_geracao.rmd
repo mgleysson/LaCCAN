@@ -1,0 +1,196 @@
+---
+title: "Relatório dos métodos de Geração de variáveis aleatórias GI0 implementados"
+output: html_notebook
+---
+
+```{r}
+library(ggplot2)
+```
+
+
+Até o presente momento temos implementados dois métodos distintos de geração de variáveis aleatórias GI0. O primeiro deles diz respeito à geração de variáveis aleatórias GI0 por intermédio de uma razão de variáveis aleatórias Gama decorrente do Modelo Multiplicativo.
+
+O seguinte trecho de código mostra a função implementada tendo como base a razão de variáveis aleatórias Gama. Essas variáveis foram geradas com os correspondentes parâmetros *shape* e *rate* obtidos do Modelo Multiplicativo e em seguida, como retorno da função, efetuou-se a razão dada por *Y/X* para que fossem geradas as variáveis aleatórias GI0.
+
+```{r}
+
+randGI0 <- function(n, alpha, gamma, Looks) {
+  
+  X = rgamma(n, shape = -alpha, rate = gamma)
+  Y = rgamma(n, shape = Looks, rate = Looks)
+  
+  return (Y/X)
+  
+}
+
+```
+
+Para testar este primeiro método de Geração foram gerados diversos histogramas cada qual sobreposto com a densidade desejada obtida por meio da função de densidade de probabilidade da GI0 que também foi implementada. Esta função possui a seguinte assinatura *densGI0(x, alpha, gamma, Looks)* e sua implementação está exposta a seguir.
+
+
+```{r}
+densGI0 <- function(x, alpha, gamma, Looks) {
+  
+  return(((Looks^Looks * gamma(Looks-alpha))/ (gamma^alpha * gamma(Looks) * gamma(-alpha))) *
+    (x^(Looks-1) / (gamma + Looks * x)^(Looks-alpha)))
+  
+}
+```
+
+Como primeiro teste, analisemos a seguir o histograma gerado e a curva de densidade desejada sobreposta ao mesmo. Foram geradas 2000 observações de variáveis aleatórias GI0 com os parâmetros alpha = -3, gamma = 2 e Looks = 8 e plotou-se o histograma com esses dados. Após isso, foi implementada a densidade desejada - passando os mesmos parâmetros acima - e a mesma foi sobreposta ao histograma.
+
+Como pode-se observar, o histograma juntamente com a densidade desejada estão compatíveis entre si e a visualização do histograma sobreposto com a curva de densidade está conforme o esperado.
+
+```{r}
+
+randVarGI0_1 <- randGI0(2000, -3, 2, 8)
+
+hist1 <- hist(randVarGI0_1, probability = TRUE, breaks = "FD")
+densd1 <- densGI0(hist1$mids, -3, 2, 8)
+#lines(hist1$mids, densd1)
+
+qplot (xlab="Intensity", ylab="GI0 Densities") + 
+  ggtitle("Histogram with Density curve of GI0(-3, 2, 8)") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_histogram(aes(randVarGI0_1, y=..density..), fill="white", bins = 150, color="black") +
+  geom_line(aes(hist1$mids, densd1), size=1.1, color="blue")
+
+```
+
+A seguir está outra implementação de histograma juntamente com a curva de densidade sobreposta. Dessa vez foram geradas 2000 observações utilizando os parâmetros alpha = -1.5, gamma = 0.5 e Looks = 1.
+
+```{r}
+
+randVarGI0_4 <- randGI0(2000, -1.5, 0.5, 1)
+
+hist4 <- hist(randVarGI0_4, probability = TRUE, breaks = "FD")
+densd4 <- densGI0(hist4$mids, -1.5, 0.5, 1)
+#lines(hist4$mids, densd4)
+
+qplot (xlab="Intensity", ylab="GI0 Densities") + 
+  ggtitle("Histogram with Density curve of GI0(-1.5, 0.5, 1)") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_histogram(aes(randVarGI0_4, y=..density..), fill="white", bins = 150, color="black") +
+  geom_line(aes(hist4$mids, densd4), size=1.1, color="blue")
+
+```
+
+Por fim, a última implementação para compor este relatório foi implementada como a seguir. Foram geradas 2000 observações com os parâmetros alpha = -8, gamma = 7 e Looks = 3.
+
+```{r}
+
+randVarGI0_9 <- randGI0(2000, -8, 7, 3)
+
+hist9 <- hist(randVarGI0_9, probability = TRUE, breaks = "FD")
+densd9 <- densGI0(hist9$mids, -8, 7, 3)
+#lines(hist6$mids, densd9)
+
+qplot (xlab="Intensity", ylab="GI0 Densities") + 
+  ggtitle("Histogram with Density curve of GI0(-8, 7, 3)") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_histogram(aes(randVarGI0_9, y=..density..), fill="white", bins = 150, color="black") +
+  geom_line(aes(hist9$mids, densd9), size=1.1, color="blue")
+
+```
+
+Agora concentrando-se na segunda forma de geração temos que o mesmo foi implementado seguindo o Método da Transformada Inversa por meio da Inversa da Função de Distribuição Acumulada da GI0.
+
+A partir da relação descoberta entre a função de distribuição acumulada da GI0 e a distribuição F de Snedekor, para a qual existem implementações já feitas em R, foram geradas as variáveis aleatórias GI0, sem passar pelas funções especiais.
+
+O seguinte código mostra a relação encontrada da f.d.a da GI0 com a F de Snedekor. A função retorna a f.d.a da F de Snedekor com os parâmetros q = (-alpha/gamma)(x), df1 = 2Looks e df2 = -2alpha.
+
+```{r}
+
+ cdfGI0 <- function(x, alpha, gamma, Looks) {
+   
+   p = pf(q = (-alpha/gamma)*(x), df1 = 2*Looks, df2 = -2*alpha)
+   
+   return (p)
+ }
+
+```
+
+Para comprovar que a relação encontrada entre ambas as distribuições (GI0 e F) está correta foi feito o seguinte teste, onde gerou-se variáveis aleatórias GI0 pelo Método de geração utilizando a razão de variáveis aleatórias Gama e, em seguida, plotou-se, por meio da função ecdf que nos dá uma estimativa da cdf, o gráfico da f.d.a das variáveis GI0 geradas.
+
+```{r}
+ randVarGI0 <- randGI0(2000, -3, 2, 8)
+ seqx <- seq(from = 0.001, to = 14.000, by = 0.01)
+ plot(ecdf(randVarGI0), col=2)
+```
+
+Para efetuar o teste, foi feito o seguinte traçado de linha e foi possível observar que as linhas se coincidem implicando que f.d.a da GI0 foi implementada com êxito mediante relação com a F.
+
+```{r}
+seqx <- seq(from = 0.001, to = 14.000, by = 0.01)
+ plot(ecdf(randVarGI0), col=2)
+ lines(seqx, cdfGI0(seqx,-3, 2, 8))
+```
+
+
+O seguinte trecho de código mostra a implementação do método de geração utilizando a Inversa da Função de Distribuição Acumulada da GI0. Aqui foram geradas *n* variáveis aleatórias com distribuição Uniforme e foram passadas como parâmetro para a inversa da f.d.a da GI0. 
+
+O retorno da função é dado pela relação da GI0 com a F, em que é passado o inverso de (-alpha/gamma)(x) que justamente se trata de (-gamma/alpha)(q) e dessa forma tem-se o segundo método de geração implementado.
+
+```{r}
+
+randGI0_2 <- function(n, alpha, gamma, Looks) {
+  
+  U <- runif(n)
+  q = qf(p = U, df1 = 2*Looks, df2 = -2*alpha)
+  
+  return ((-gamma/alpha)*(q))
+  
+}
+
+```
+
+Foram feitas plotagens de histogramas juntamente com a curva de densidade desejada sobreposta aos mesmos. A seguir estão os gráficos gerados.
+
+```{r}
+
+randVarGI0_2 <- randGI0_2(2000, -3, 2, 3)
+
+hist2 <- hist(randVarGI0_2, probability = TRUE, breaks = "FD")
+densd2 <- densGI0(hist2$mids, -3, 2, 3)
+#lines(hist2$mids, densd2)
+
+qplot (xlab="Intensity", ylab="GI0 Densities") + 
+  ggtitle("Histogram with Density curve of GI0(-3, 2, 3)") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_histogram(aes(randVarGI0_2, y=..density..), fill="white", bins = 150, color="black") +
+  geom_line(aes(hist2$mids, densd2), size=1.1, color="red")
+
+```
+
+```{r}
+
+randVarGI0_7 <- randGI0_2(2000, -1.5, 0.5, 3)
+
+hist7 <- hist(randVarGI0_7, probability = TRUE, breaks = "FD")
+densd7 <- densGI0(hist7$mids, -1.5, 0.5, 3)
+#lines(hist7$mids, densd7)
+
+qplot (xlab="Intensity", ylab="GI0 Densities") + 
+  ggtitle("Histogram with Density curve of GI0(-1.5, 0.5, 3)") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_histogram(aes(randVarGI0_7, y=..density..), fill="white", bins = 150, color="black") +
+  geom_line(aes(hist7$mids, densd7), size=1.1, color="red")
+
+```
+
+```{r}
+
+randVarGI0_6 <- randGI0_2(2000, -8, 7, 1)
+
+hist6 <- hist(randVarGI0_6, probability = TRUE, breaks = "FD")
+densd6 <- densGI0(hist6$mids, -8, 7, 1)
+#lines(hist6$mids, densd6)
+
+qplot (xlab="Intensity", ylab="GI0 Densities") + 
+  ggtitle("Histogram with Density curve of GI0(-8, 7, 1)") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  geom_histogram(aes(randVarGI0_6, y=..density..), fill="white", bins = 150, color="black") +
+  geom_line(aes(hist6$mids, densd6), size=1.1, color="red")
+
+```
+
