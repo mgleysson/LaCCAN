@@ -1,6 +1,8 @@
 ---
-title: "Relatório dos métodos de Geração de variáveis aleatórias GI0 implementados"
-output: html_notebook
+title: "Relat?rio dos m?todos de Gera??o de vari?veis aleat?rias GI0 implementados"
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r}
@@ -8,9 +10,9 @@ library(ggplot2)
 ```
 
 
-Até o presente momento temos implementados dois métodos distintos de geração de variáveis aleatórias GI0. O primeiro deles diz respeito à geração de variáveis aleatórias GI0 por intermédio de uma razão de variáveis aleatórias Gama decorrente do Modelo Multiplicativo.
+At? o presente momento temos implementados dois m?todos distintos de gera??o de vari?veis aleat?rias GI0. O primeiro deles diz respeito ? gera??o de vari?veis aleat?rias GI0 por interm?dio de uma raz?o de vari?veis aleat?rias Gama decorrente do Modelo Multiplicativo.
 
-O seguinte trecho de código mostra a função implementada tendo como base a razão de variáveis aleatórias Gama. Essas variáveis foram geradas com os correspondentes parâmetros *shape* e *rate* obtidos do Modelo Multiplicativo e em seguida, como retorno da função, efetuou-se a razão dada por *Y/X* para que fossem geradas as variáveis aleatórias GI0.
+O seguinte trecho de c?digo mostra a fun??o implementada tendo como base a raz?o de vari?veis aleat?rias Gama. Essas vari?veis foram geradas com os correspondentes par?metros *shape* e *rate* obtidos do Modelo Multiplicativo e em seguida, como retorno da fun??o, efetuou-se a raz?o dada por *Y/X* para que fossem geradas as vari?veis aleat?rias GI0.
 
 ```{r}
 
@@ -25,7 +27,7 @@ randGI0 <- function(n, alpha, gamma, Looks) {
 
 ```
 
-Para testar este primeiro método de Geração foram gerados diversos histogramas cada qual sobreposto com a densidade desejada obtida por meio da função de densidade de probabilidade da GI0 que também foi implementada. Esta função possui a seguinte assinatura *densGI0(x, alpha, gamma, Looks)* e sua implementação está exposta a seguir.
+Para testar este primeiro m?todo de Gera??o foram gerados diversos histogramas cada qual sobreposto com a densidade desejada obtida por meio da fun??o de densidade de probabilidade da GI0 que tamb?m foi implementada. Esta fun??o possui a seguinte assinatura *densGI0(x, alpha, gamma, Looks)* e sua implementa??o est? exposta a seguir.
 
 
 ```{r}
@@ -37,9 +39,9 @@ densGI0 <- function(x, alpha, gamma, Looks) {
 }
 ```
 
-Como primeiro teste, analisemos a seguir o histograma gerado e a curva de densidade desejada sobreposta ao mesmo. Foram geradas 2000 observações de variáveis aleatórias GI0 com os parâmetros alpha = -3, gamma = 2 e Looks = 8 e plotou-se o histograma com esses dados. Após isso, foi implementada a densidade desejada - passando os mesmos parâmetros acima - e a mesma foi sobreposta ao histograma.
+Como primeiro teste, analisemos a seguir o histograma gerado e a curva de densidade desejada sobreposta ao mesmo. Foram geradas 2000 observa??es de vari?veis aleat?rias GI0 com os par?metros alpha = -3, gamma = 2 e Looks = 8 e plotou-se o histograma com esses dados. Ap?s isso, foi implementada a densidade desejada - passando os mesmos par?metros acima - e a mesma foi sobreposta ao histograma.
 
-Como pode-se observar, o histograma juntamente com a densidade desejada estão compatíveis entre si e a visualização do histograma sobreposto com a curva de densidade está conforme o esperado.
+Como pode-se observar, o histograma juntamente com a densidade desejada est?o compat?veis entre si e a visualiza??o do histograma sobreposto com a curva de densidade est? conforme o esperado.
 
 ```{r}
 
@@ -57,7 +59,7 @@ qplot (xlab="Intensity", ylab="GI0 Densities") +
 
 ```
 
-A seguir está outra implementação de histograma juntamente com a curva de densidade sobreposta. Dessa vez foram geradas 2000 observações utilizando os parâmetros alpha = -1.5, gamma = 0.5 e Looks = 1.
+A seguir est? outra implementa??o de histograma juntamente com a curva de densidade sobreposta. Dessa vez foram geradas 2000 observa??es utilizando os par?metros alpha = -1.5, gamma = 0.5 e Looks = 1.
 
 ```{r}
 
@@ -75,7 +77,7 @@ qplot (xlab="Intensity", ylab="GI0 Densities") +
 
 ```
 
-Por fim, a última implementação para compor este relatório foi implementada como a seguir. Foram geradas 2000 observações com os parâmetros alpha = -8, gamma = 7 e Looks = 3.
+Por fim, a ?ltima implementa??o para compor este relat?rio foi implementada como a seguir. Foram geradas 2000 observa??es com os par?metros alpha = -8, gamma = 7 e Looks = 3.
 
 ```{r}
 
@@ -93,11 +95,11 @@ qplot (xlab="Intensity", ylab="GI0 Densities") +
 
 ```
 
-Agora concentrando-se na segunda forma de geração temos que o mesmo foi implementado seguindo o Método da Transformada Inversa por meio da Inversa da Função de Distribuição Acumulada da GI0.
+Agora concentrando-se na segunda forma de gera??o temos que o mesmo foi implementado seguindo o M?todo da Transformada Inversa por meio da Inversa da Fun??o de Distribui??o Acumulada da GI0.
 
-A partir da relação descoberta entre a função de distribuição acumulada da GI0 e a distribuição F de Snedekor, para a qual existem implementações já feitas em R, foram geradas as variáveis aleatórias GI0, sem passar pelas funções especiais.
+A partir da rela??o descoberta entre a fun??o de distribui??o acumulada da GI0 e a distribui??o F de Snedekor, para a qual existem implementa??es j? feitas em R, foram geradas as vari?veis aleat?rias GI0, sem passar pelas fun??es especiais.
 
-O seguinte código mostra a relação encontrada da f.d.a da GI0 com a F de Snedekor. A função retorna a f.d.a da F de Snedekor com os parâmetros q = (-alpha/gamma)(x), df1 = 2Looks e df2 = -2alpha.
+O seguinte c?digo mostra a rela??o encontrada da f.d.a da GI0 com a F de Snedekor. A fun??o retorna a f.d.a da F de Snedekor com os par?metros q = (-alpha/gamma)(x), df1 = 2Looks e df2 = -2alpha.
 
 ```{r}
 
@@ -110,7 +112,7 @@ O seguinte código mostra a relação encontrada da f.d.a da GI0 com a F de Snedeko
 
 ```
 
-Para comprovar que a relação encontrada entre ambas as distribuições (GI0 e F) está correta foi feito o seguinte teste, onde gerou-se variáveis aleatórias GI0 pelo Método de geração utilizando a razão de variáveis aleatórias Gama e, em seguida, plotou-se, por meio da função ecdf que nos dá uma estimativa da cdf, o gráfico da f.d.a das variáveis GI0 geradas.
+Para comprovar que a rela??o encontrada entre ambas as distribui??es (GI0 e F) est? correta foi feito o seguinte teste, onde gerou-se vari?veis aleat?rias GI0 pelo M?todo de gera??o utilizando a raz?o de vari?veis aleat?rias Gama e, em seguida, plotou-se, por meio da fun??o ecdf que nos d? uma estimativa da cdf, o gr?fico da f.d.a das vari?veis GI0 geradas.
 
 ```{r}
  randVarGI0 <- randGI0(2000, -3, 2, 8)
@@ -118,7 +120,7 @@ Para comprovar que a relação encontrada entre ambas as distribuições (GI0 e F) e
  plot(ecdf(randVarGI0), col=2)
 ```
 
-Para efetuar o teste, foi feito o seguinte traçado de linha e foi possível observar que as linhas se coincidem implicando que f.d.a da GI0 foi implementada com êxito mediante relação com a F.
+Para efetuar o teste, foi feito o seguinte tra?ado de linha e foi poss?vel observar que as linhas se coincidem implicando que f.d.a da GI0 foi implementada com ?xito mediante rela??o com a F.
 
 ```{r}
 seqx <- seq(from = 0.001, to = 14.000, by = 0.01)
@@ -127,9 +129,9 @@ seqx <- seq(from = 0.001, to = 14.000, by = 0.01)
 ```
 
 
-O seguinte trecho de código mostra a implementação do método de geração utilizando a Inversa da Função de Distribuição Acumulada da GI0. Aqui foram geradas *n* variáveis aleatórias com distribuição Uniforme e foram passadas como parâmetro para a inversa da f.d.a da GI0. 
+O seguinte trecho de c?digo mostra a implementa??o do m?todo de gera??o utilizando a Inversa da Fun??o de Distribui??o Acumulada da GI0. Aqui foram geradas *n* vari?veis aleat?rias com distribui??o Uniforme e foram passadas como par?metro para a inversa da f.d.a da GI0. 
 
-O retorno da função é dado pela relação da GI0 com a F, em que é passado o inverso de (-alpha/gamma)(x) que justamente se trata de (-gamma/alpha)(q) e dessa forma tem-se o segundo método de geração implementado.
+O retorno da fun??o ? dado pela rela??o da GI0 com a F, em que ? passado o inverso de (-alpha/gamma)(x) que justamente se trata de (-gamma/alpha)(q) e dessa forma tem-se o segundo m?todo de gera??o implementado.
 
 ```{r}
 
@@ -144,7 +146,7 @@ randGI0_2 <- function(n, alpha, gamma, Looks) {
 
 ```
 
-Foram feitas plotagens de histogramas juntamente com a curva de densidade desejada sobreposta aos mesmos. A seguir estão os gráficos gerados.
+Foram feitas plotagens de histogramas juntamente com a curva de densidade desejada sobreposta aos mesmos. A seguir est?o os gr?ficos gerados.
 
 ```{r}
 
