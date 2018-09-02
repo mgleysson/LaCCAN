@@ -32,11 +32,12 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass[12pt]{article}
-\usepackage[english]{babel}
+\usepackage[portuguese]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
+\usepackage{natbib}
 
 \begin{document}
 
@@ -104,19 +105,19 @@ Alejandro C. Frery  % Supervisor's Name
 
 
 \section{Função densidade de probabilidade}
+%%% ACF Evite usar "\\" e qualquer outra formatação fixa
 
 \textbf{Primeira parametrização:}\\
 
-X $\sim$ \begin{math} \Gamma(\alpha, \beta) \end{math} onde \begin{math} \alpha > 0 \end{math} representa o parâmetro \textit{Shape} e \begin{math} \beta > 0 \end{math} representa o parâmetro \textit{Rate}
-
+X $\sim$ \begin{math} \Gamma(\alpha, \beta) \end{math} onde \begin{math} \alpha > 0 \end{math} representa o parâmetro \textit{Shape} (de forma) e \begin{math} \beta > 0 \end{math} representa o parâmetro \textit{Rate} (taxa)
+%%% ACF Não deixe espaço antes de elementos que fazem parte do parágrafo. Repare no uso de \text
 \begin{equation}
-f(x; \alpha, \beta )=\frac{\beta^{\alpha}x^{\alpha-1}e^{-\beta x}}{\Gamma(\alpha)} \qquad para \quad x > 0
+f(x; \alpha, \beta )=\frac{\beta^{\alpha}x^{\alpha-1}e^{-\beta x}}{\Gamma(\alpha)} \qquad \text{para} \quad x > 0
 \end{equation}\\
 
 \textbf{Segunda parametrização:}\\
 
 X $\sim$ \begin{math} \Gamma(\alpha, \theta) \end{math} onde \begin{math} \alpha > 0 \end{math} representa o parâmetro \textit{Shape} e \begin{math} \theta > 0 \end{math} representa o parâmetro \textit{Scale} que é avaliado como \begin{math} 1/ \beta \end{math} (inverso do parâmetro \textit{Rate})
-
 \begin{equation}
 f(x; \alpha, \theta )=\frac{x^{\alpha-1}e^{\frac{-x}{\theta}}}{\theta^{\alpha}\Gamma(\alpha)} \qquad para \quad x > 0
 \end{equation}\\
@@ -127,8 +128,15 @@ f(x; \alpha, \theta )=\frac{x^{\alpha-1}e^{\frac{-x}{\theta}}}{\theta^{\alpha}\G
 \frac{\beta^{\alpha}x^{\alpha-1}e^{-\beta x}}{\Gamma(\alpha)} \qquad \frac{x^{\alpha-1}e^{\frac{-x}{\theta}}}{\theta^{\alpha}\Gamma(\alpha)}
 \end{equation}
 
+Assim, é claro que $\beta = 1/\theta$.
 
+Pelo Teorema~7.2.10 de \citet{CasellaBergerStatisticalInference}, temos que há invariância de estimadores de máxima verossimilhança (apenas para esta classe).
+Isto é, se obtivemos $\widehat{\eta}$ para o parâmetro $\eta$ de uma parametrização, e em otra parametrização precisamos estimar $\nu=g(\eta)$, o novo estimador será $\widehat{\nu}=g(\widehat{\eta})$.
 
+Exercício: parametrize a distribuição gama pelo parâmetro de forma e pela média $\mu$.
+Obtenha o estimador de máxima verossimilhança nesta parametrização.
 
+\bibliographystyle{agsm}
+\bibliography{../../../Bibliography/references}
 
 \end{document}
