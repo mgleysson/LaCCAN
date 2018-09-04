@@ -155,9 +155,9 @@ A f.d.p da Gama com tal configuração é dada por:
 
 \begin{equation}
 f(x; \alpha, \mu )=\frac{(\frac{\alpha}{\mu})^{\alpha}x^{\alpha-1}e^{-\frac{\alpha}{\mu} x}}{\Gamma(\alpha)} \qquad \text{para} \quad x > 0
-\end{equation}\\
+\end{equation}
 
-\textbf{Obtenção do estimador de Máxima Verossimilhança:}\\
+\textbf{Obtenção do estimador de Máxima Verossimilhança:}
 
 Considere a parametrização usual da Gama (shape-scale) e considere ainda que o parâmetro desconhecido é a \textit{escala} representada por $\theta$. Com isso temos que a função de Verossimilhança para uma amostra de \emph{n} observações \emph{iid} ($x_1$, $x_2$, ..., $x_n$) é dada por:
 
@@ -179,7 +179,7 @@ Agora resta encontrar o ponto de máximo dessa função com relação ao parâme
 
 \begin{equation}
 \frac{\sum_{i=1}^{n}x_i}{\theta^2} = \frac{n\alpha}{\theta} 
-\end{equation}\\
+\end{equation}
 
 %\begin{equation}
 %\frac{\sum_{i=1}^{n}x_i}{\theta} %= n\alpha
@@ -189,13 +189,13 @@ Com isso encontramos o estimador de Máxima Verossimilhança para o parâmetro $
 
 \begin{equation}
  \widehat{\theta} = \frac{\sum_{i=1}^{n}x_i}{n\alpha} 
-\end{equation}\\
+\end{equation}
 
 Agora vamos utilizar o Teorema~7.2.10 enunciado anteriormente. Dado que obtemos $\widehat{\theta}$ para $\theta$ da parametrização \textbf{shape-scale} da Gama, precisamos agora estimar, em outra parametrização, a média $\mu$ que é dada em função de $\theta$:
 
 \begin{equation}
 \mu = g(\theta) = \alpha\theta
-\end{equation}\\
+\end{equation}
 
 Portanto, de acordo com o Teorema, temos que o novo estimador ($\widehat{\mu}$) será dado por:
 
