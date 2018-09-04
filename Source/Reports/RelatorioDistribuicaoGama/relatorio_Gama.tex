@@ -32,7 +32,7 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass[12pt]{article}
-\usepackage[english]{babel}
+\usepackage[portuguese]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -107,34 +107,40 @@ Alejandro C. Frery  % Supervisor's Name
 \section{Função densidade de probabilidade}
 %%% ACF Evite usar "\\" e qualquer outra formatação fixa
 
-\textbf{Primeira parametrização:}\\
+
+\subsection{Parametrizações usuais}
+
+\textbf{Primeira parametrização:}
 
 X $\sim$ \begin{math} \Gamma(\alpha, \beta) \end{math} onde \begin{math} \alpha > 0 \end{math} representa o parâmetro \textit{Shape} (de forma) e \begin{math} \beta > 0 \end{math} representa o parâmetro \textit{Rate} (taxa)
 %%% ACF Não deixe espaço antes de elementos que fazem parte do parágrafo. Repare no uso de \text
 \begin{equation}
-f(x; \alpha, \beta )=\frac{\beta^{\alpha}x^{\alpha-1}e^{-\beta x}}{\Gamma(\alpha)} \qquad \text{para} \quad x > 0
-\end{equation}\\
+f(x; \alpha, \beta )=\frac{\beta^{\alpha}x^{\alpha-1}e^{-\beta x}}{\Gamma(\alpha)} \qquad \text{para} \quad x > 0 \label{eq:fdp1}
+\end{equation}
 
-\textbf{Segunda parametrização:}\\
+\textbf{Segunda parametrização:}
 
 X $\sim$ \begin{math} \Gamma(\alpha, \theta) \end{math} onde \begin{math} \alpha > 0 \end{math} representa o parâmetro \textit{Shape} e \begin{math} \theta > 0 \end{math} representa o parâmetro \textit{Scale} que é avaliado como \begin{math} 1/ \beta \end{math} (inverso do parâmetro \textit{Rate})
 \begin{equation}
-f(x; \alpha, \theta )=\frac{x^{\alpha-1}e^{\frac{-x}{\theta}}}{\theta^{\alpha}\Gamma(\alpha)} \qquad para \quad x > 0
-\end{equation}\\
+f(x; \alpha, \theta )=\frac{x^{\alpha-1}e^{\frac{-x}{\theta}}}{\theta^{\alpha}\Gamma(\alpha)} \qquad para \quad x > 0 \label{eq:fdp2}
+\end{equation}
 
-\textbf{Comparação de ambas:}\\
+\textbf{Comparação de ambas:}
 
 \begin{equation}
 \frac{\beta^{\alpha}x^{\alpha-1}e^{-\beta x}}{\Gamma(\alpha)} \qquad \frac{x^{\alpha-1}e^{\frac{-x}{\theta}}}{\theta^{\alpha}\Gamma(\alpha)}
 \end{equation}
 
-Assim, é claro que $\beta = 1/\theta$.\\\\
+Assim, é claro que $\beta = 1/\theta$.
 
 Pelo Teorema~7.2.10 de \citet{CasellaBergerStatisticalInference}, temos que há invariância de estimadores de máxima verossimilhança (apenas para esta classe).
-Isto é, se obtivemos $\widehat{\eta}$ para o parâmetro $\eta$ de uma parametrização, e em otra parametrização precisamos estimar $\nu=g(\eta)$, o novo estimador será $\widehat{\nu}=g(\widehat{\eta})$.\\\\
+Isto é, se obtivemos $\widehat{\eta}$ para o parâmetro $\eta$ de uma parametrização, e em outra parametrização precisamos estimar $\nu=g(\eta)$, o novo estimador será $\widehat{\nu}=g(\widehat{\eta})$.
+
+
+\subsection{Parametrização pelo parâmetro de forma e pela média $\mu$}
 
 \textbf{Exercício:} Parametrize a distribuição gama pelo parâmetro de forma e pela média $\mu$.
-Obtenha o estimador de máxima verossimilhança nesta parametrização.\\
+Obtenha o estimador de máxima verossimilhança nesta parametrização.
 
 Sabemos que a Média ($\mu$) da distribuição Gama é dada de acordo com as suas parametrizações:
 
@@ -143,7 +149,7 @@ Sabemos que a Média ($\mu$) da distribuição Gama é dada de acordo com as sua
 \item Para a parametrização \textbf{shape-scale} temos que $\mu$ = $\alpha \theta$
 \end{itemize}
 
-Por exemplo, da primeira parametrização temos que $\beta$ = $\frac{\alpha}{\mu}$. Tendo isto, podemos substituir esse valor de $\beta$ na equação \emph{1} dada anteriormente e, assim, obtemos uma parametrização alternativa em que um dos parâmetros fica definido pela média ($\mu$) da distribuição.
+Por exemplo, da primeira parametrização temos que $\beta$ = $\frac{\alpha}{\mu}$. Tendo isto, podemos substituir esse valor de $\beta$ na equação~\eqref{eq:fdp1} dada anteriormente e, assim, obtemos uma parametrização alternativa em que um dos parâmetros fica definido pela média ($\mu$) da distribuição.
 
 A f.d.p da Gama com tal configuração é dada por:
 
@@ -159,7 +165,7 @@ Considere a parametrização usual da Gama (shape-scale) e considere ainda que o
 L(\alpha, \theta) = \prod_{i=1}^{n} f(x_i; \alpha, \theta)
 \end{equation}
 
-Aplicando a função logaritmo natural (\textit{ln}) para simplificar o problema, temos  a função log-verossimilhança:
+Aplicando a função logaritmo natural (\textit{ln}) para simplificar o problema obtemos  a função log-verossimilhança dada a seguir:
 
 \begin{equation}
 logL(\alpha, \theta) = (\alpha-1) \sum_{i=1}^{n} ln(x_i) - \sum_{i=1}^{n} \frac{x_i}{\theta} - n \alpha ln(\theta) - n ln(\Gamma(\alpha))
@@ -185,7 +191,7 @@ Com isso encontramos o estimador de Máxima Verossimilhança para o parâmetro $
  \widehat{\theta} = \frac{\sum_{i=1}^{n}x_i}{n\alpha} 
 \end{equation}\\
 
-Agora vamos utilizar o Teorema 7.2.10 enunciado anteriormente. Dado que obtemos $\widehat{\theta}$ para $\theta$ da parametrização \textbf{shape-scale} da Gama, precisamos agora estimar, em outra parametrização, a média $\mu$ que é dada em função de $\theta$:
+Agora vamos utilizar o Teorema~7.2.10 enunciado anteriormente. Dado que obtemos $\widehat{\theta}$ para $\theta$ da parametrização \textbf{shape-scale} da Gama, precisamos agora estimar, em outra parametrização, a média $\mu$ que é dada em função de $\theta$:
 
 \begin{equation}
 \mu = g(\theta) = \alpha\theta
@@ -196,7 +202,6 @@ Portanto, de acordo com o Teorema, temos que o novo estimador ($\widehat{\mu}$) 
 \begin{equation}
 \widehat{\mu} = g(\widehat{\theta}) = \alpha\widehat{\theta}=  \frac{\sum_{i=1}^{n}x_i}{n}
 \end{equation}
-
 
 
 \bibliographystyle{agsm}
