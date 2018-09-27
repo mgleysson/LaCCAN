@@ -1,0 +1,381 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University Assignment Title Page 
+% LaTeX Template
+% Version 1.0 (27/12/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% WikiBooks (http://en.wikibooks.org/wiki/LaTeX/Title_Creation)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+% Instructions for using this template:
+% This title page is capable of being compiled as is. This is not useful for 
+% including it in another document. To do this, you have two options: 
+%
+% 1) Copy/paste everything between \begin{document} and \end{document} 
+% starting at \begin{titlepage} and paste this into another LaTeX file where you 
+% want your title page.
+% OR
+% 2) Remove everything outside the \begin{titlepage} and \end{titlepage} and 
+% move this file to the same directory as the LaTeX file you wish to add it to. 
+% Then add \input{./title_page_1.tex} to your LaTeX file where you want your
+% title page.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\title{Title page with logo}
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+\usepackage[portuguese]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{cite} 
+\usepackage{float}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.5cm, bottom=2.5cm]{geometry}
+
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE Universidade Federal de Alagoas}\\[1.5cm] % Name of your university/college
+\textsc{\Large Instituto de Computação (IC)}\\[0.5cm] % Major heading such as course name
+\textsc{\large Laboratório de Computação Científica e Análise Numérica (LaCCAN)}\\[3.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \LARGE \bfseries Distribuição Gama e Estimação dos parâmetros das Bandas de Intensidade}\\[0.4cm] 
+\HRule \\[2.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Autor:}\\
+Marcos G. S. do Nascimento % Your name
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Orientador:} \\
+Alejandro C. Frery  % Supervisor's Name
+\end{flushright}
+\end{minipage}\\[10cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+%\Large \emph{Author:}\\
+%John \textsc{Smith}\\[3cm] % Your name
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large 26/09/2018}\\[2cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+% \includegraphics{logo.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+
+\section{Reparametrização da Distribuição Gama}
+%%% ACF Evite usar "\\" e qualquer outra formatação fixa
+
+Diante do problema de gerar os estimadores da Distribuição Gama parametrizada com os parâmetros \textit{Looks} e \textit{Média} para cada banda de intensidade (HHHH, HVHV, VVVV), surgiu a necessidade de se estudar sobre reparametrização, verificando, dessa forma, diferentes formas de representar a função densidade de probabilidade da distribuição Gama considerando parâmetros distintos. Na subseção seguinte estão descritas as duas parametrizações mais usuais da distribuição citada.
+
+\subsection{Parametrizações usuais}
+
+Temos que se X $\sim$ \begin{math} \Gamma(\alpha, \theta) \end{math} onde \begin{math} \alpha > 0 \end{math} representa o parâmetro \textit{Shape} (de forma) e \begin{math} \theta > 0 \end{math} representa o parâmetro \textit{Rate} (taxa), a f.d.p da distribuição Gama é dada por:
+%%% ACF Não deixe espaço antes de elementos que fazem parte do parágrafo. Repare no uso de \text
+\begin{equation}
+f(x; \alpha, \theta )=\frac{\theta^{\alpha}x^{\alpha-1}e^{-\theta x}}{\Gamma(\alpha)} \qquad \text{para} \quad x > 0 \label{eq:fdp1}
+\end{equation}
+
+Por outro lado, se X $\sim$ \begin{math} \Gamma(\alpha, \beta) \end{math} onde \begin{math} \alpha > 0 \end{math} representa o parâmetro \textit{Shape} e \begin{math} \beta > 0 \end{math} representa o parâmetro \textit{Scale} que é avaliado como \begin{math} 1/ \theta \end{math} (inverso do parâmetro \textit{Rate})
+
+\begin{equation}
+f(x; \alpha, \beta )=\frac{x^{\alpha-1}e^{\frac{-x}{\beta}}}{\beta^{\alpha}\Gamma(\alpha)} \qquad para \quad x > 0 \label{eq:fdp2}
+\end{equation}
+
+Realizando a comparação de ambas as formas de parametrização, temos:
+\begin{equation}
+\frac{\beta^{\alpha}x^{\alpha-1}e^{-\beta x}}{\Gamma(\alpha)} \qquad \frac{x^{\alpha-1}e^{\frac{-x}{\theta}}}{\theta^{\alpha}\Gamma(\alpha)}
+\end{equation}
+
+Assim, comprovamos claramente que $\beta = 1/\theta$.
+
+Pelo Teorema~7.2.10 de \citet{CasellaBergerStatisticalInference}, temos que há invariância de estimadores de máxima verossimilhança (apenas para esta classe).
+Isto é, se obtivemos $\widehat{\eta}$ para o parâmetro $\eta$ de uma parametrização, e em outra parametrização precisamos estimar $\nu=g(\eta)$, o novo estimador será $\widehat{\nu}=g(\widehat{\eta})$.
+
+
+\subsection{Parametrização pelo parâmetro de forma $\alpha$ e pela média $\mu$}
+
+\textbf{Exercício:} Parametrize a distribuição gama pelo parâmetro de forma e pela média $\mu$.
+Obtenha o estimador de máxima verossimilhança nesta parametrização.
+
+Sabemos que a Média ($\mu$) da distribuição Gama é dada de acordo com as suas parametrizações:
+\begin{itemize}
+\item Para a parametrização \textbf{shape-rate} temos que $\mu$ = $\frac{\alpha}{\theta}$
+\item Para a parametrização \textbf{shape-scale} temos que $\mu$ = $\alpha \beta$
+\end{itemize}
+
+Por exemplo, da primeira parametrização (\textbf{shape-rate}) temos que $\theta$ = $\frac{\alpha}{\mu}$. Tendo isto, podemos substituir esse valor de $\beta$ na equação~\eqref{eq:fdp1} dada anteriormente e, assim, obtemos uma parametrização alternativa em que um dos parâmetros fica definido pela média ($\mu$) da distribuição.
+
+A f.d.p da Gama com tal configuração é dada por:
+\begin{equation}
+f(x; \alpha, \mu )=\frac{(\frac{\alpha}{\mu})^{\alpha}x^{\alpha-1}e^{-\frac{\alpha}{\mu} x}}{\Gamma(\alpha)} \qquad \text{para} \quad x > 0
+\end{equation}
+
+Para a segunda parametrização (\textbf{shape-scale}) temos que $\beta$ = $\frac{\mu}{\alpha}$. De forma análoga, podemos substituir esse valor de $\beta$ na equação~\eqref{eq:fdp2} descrita anteriormente e, assim, obtemos uma parametrização em que um dos parâmetros fica definido novamente pela média ($\mu$) da distribuição.
+
+A f.d.p da Gama com tal configuração é dada por: 
+\begin{equation}
+ f(x; \alpha, \mu) = \frac{x^{\alpha-1}e^{-\frac{\alpha }{\mu} x}}{(\frac{\mu}{\alpha})^{\alpha}\Gamma(\alpha)} \qquad \text{para} \quad x > 0
+\end{equation}
+
+Considere a parametrização usual da Gama (\textbf{shape-scale}) e considere ainda que o parâmetro desconhecido é a \textit{escala} representada por $\beta$. Com isso temos que a função de Verossimilhança para uma amostra de \emph{n} observações \emph{iid} ($x_1$, $x_2$, \dots, $x_n$) é dada por:
+\begin{equation}
+L(\alpha, \beta) = \prod_{i=1}^{n} f(x_i; \alpha, \beta)
+\end{equation}
+
+Aplicando a função logaritmo natural (\textit{ln}) para simplificar o problema obtemos  a função log-verossimilhança dada a seguir:
+\begin{equation}
+logL(\alpha, \beta) = (\alpha-1) \sum_{i=1}^{n} ln(x_i) - \sum_{i=1}^{n} \frac{x_i}{\beta} - n \alpha ln(\beta) - n ln(\Gamma(\alpha))
+\end{equation}
+
+Agora resta encontrar o ponto de máximo dessa função com relação ao parâmetro desconhecido $\theta$. Assim, temos que calcular a derivada parcial com relação a $\beta$ e igualar a zero:
+\begin{equation}
+\frac{\partial logL}{\partial \beta} = \frac{1}{\beta^2}\sum_{i=1}^{n}x_i - \frac{n\alpha}{\beta} = 0
+\end{equation}
+\begin{equation}
+\frac{\sum_{i=1}^{n}x_i}{\beta^2} = \frac{n\alpha}{\beta} 
+\end{equation}
+
+%\begin{equation}
+%\frac{\sum_{i=1}^{n}x_i}{\theta} %= n\alpha
+%\end{equation}
+
+Com isso, encontramos o estimador de Máxima Verossimilhança para o parâmetro $\beta$:
+\begin{equation}
+ \widehat{\beta} = \frac{\sum_{i=1}^{n}x_i}{n\alpha} 
+\end{equation}
+
+Agora vamos utilizar o Teorema~7.2.10 enunciado anteriormente. Dado que obtemos $\widehat{\beta}$ para $\beta$ da parametrização \textbf{shape-scale} da Gama, precisamos agora estimar, em outra parametrização, a média $\mu$ que é dada em função de $\beta$:
+\begin{equation}
+\mu = g(\theta) = \alpha\beta
+\end{equation}
+
+Portanto, de acordo com o Teorema, temos que o novo estimador ($\widehat{\mu}$) será dado por:
+\begin{equation}
+\widehat{\mu} = g(\widehat{\beta}) = \alpha\widehat{\beta}=  \frac{\sum_{i=1}^{n}x_i}{n}
+\end{equation}
+
+\subsection{Estimação pelo Métodos dos Momentos}
+
+Suponha que \begin{math} X = (X_1, X_2, \dots, X_n) \end{math} são observações aleatórias iid que seguem uma distribuição Gama com os parâmetros $\alpha$ (Forma) e $\beta$ (Escala).
+
+O primeiro momento teórico sobre a origem é:
+\begin{equation}
+	E(X_i) = \alpha\beta
+\end{equation}
+
+O segundo momento teórico sobre a média é: 
+\begin{equation}
+	Var(X_i) = E(X_i - \mu) = \alpha\beta^2
+\end{equation}
+
+Como temos dois parâmetros para os quais estamos tentando derivar estimadores de momentos, precisamos de duas equações. Igualando o primeiro momento teórico sobre a origem com o momento de amostra correspondente, obtemos:
+\begin{equation}
+	E(X)=\alpha\beta=\dfrac{1}{n}\sum\limits_{i=1}^n X_i=\bar{X}
+\end{equation}
+
+E, igualando o segundo momento teórico sobre a média com o momento da amostra correspondente, obtemos:
+\begin{equation}
+	Var(X)=\alpha\beta^2=\dfrac{1}{n}\sum\limits_{i=1}^n (X_i-\bar{X})^2
+\end{equation}
+
+Agora, temos apenas que resolver os dois parâmetros. Vamos  começar resolvendo \begin{math} \alpha \end{math} na primeira equação (E(X)). Fazendo isso, obtemos:
+\begin{equation}
+	\alpha=\dfrac{\bar{X}}{\beta}
+\end{equation}
+
+Agora, substituindo o valor \begin{math} \alpha \end{math} na segunda equação (Var(x)), temos:
+\begin{equation}
+\alpha\beta^2=\left(\dfrac{\bar{X}}{\beta}\right)\beta^2=\bar{X}\beta=\dfrac{1}{n}\sum\limits_{i=1}^n (X_i-\bar{X})^2
+\end{equation}
+
+Resolvendo para \begin{math} \beta \end{math} nessa última equação, obtemos que o estimador de momento é dado por: 
+\begin{equation}
+\hat{\beta}_{MM}=\dfrac{1}{n\bar{X}}\sum\limits_{i=1}^n(X_i-\bar{X})^2 = \frac{s^2}{\bar{X}} 
+\end{equation}
+
+Onde $s^{2}$ é a variância amostral.
+
+Substituindo de volta esse valor de  \begin{math} \beta \end{math} na equação que temos para \begin{math} \alpha \end{math}, obtemos que o estimador de momento para esse parâmetro é dado por:
+\begin{equation}
+\hat{\alpha}_{MM}=\dfrac{\bar{X}}{\hat{\beta}_{MM}}=\dfrac{\bar{X}}{\frac{s^2}{\bar{X}}}=\dfrac{\bar{X}^2}{s^2}
+\end{equation}
+
+Como queremos estimar, para cada banda de intensidade, os parâmetros da distribuição Gama (Looks e Média) fazemos as seguintes atribuições:
+\begin{equation}
+    \hat{Looks} = \hat{\alpha}_{MM} = \dfrac{\bar{X}^2}{s^2}
+\end{equation}
+\begin{equation}
+    \hat{\mu} = \hat{\alpha}_{MM}\hat{\beta}_{MM} = \bar{X}
+\end{equation}
+
+
+
+\section{Estimadores para as Bandas de Intensidade}
+
+\subsection{Implementação dos Estimadores MM e MV}
+
+No contexto dos estimadores de Máxima Verossimilhança (MV), temos que a tarefa consiste em gerar, para cada banda, estimadores da distribuição Gama com a parametrização \textbf{Looks} e \textbf{Média}. Para tanto, se fez necessário o estudo anterior sobre reparametrização, a partir do qual constatou-se que a função de densidade de probabilidade da Gama a ser utilizada no cálculo dos estimadores é dada a seguir:
+\begin{equation}
+ f(x; \textit{Looks}, \mu) = \frac{x^{Looks-1}e^{-\frac{Looks}{\mu} x}}{(\frac{\mu}{Looks})^{Looks}\Gamma(Looks)} \qquad \text{para} \quad x > 0
+\end{equation} 
+
+Onde, nesse caso, \textit{Looks} = $\alpha$.
+
+No contexto dos estimadores do Método dos Momentos (MM) que é um caso mais simples, se fez necessário apenas o cálculo das médias e variâncias amostrais e, partir disso, se chegou nas estimativas para ambos os parâmetros de interesse da distribuição Gama.
+
+\subsection{Imagem PoISAR utilizada na estimação}
+
+A imagem utilizada na estimação (Figura \ref{img_1}) foi acessada no site PoISARpro~\citet{PoISARpro}(\textit{The Polarimetric SAR Data Processing and Educational Tool}). 
+
+As regiões homogêneas da imagem poISAR utilizadas na implementação dos estimadores correspondem às matrizes retangulares de tamanho 50x165 e 80x100 \textit{pixels} indicadas na figura abaixo. A região de contorno branco no topo da imagem corresponde a matriz 50x165 e a região de contorno vermelho na parte baixa da imagem corresponde a matriz 80x100.
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.3]{Homogeneous_regions.png}
+     \caption{Imagem PoISAR e regiões homogêneas utilizadas para estimar os parâmetros}
+     \label{img_1}
+\end{figure}
+
+\subsection{Resultados obtidos}
+
+Para cada banda de intensidade - HHHH, HVHV e VVVV - temos as seguintes estimativas para os parâmetros \textit{Looks} e \textit{Média} ($\mu$) considerando ambos os estimadores implementados: Método dos Momentos (MM) e Método da Máxima Verossimilhança (MV).
+% Tabela 1
+\begin{table}[H]
+\centering
+\caption{Banda HHHH - Estimativas para os parâmetros \textit{Looks}(\textit{L}) e \textit{Média}(\textit{$\mu$})}
+\vspace{0.2cm}
+\begin{tabular}{r|r|r|r|r|lr}
+\hline
+Região & Tamanho (Pixels) & $\hat{L}_{MV}$ & $\hat{L}_{MM}$ & $\hat{\mu}_{MV}$ & $\hat{\mu}_{MM}$  \\ 
+\hline                               
+Branca & 50x165 & 8.068 & 7.907 & 0.420 & 0.420 \\
+Vermelha & 80x100 & 6.050 & 5.493 & 0.229 & 0.229\\
+\end{tabular}
+\end{table}
+% Tabela 2
+\begin{table}[H]
+\centering
+\caption{Banda HVHV - Estimativas para os parâmetros \textit{Looks}(\textit{L}) e \textit{Média}(\textit{$\mu$})}
+\vspace{0.2cm}
+\begin{tabular}{r|r|r|r|r|lr}
+\hline
+Região & Tamanho (Pixels) & $\hat{L}_{MV}$ & $\hat{L}_{MM}$ & $\hat{\mu}_{MV}$ & $\hat{\mu}_{MM}$  \\ 
+\hline                               
+Branca & 50x165 & 7.728 & 7.143 & 0.319 & 0.319 \\
+Vermelha & 80x100 & 5.747 & 5.025 & 0.227 & 0.227\\
+\end{tabular}
+\end{table}
+% Tabela 3
+\begin{table}[H]
+\centering
+\caption{Banda VVVV - Estimativas para os parâmetros \textit{Looks}(\textit{L}) e \textit{Média}(\textit{$\mu$})}
+\vspace{0.2cm}
+\begin{tabular}{r|r|r|r|r|lr}
+\hline
+Região & Tamanho (Pixels) & $\hat{L}_{MV}$ & $\hat{L}_{MM}$ & $\hat{\mu}_{MV}$ & $\hat{\mu}_{MM}$  \\ 
+\hline                               
+Branca & 50x165 & 8.105 & 7.891 & 0.453 & 0.453 \\
+Vermelha & 80x100 & 5.716 & 5.105 & 0.232 & 0.232\\
+\end{tabular}
+\end{table}
+
+Abaixo estão os gráficos que ilustram os resultados obtidos nas tabelas apresentadas anteriormente. Primeiramente, estão listados três gráficos referentes a cada banda de intensidade da Região de contorno branco da imagem PoISAR. 
+% White Region
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{BandHHHH_WhiteRegion.jpeg}
+     \caption{\textit{Banda HHHH}}
+     \label{graf_1}
+\end{figure}
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{BandHVHV_WhiteRegion.jpeg}
+     \caption{\textit{Banda HVHV}}
+     \label{graf_2}
+\end{figure}
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{BandVVVV_WhiteRegion.jpeg}
+     \caption{\textit{Banda VVVV}}
+     \label{graf_3}
+\end{figure}
+
+Abaixo estão os três gráficos referentes a cada banda de intensidade da Região de contorno vermelho da imagem PoISAR.
+% Red Region
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{BandHHHH_RedRegion.jpeg}
+     \caption{\textit{Banda HHHH}}
+     \label{graf_1}
+\end{figure}
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{BandHVHV_RedRegion.jpeg}
+     \caption{\textit{Banda HVHV}}
+     \label{graf_2}
+\end{figure}
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{BandVVVV_RedRegion.jpeg}
+     \caption{\textit{Banda VVVV}}
+     \label{graf_3}
+\end{figure}
+
+
+Podemos observar que as estimativas obtidas (tanto pelo Método dos Momentos quanto pelo Método da Máxima Verossimilhança) se aproximam bastante do histograma das respectivas bandas de intensidade, se mostrando, de certa forma, coerentes com as amostras analisadas.
+
+No caso da região vermelha temos que os estimadores de MM e MV apresentaram maior discrepância entre si, ao passo que na região branca as estimativas encontradas foram mais semelhantes. Pela análise dos gráficos, o Método da Máxima Verossimilhança foi o que apresentou melhor ajuste aos dados amostrais de ambas as regiões analisadas, como era de se esperar, já que é um estimador propenso a ter uma menor taxa de erro em seu processo de estimação. 
+
+\newpage
+\bibliographystyle{agsm}
+%\bibliographystyle{unsrt}
+\bibliography{../../../Bibliography/references}
+
+%\bibliography{references}
+
+
+\end{document}
