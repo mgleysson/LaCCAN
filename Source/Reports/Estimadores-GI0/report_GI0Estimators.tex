@@ -92,7 +92,9 @@ Essas imagens são formadas por sensores ativos (já que carregam sua própria f
 \section{O Modelo Universal (Lei $G^{0}$)}
 
 A modelagem estatística dos dados é essencial para interpretar imagens SAR. O artigo de pesquisa de \citet{Gao2010StatisticalMO} discute em detalhes vários modelos estatísticos para esse tipo de dado.
+%%% ACF Por que o sobrenome GAO aparece em maiúsculas?
 
+%%% ACF Use modo matemático
 Segundo \citet{Mejail2002}, dentre os modelos estatísticos disponíveis, o modelo multiplicativo baseia-se no pressuposto de que o campo aleatório observado (retorno) Z é o resultado do produto de dois campos aleatórios independentes e não observados: X e Y. O campo aleatório X modela o retroespalhamento (\textit{backscatter})  do terreno e, portanto, depende apenas do tipo de área a que cada pixel pertence. O campo aleatório Y leva em consideração que as imagens SAR são o resultado de um sistema de geração de imagens coerente que produz o conhecido fenômeno chamado ruído \textit{speckle}, e que elas são geradas pela média de n imagens (teoricamente independentes) - looks - para reduzir o efeito do \textit{speckle}.
 
 Conforme proposto e avaliado em \citet{Clutter1997}, as distribuições $G^0$ podem ser utilizadas com sucesso para descrever os dados contaminados pelo ruído (speckle). Dessa forma, os dados ruidosos foram descritos no modelo multiplicativo usando a família G de distribuições que é capaz de descrever áreas extremamente  melhor que a distribuição K. Foi demonstrado que essa classe de distribuições é capaz de caracterizar um grande número de alvos em imagens de SAR monopolarizadas, merecendo a denominação de “Modelo Universal”. 
@@ -138,6 +140,7 @@ Vale reforçar que Sistemas que empregam iluminação coerente são usados para 
 As técnicas usuais de inferência incluem métodos baseados no princípio de analogia, sendo os estimadores estatísticos de ordem e momento os mais populares desta classe, e no princípio de Máxima Verossimilhança (MV). Estimadores de momentos são favorecidos em aplicações, já que são fáceis de derivar e são, geralmente, computacionalmente atraentes. Os estimadores MV são amplamente utilizados, uma vez que possuem propriedades ótimas bem conhecidas, como consistência, eficiência e normalidade assintótica, entre outras. Esses estimadores foram utilizados para a análise de imagens de SAR sob o modelo \textit{K} no trabalho de \citet{KMaxVer_Joughin}.
 
 Dado uma amostra $Z = (Z_1, Z_2, \dots, Z_N)$ e assumindo que essas observações são resultados de variáveis aleatórias independentes e identicamente distribuídas que seguem uma distribuição comum \textit{D($\theta$)}, com $\theta \in \Theta$, um estimador MV para $\theta$ é dado por
+%%% ACF Use \arg\max
 \begin{equation}
     \widehat{\theta} = argmax L(\theta; z) \quad \text{para} \quad \theta \in \Theta \label{eq:mv}
 \end{equation}
