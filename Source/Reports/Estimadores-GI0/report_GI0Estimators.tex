@@ -220,39 +220,95 @@ Estimadores de momentos fracionários foram utilizadas amplamente em \citet{Clut
     \frac{1}{N}\sum_{i=1}^{N}\sqrt{z_i}-\sqrt{\frac{-\widehat{\alpha} - 1}{L}}\frac{\Gamma(-\widehat{\alpha} - \frac{1}{2})}{\Gamma(-\widehat{\alpha})}\frac{\Gamma(L+\frac{1}{2})}{\Gamma(L)} = 0
 \end{equation}
 
-\section{Propostas de Implementação dos Estimadores}
+\section{Propostas de Implementação dos Estimadores e Resultados}
 
-Para a implementação dos estimadores foi proposto o uso do pacote \texttt{stats4} que disponibiliza a função \texttt{mle} que pode ser utilizada para se obter os estimadores de Máxima Verossimilhança tanto de distribuições populares, por exemplo, $Normal$, $Gama$ e $t$, quanto de distribuições que não possuem implementação nativa na plataforma \textit{R}.
+Para a implementação dos estimadores foi proposto o uso do pacote \texttt{stats4} que disponibiliza a função \texttt{mle} que pode ser utilizada para se obter os estimadores de Máxima Verossimilhança tanto de distribuições populares, por exemplo, $Normal$, $Gama$ e $t$, quanto de distribuições que não possuem implementação nativa na plataforma \texttt{R}.
 
 Foi feita a implementação dos estimadores de MV para o modelo $G_I^0$ utilizando esse pacote. Nessa implementação, utilizou-se dados simulados gerados pelo gerador de variáveis aleatórias $G_I^0$ implementado a partir do Modelo Multiplicativo, onde as variáveis aleatórias são geradas a partir da razão de variáveis aleatórias $Gama$.
 
-Os dados foram gerados seguindo a distribuição $G_I^0(-8, 7, 3)$ com o parâmetro de textura $\alpha$ valendo $-8$, o parâmetro de escala $\gamma$ valendo $7$ e o número de $Looks$ com valor 3. O número de variáveis aleatórias geradas foi $n = 200$.
+Como nota-se em \eqref{eq:mv}, a estimação por Máxima Verossimilhança consiste em encontrar o $\arg\max$ da função de Verossimilhança e, com base nessa ideia, estamos diante de um problema de otimização. Um método utilizado para encontrar tais pontos de máximo é fazer como em \eqref{eq:gradient}, calculando as derivadas parciais e igualando a zero. Mas, como alternativa a isso, podemos aplicar diversos otimizadores existentes na literatura e que estão disponíveis para uso na função \texttt{mle} do pacote \texttt{stats4}.
 
-Como nota-se em \eqref{eq:mv}, a estimação por Máxima Verossimilhança consiste em encontrar o $\arg\max$ da função de Verossimilhança e, com base nessa ideia, estamos diante de um problema de otimização. Um método utilizado para encontrar tais pontos de máximo é fazer como em \eqref{eq:gradient}, calculando as derivadas parciais e igualando a zero. Mas, como alternativa a isso, podemos aplicar diversos otimizadores existentes na literatura e que estão disponíveis para uso na função \textit{mle} do pacote \textit{stats4}.
+\subsection{Otimizadores disponíveis}
 
-Dentre os otimizadores disponíveis, temos, talvez o mais utilizado deles, o \emph{BFGS} é um método quasi-Newton (também conhecido como algoritmo variável de métrica), especificamente aquele publicado simultaneamente em 1970 por Broyden, Fletcher, Goldfarb e Shanno. Esse algoritmo usa valores de função e gradientes para construir uma imagem da superfície a ser otimizada. Na simulação feita, foi utilizado o otimizador \emph{L-BFGS-B} é o de \citet{Byrd_1995}, que permite restrições de limite, ou seja, cada variável pode receber um limite inferior e/ou superior. O valor inicial deve satisfazer as restrições. Ou seja, ele consiste de uma modificação de memória limitada do método \emph{BFGS} quasi-Newton e que diminui o espaço de busca dos valores para os estimadores.
+Dentre os otimizadores disponíveis, temos, talvez o mais utilizado deles, o \emph{BFGS} é um método quasi-Newton (também conhecido como algoritmo variável de métrica), especificamente aquele publicado simultaneamente em 1970 por Broyden, Fletcher, Goldfarb e Shanno. Esse algoritmo usa valores de função e gradientes para construir uma imagem da superfície a ser otimizada. Na simulação feita foram utilizados 3 otimizadores para análise, dentre eles, o otimizador \emph{L-BFGS-B} de \citet{Byrd_1995} que permite restrições de limite, ou seja, cada variável pode receber um limite inferior e/ou superior. O valor inicial deve satisfazer as restrições. Ou seja, ele consiste de uma modificação de memória limitada do método \emph{BFGS} quasi-Newton que diminui o espaço de busca dos valores para os estimadores, sendo uma abordagem bem interessante para simulações com grande espaço de parâmetros.
 
-Na simulação feita, também foi utilizada o otimizador de \emph{Brent} que é utilizado somente para problemas unidimensionais, neste caso, utilizou-se a simplificação feita de que $\widehat{\gamma}* = -\widehat{\alpha} - 1$ e, fornecemos para o algoritmo somente o parâmetro de textura $\alpha$ para ser otimizado.
+Na simulação feita, foram feitos testes também com o otimizador \emph{CG} que é um método de gradientes conjugados baseado em \citet{Fletcher64} em que fizemos uma análise com o otimizador \emph{L-BFGS-B}. Métodos baseados em gradiente conjugado geralmente são mais frágeis que aqueles baseados no método \emph{BFGS}, entretanto, como eles não armazenam uma matriz, podem ter sucesso em problemas de otimização muito maiores e mais complicados.
 
-Para finalizar, foram feitos testes também com o otimizador \emph{CG} que é um método de gradientes conjugados baseado em \citet{Fletcher64}. Métodos baseados em gradiente conjugado geralmente são mais frágeis que aqueles baseados no método \emph{BFGS}, entretanto, como eles não armazenam uma matriz, podem ter sucesso em problemas de otimização muito maiores e mais complicados. 
+Para finalizar, também foi utilizado o otimizador de \emph{Brent} que é utilizado somente para problemas unidimensionais. Sendo assim, neste caso, utilizou-se a simplificação feita de que $\widehat{\gamma}* = -\widehat{\alpha} - 1$ e, fornecemos para o algoritmo somente o parâmetro de textura ($\alpha$) para ser otimizado.
 
-Os estimadores para cada um dos 3 otimizadores utilizados estão dispostos na tabela abaixo.
+\subsection{Experimento de Monte Carlo}
+
+Um experimento de Monte Carlo foi definido para avaliar o desempenho de cada otimizador no cálculo dos estimadores. O espaço de parâmetros utilizado consiste na grade formada pela tabela a seguir. Onde variamos o parâmetro de textura $\alpha$ de modo a englobar a simulação de regiões extremamente texturizadas, de textura moderada e alvos sem textura. O parâmetro $n$, número de amostras, também foi variado de forma a representar amostras consideravelmente pequenas, médias e grandes
 \begin{table}[H]
 \centering
-\caption{Estimadores MV para os parâmetros de textura($\alpha$) e escala($\gamma$)}
+\caption{Espaço de parâmetros utilizado na simulação}
 \vspace{0.2cm}
-\begin{tabular}{r|r|r|lr}
+\begin{tabular}{r|lr}
 \hline
-Estimadores & L-BFGS-B & CG & Brent \\ 
+Parâmetros & Valores \\ 
 \hline                               
-$\widehat{\alpha}_{MV}$ & -8.229604 & -8.126974 & -8.414278 \\
-$\widehat{\gamma}_{MV}$ & 7.324793 & 7.223863 & 7.414278 \\
+$n$ & \{200, 2000, 10000\} \\
+$\alpha$ & \{-2, -5, -8\} \\
+$\gamma$ & \{7\} \\
+$Looks$ & \{3\}
 \end{tabular}
 \end{table}
 
-Como pode-se observar, os estimadores calculados utilizando o otimizador \emph{CG} baseado em gradientes conjugados apresentou o menor erro em relação aos demais. Entretanto, foram feitos testes com outros tamanhos de variáveis geradas, $n={500, 800, 1000}$ e, na maioria das vezes, o otimizador baseado em \emph{L-BFGS-B} obtem os melhores resultados.
+Nesse experimento foi feito um total de 1000 replicações onde mil amostras foram geradas para cada ponto do espaço de parâmetros considerado na tabela anterior. Dessa forma, foram produzidos os vetores de estimadores, $\{\widehat{\alpha}_{1}, \widehat{\alpha}_{2}, \dots, \widehat{\alpha}_{1000} \}$ e $\{\widehat{\gamma}_{1}, \widehat{\gamma}_{2}, \dots, \widehat{\gamma}_{1000} \}$, para os otimizadores \emph{L-BFGS-B} e \emph{CG}. Para o otimizador de \emph{Brent} foi gerado apenas o vetor com o estimadores para o parâmetro $\alpha$. Com esses vetores em mãos, foram então calculados para cada caso a média das mil estimativas, $ \overline{\widehat{\alpha}} = (1000)^{-1} \sum_{i=1}^{1000} \widehat{\alpha_{i}} $, e o erro quadrático médio.
 
-Para os estimadores de Momentos, as propostas de implementação ainda não estão bem consolidadas e, na verdade, ainda se está averiguando as bibliotecas existentes e como estas poderiam ser aplicadas no contexto da estimação dos parâmetros da $G_I^0$. Algumas bibliotecas foram pesquisadas e estudadas, mas não houveram tantos avanços nessa parte ainda. As bibliotecas \textit{gmm} (Generalized Method of Moments) e \textit{moments} foram instaladas e usadas para pequenos testes e, além dessas, estou analisando outras que possam ser úteis na estimação. Portanto, os trabalhos futuros consistem em direcionar os esforços nesta parte de implementação e análise dos estimadores, com foco tanto nos estimadores de Máxima Verossimilhança quanto nos estimadores de Momentos, ambos discutidos no presente relatório. 
+Abaixo encontra-se uma tabela com os resultados dos 3 otimizadores para o parâmetro $\alpha$ da $G_I^0$. No cabeçalho Configuração da tabela, mostra a configuração gerada das variáveis $G_I^0$ na forma $randGI0(n, \alpha, \gamma, Looks)$, onde $n$ é o número de amostras geradas (esta é a assinatura do método de geração implementado).
+\begin{table}[H]
+\centering
+\caption{Estimadores para o parâmetro $\alpha$ ($ \overline{\widehat{\alpha}}$) }
+\vspace{0.2cm}
+\begin{tabular}{r|r|r|lr}
+\hline
+Configuração & L-BFGS-B & CG & Brent \\ 
+\hline                               
+$(200, -2, 7, 3)$ & -2.063 & -2.060 & -1.940 \\
+$(200, -5, 7, 3)$ & -4.301 & -5.317 & -5.275 \\
+$(200, -8, 7, 3)$ & -9.737 & -8.354 & -9.223 \\
+$(2000, -2, 7, 3)$ & -2.009 & -2.069 & -2.001 \\
+$(2000, -5, 7, 3)$ & -5.029 & -4.972 & -5.027 \\
+$(2000, -8, 7, 3)$ & -8.059 & -9.759 & -8.074 \\
+$(10000, -2, 7, 3)$ & -2.004 & -2.085 & -2.001 \\
+$(10000, -5, 7, 3)$ & -5.011 & -4.949 & -5.005 \\
+$(10000, -8, 7, 3)$ & -8.007 & -8.373 & -8.015 \\
+\end{tabular}
+\end{table}
+
+Agora temos uma tabela equivalente só que válida para o parâmetro $\gamma$ que foi estimado nos otimizadores \emph{L-BFGS-B} e \emph{CG}.
+\begin{table}[H]
+\centering
+\caption{Estimadores para o parâmetro $\gamma$ ($ \overline{\widehat{\gamma}}$) }
+\vspace{0.2cm}
+\begin{tabular}{r|r|lr}
+\hline
+Configuração & L-BFGS-B & CG \\ 
+\hline                               
+$(200, -2, 7, 3)$ & 7.290 & 7.283  \\
+$(200, -5, 7, 3)$ & 7.477 & 7.506  \\
+$(200, -8, 7, 3)$ & 8.641 & 7.330  \\
+$(2000, -2, 7, 3)$ & 7.050 & 7.266  \\
+$(2000, -5, 7, 3)$ & 7.050 & 6.952  \\
+$(2000, -8, 7, 3)$ & 7.057 & 8.712  \\
+$(10000, -2, 7, 3)$ & 7.019 & 7.324  \\
+$(10000, -5, 7, 3)$ & 7.013 & 6.918  \\
+$(10000, -8, 7, 3)$ & 7.005 & 7.336  \\
+\end{tabular}
+\end{table}
+
+Podemos observar que todos os otimizadores são bem sensíveis quanto ao tamanho de amostras utilizadas se mostrando melhores quando o número de amostras é maior. Dentre os três otimizadores utilizados o que forneceu melhores estimativas com menores erros foi o otimizador de \emph{L-BFGS-B} que também em relação ao seu principal concorrente, o otimizador \emph{CG}, apresentou o menor tempo de execução para executar a simulação Monte Carlo com as 1000 replicações, isso ocorreu justamente, por conta de sua estratégia de memória limitada, restrigindo o espaço de busca por meio dos limites de fronteira estabelecidos. 
+
+O otimizador de \emph{Brent}, embora seja aplicado somente a problemas de otimização unidimensionais com somente um parâmetro sendo passado, também mostrou resultados bem satisfatórios em um tempo mais curto em relação aos demais. Contudo, por conta da unidimensionalidade, o seu uso é restrito e deve ser utilizado assumindo algumas simplificações o que certamente é uma real desvantagem frente aos demais.
+
+Como conclusão, temos que o otimizador que forneceu os melhores resultados com os menores erros, no menor tempo de execução e ainda sendo possível de ser utilizado com $n$-dimensões foi o \emph{L-BFGS-B} que será utilizado nas futuras estimações por Máxima Verossimilhança que virão a ser realizadas.
+
+
+\section{Trabalhos Futuros}
+
+Para os estimadores de Momentos, as propostas de implementação ainda não estão bem consolidadas e, na verdade, ainda se está averiguando as bibliotecas existentes e como estas poderiam ser aplicadas no contexto da estimação dos parâmetros da $G_I^0$. Algumas bibliotecas foram pesquisadas e estudadas, mas não houveram tantos avanços nessa parte ainda. As bibliotecas \textit{gmm} (Generalized Method of Moments) e \textit{moments} foram instaladas e usadas para pequenos testes e, além dessas, estou analisando outras que possam ser úteis na estimação. Portanto, os trabalhos futuros consistem em direcionar os esforços nesta parte de implementação e análise dos estimadores, com foco maior nos estimadores de Momentos. 
+
 
 \newpage
 \bibliographystyle{agsm}
