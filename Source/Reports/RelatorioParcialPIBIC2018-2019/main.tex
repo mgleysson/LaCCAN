@@ -1,10 +1,10 @@
+%!TEX program = xelatex
+
 \documentclass[12pt]{article}
 \usepackage[portuguese]{babel}
 \usepackage{fontspec}
 \setmainfont{Times New Roman}
-\usepackage{amsmath}
-\usepackage{amsmath}
-\usepackage{amssymb}
+\usepackage{amsmath,amsmath,amssymb,amsfonts}
 \usepackage{graphicx}
 \usepackage{natbib}
 \usepackage{cite} 
@@ -16,8 +16,6 @@
 \usepackage{booktabs}
 \usepackage[table]{xcolor}
 \usepackage{siunitx}
-\usepackage{amsfonts}
-\usepackage{amssymb}
 \usepackage{makeidx}
 \usepackage{xcolor}
 \usepackage[stable]{footmisc}
@@ -73,7 +71,7 @@ PROGRAMA INSTITUCIONAL DE BOLSAS DE INICIAÇÃO CIENTÍFICA\\PIBIC/UFAL/FAPEAL/C
 \begin{center}
 \begin{tabularx}{\textwidth}{|X|X|X|}
 \hline                              
-\textbf{Nome Orientador/Unidade/Campus/Email} &  Alejandro C. Frery/Instituto de Computação/Campus A. C. Simões/acfrery@gmail.com\\
+\textbf{Nome Orientador/Unidade/Campus/Email} &  Alejandro C.\ Frery / Instituto de Computação / Campus A.\ C.\ Simões / acfrery@ic.ufal.br\\
 \hline     
 \textbf{Nome Bolsista ou Colaborador} & Marcos Gleysson Silva do Nascimento\\
 \hline     
@@ -106,9 +104,17 @@ X & Bolsista CNPq &  & Bolsista FAPEAL\\
 
 \vspace{0.2cm}
 
-Houve um significativo avanço nos ultimos anos na obtenção de novos métodos para a extração de informação a partir de sinais e imagens empregando técnicas oriundas da Teoria da Informação. Essas técnicas empregam duas abordagens. A primeira consiste em calcular diversas formas de entropia através de modelos analíticos; essas entropias sao atributos descritores, e podem ser usados para calcular o contraste entre dos sinais, isto é, quão diferentes eles são. A segunda abordagem emprega dois sinais e seus modelos analíticos, e calcula diversas medidas de dissimilaridade entre eles. Tanto os contrastes oriundos de diferenças de entropias quanto as medidas de dissimilaridade podem ser transformados em testes estatísticos com propriedades assintóticas conhecidas tornando-se, assim, poderosas ferramentas para a realização de comparações e para a tomada de decisões. Este projeto irá concentrar-se na aplicacão dessas ferramentas em problemas relevantes de processamento e analise de sinais e imagens. Os principais problemas a serem abordados são na área de processamento e análise de imagens, em particular de imagens de radar de abertura sintetica polarimétrico (SAR -- Synthetic Aperture Radar e PolSAR -- Polarimetric
-Synthetic Aperture Radar) e de series temporais. Faremos a proposta de novos filtros, classificadores, segmentadores e detetores de mudança para as primeiras, e de novos descritores e quantificadores de mudança para as segundas. Este projeto irá ainda fazer avanços teóricos. Os resultados conhecidos para os testes estatísticos são válidos apenas no sentido assintótico e quando são empregados estimadores de máxima ´
-verossimilhança. Estudaremos extensoes para os casos de amostras finitas e outros tipos de estimadores (baseados no princípio da analogia, robustos, e não-paramétricos, dentre outros).
+Houve um significativo avanço nos ultimos anos na obtenção de novos métodos para a extração de informação a partir de sinais e imagens empregando técnicas oriundas da Teoria da Informação. 
+Essas técnicas utilizam duas abordagens. 
+A primeira consiste em calcular diversas formas de entropia através de modelos analíticos; essas entropias sao atributos descritores, e podem ser usados para calcular o contraste entre dos sinais, isto é, quão diferentes eles são. 
+A segunda abordagem emprega dois sinais e seus modelos analíticos, e calcula diversas medidas de dissimilaridade entre eles. 
+Tanto os contrastes oriundos de diferenças de entropias quanto as medidas de dissimilaridade podem ser transformados em testes estatísticos com propriedades assintóticas conhecidas tornando-se, assim, poderosas ferramentas para a realização de comparações e para a tomada de decisões. 
+Este projeto irá concentrar-se na aplicacão dessas ferramentas em problemas relevantes de processamento e analise de sinais e imagens. 
+Os principais problemas a serem abordados são na área de processamento e análise de imagens, em particular de imagens de radar de abertura sintetica polarimétrico (SAR -- Synthetic Aperture Radar e PolSAR -- Polarimetric
+Synthetic Aperture Radar) e de series temporais. 
+Faremos a proposta de novos filtros, classificadores, segmentadores e detetores de mudança para as primeiras, e de novos descritores e quantificadores de mudança para as segundas. Este projeto irá ainda fazer avanços teóricos. 
+Os resultados conhecidos para os testes estatísticos são válidos apenas no sentido assintótico e quando são empregados estimadores de máxima verossimilhança. 
+Estudaremos extensoes para os casos de amostras finitas e outros tipos de estimadores (baseados no princípio da analogia, robustos, e não-paramétricos, dentre outros).
 
 
 \textbf{Palavras-chave: Teoria da Informação; Imagens SAR; Séries Temporais} 
@@ -147,7 +153,7 @@ Parte fundamental deste projeto é a verificação das propriedades numéricas d
 
 \vspace{0.5cm}
 
-Os objetivos específicos desta frente de trabalho consistem em desenvolver métodos de estimação do parâmetro que indexa a distribuição $G^{0}$ para modelar dados SAR. Estudar e implementar técnicas de estimação por momentos fracionários, log-momentos, máxima verossimilhança, máxima verossimilhança iterada, métodos kernel e robustos, além de técnicas para melhorar as estimativas (bootstrap e correções analíticas). 
+Os objetivos específicos desta frente de trabalho consistem em desenvolver métodos de estimação do parâmetro que indexa a distribuição $G^{0}$ para modelar dados SAR, estudar e implementar técnicas de estimação por momentos fracionários, log-momentos, máxima verossimilhança, máxima verossimilhança iterada, métodos kernel e robustos, além de técnicas para melhorar as estimativas (bootstrap e correções analíticas). 
 
 Além disso, também faz parte dos objetivos integrar essas técnicas em um método unificado que seja capaz de aplicar as mais adequadas para cada caso com a mínima intervenção possível por parte do usuário utilizando a plataforma R.
 %=========================================================
@@ -174,15 +180,17 @@ Nesse contexto, para iniciar a pesquisa foi estabelecido o foco em duas técnica
 \section*{\centering \textbf{APRESENTAÇÃO E DISCUSSÃO DOS PRINCIPAIS RESULTADOS}}
 \vspace{0.5cm}
 
-Durante a execução do presente projeto de pesquisa, mais especificamente do plano de trabalho relativo a esse relatório, ocorreram resultados bastante positivos relativos aos conceitos e teorias estudadas, bem como às implementações de código desenvolvidas na plataforma \texttt{R}. 
+Durante a execução do presente projeto de pesquisa, mais especificamente do plano de trabalho relativo a esse relatório, obtivemos resultados bastante positivos relativos aos conceitos e teorias estudadas, bem como às implementações de código desenvolvidas na plataforma \texttt{R}. 
 
-Segundo \citet{FreryStochasticDistances2015}, o modelo $G_I^0$ é indexado por três parâmetros: o número de $Looks$ ($L$) que pode ser estimado em toda a imagem, um parâmetro de escala ($\gamma$) e o parâmetro de rugosidade ou textura ($\alpha$). Uma das características mais importantes da distribuição $G_I^0$ é a interpretação de seu parâmetro $\alpha$ que está relacionado com a rugosidade do alvo. Valores próximos de $0$ (tipicamente acima de $-3$) sugerem alvos extremamente texturizados, como zonas urbanas. Em situações intermediárias, à medida que o valor diminui, isso indica regiões com textura moderada (geralmente $\alpha \in  [−6, −3]$), tipicamente áreas irregulares, como zonas florestais. Alvos sem textura, geralmente produzem $\alpha \in (−\infty, −6)$ como é o caso de regiões lisas, por exemplo, pastagem, culturas e campos queimados. Esta é a razão pela qual a precisão na estimativa de $\alpha$ é tão importante.
+Segundo \citet{FreryStochasticDistances2015}, o modelo $G_I^0$ é indexado por três parâmetros: o número de \textit{Looks} ($L$) que pode ser estimado em toda a imagem, um parâmetro de escala ($\gamma$) e o parâmetro de rugosidade ou textura ($\alpha$). Uma das características mais importantes da distribuição $G_I^0$ é a interpretação de seu parâmetro $\alpha$ que está relacionado com a rugosidade do alvo. Valores próximos de $0$ (tipicamente acima de $-3$) sugerem alvos extremamente texturizados, como zonas urbanas. Em situações intermediárias, a medida que o valor diminui, isso indica regiões com textura moderada (geralmente $\alpha \in  [−6, −3]$), tipicamente áreas irregulares, como zonas florestais. Alvos sem textura, geralmente produzem $\alpha \in (−\infty, −6)$ como é o caso de regiões lisas, por exemplo, pastagem, culturas e campos queimados. Esta é a razão pela qual a precisão na estimativa de $\alpha$ é tão importante.
 
-Ao longo do primeiro semestre de pesquisa foram implementados em \texttt{R} protótipos das técnicas de estimação estudadas: Máxima Verossimilhança, Método dos Momentos, Método de Log-Cumulantes e Estimação pela Minimização de Distâncias Estocásticas (especificamente da Distância Triangular). Após a implementação, foram realizados testes de unidade a partir de um conjunto de dados com propriedades previamente conhecidas onde se constatou a corretude do algoritmo implementado perante análise do comportamento de entrada e saída do mesmo.
+Ao longo do primeiro semestre de pesquisa foram implementados em \texttt{R} protótipos das técnicas de estimação estudadas: Máxima Verossimilhança, Método dos Momentos, Método de Log-Cumulantes e Estimação pela Minimização de Distâncias Estocásticas (especificamente da Distância Triangular). Após a implementação, foram realizados testes a partir de um conjunto de dados com propriedades previamente conhecidas onde se constatou a corretude do algoritmo implementado perante análise do comportamento de entrada e saída do mesmo.
 
-Além disso, foi feito também um experimento de Monte Carlo que de acordo com \citet{busto92}, experiências de Monte Carlo são uma poderosa técnica estatística usada para fornecer respostas aproximadas para questões sobre problemas complexos que podem incluir um componente estocástico, principalmente quando as técnicas analíticas e numéricas não fornecem, com uma quantidade aceitável de esforço, essas respostas de forma exata e completa. Estas técnicas de simulação são essencialmente baseadas em amostragem estatística controlada, e elas têm uma ampla gama de aplicações, incluindo, entre outras, mecânica estatística, biologia, jogos, otimização combinatória e engenharia.
+Além disso, foi feito também um experimento de Monte Carlo.
+De acordo com \citet{busto92}, experiências de Monte Carlo são uma poderosa técnica estatística usada para fornecer respostas aproximadas para questões sobre problemas complexos que podem incluir um componente estocástico, principalmente quando as técnicas analíticas e numéricas não fornecem, com uma quantidade aceitável de esforço, essas respostas de forma exata e completa. Estas técnicas de simulação são essencialmente baseadas em amostragem estatística controlada, e elas têm uma ampla gama de aplicações, incluindo, entre outras, mecânica estatística, biologia, jogos, otimização combinatória e engenharia.
 
-Nesse contexto, um experimento de Monte Carlo foi definido para avaliar o desempenho de cada técnica de estimação definidas acima no cálculo dos estimadores. O espaço de parâmetros utilizado consiste na grade formada pela tabela a seguir onde variou-se o parâmetro de textura $\alpha$ de modo a englobar a simulação de regiões extremamente texturizadas, de textura moderada e alvos sem textura. O parâmetro $n$, número de amostras, também foi variado de forma a representar amostras consideravelmente pequenas, médias e grandes. O parâmetros $Looks$ teve seu valor constante no experimento. Vale ressaltar que o valor de $\gamma*$ foi dado em função do parâmetro $\alpha$ de modo a simplificar os cálculos de geração dos estimadores.
+Nesse contexto, um experimento de Monte Carlo foi definido para avaliar o desempenho de cada técnica de estimação definidas acima no cálculo dos estimadores. O espaço de parâmetros utilizado consiste na grade formada pela tabela a seguir onde variou-se o parâmetro de textura $\alpha$ de modo a englobar a simulação de regiões extremamente texturizadas, de textura moderada e alvos sem textura. O parâmetro $n$, número de amostras, também foi variado de forma a representar amostras consideravelmente pequenas, médias e grandes. O parâmetros \textit{Looks} teve seu valor constante no experimento. Vale ressaltar que o valor $\gamma^*$ foi dado em função do parâmetro $\alpha$ de modo a simplificar os cálculos de geração dos estimadores.
+
 \begin{table}[H]
 \centering
 \caption{Espaço de parâmetros utilizado na simulação}
@@ -194,10 +202,10 @@ Nesse contexto, um experimento de Monte Carlo foi definido para avaliar o desemp
 \multicolumn{1}{c|}{Parâmetros} & \multicolumn{1}{c}{Valores}  \\ 
 \midrule
 \rowcolor[gray]{.9} 
-$n$ & \{200, 2000, 10000\} \\ \hline
-$\alpha$ & \{-2, -5, -8\} \\ \hline
-\rowcolor[gray]{.9} $\gamma*$ & \{-$\alpha$ - 1\} \\ \hline
-$Looks$ & \{3\} \\ 
+$n$ & $\{200, 2000, 10000\}$ \\ \hline
+$\alpha$ & $\{-2, -5, -8\}$ \\ \hline
+\rowcolor[gray]{.9} $\gamma^*$ & $\{-\alpha - 1\}$ \\ \hline
+\textit{Looks} & \{3\} \\ 
 \bottomrule
 \end{tabular}
 \end{table}
