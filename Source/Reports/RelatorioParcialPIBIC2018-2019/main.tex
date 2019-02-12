@@ -210,7 +210,7 @@ $\alpha$ & $\{-2, -5, -8\}$ \\ \hline
 \end{tabular}
 \end{table}
 
-Nesse experimento foi feito um total de 1000 replicações onde 1000 amostras foram geradas para cada ponto do espaço de parâmetros considerado na tabela anterior. Dessa forma, foi produzido o vetor de estimadores, $\{\widehat{\alpha}_{1}, \widehat{\alpha}_{2}, \dots, \widehat{\alpha}_{1000} \}$. Com esse vetor em mãos, foram então calculados para cada caso a média das mil estimativas, $ \overline{\widehat{\alpha}} = (1000)^{-1} \sum_{i=1}^{1000} \widehat{\alpha_{i}} $. Abaixo encontra-se uma tabela com os resultados dos estimadores de Máxima Verossimilhança para o parâmetro $\alpha$ da $G_I^0$.
+Nesse experimento foi feito um total de 1000 replicações onde 1000 amostras foram geradas para cada ponto do espaço de parâmetros considerado na tabela anterior. Dessa forma, foi produzido o vetor de estimadores, $\{\widehat{\alpha}_{1}, \widehat{\alpha}_{2}, \dots, \widehat{\alpha}_{1000} \}$. Com esse vetor em mãos, foram então calculados para cada caso a média das mil estimativas, $ \overline{\widehat{\alpha}} = (1000)^{-1} \sum_{i=1}^{1000} \widehat{\alpha_{i}} $ e o desvio padrão correspondente. Abaixo encontra-se uma tabela com os resultados dos estimadores de Máxima Verossimilhança para o parâmetro $\alpha$ da $G_I^0$.
 \begin{table}[H]
 \centering
 \caption{Estimadores de Máxima Verossimilhança} 
@@ -222,17 +222,17 @@ Nesse experimento foi feito um total de 1000 replicações onde 1000 amostras fo
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{MV}$} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{MV}$ (Desvio Padrão)} \\ 
 \midrule
-200  & 1 & 3 & -2 & -1.940  \\ 
-   & 4 & ~ & -5 & -5.275  \\ 
-   & 7 & ~ & -8 & -9.223  \\ \hline
-2000  & 1 & 3 & -2 & -2.001   \\ 
-   & 4 & ~ & -5 & -5.027    \\
-   & 7 & ~ & -8 & -8.074   \\ \hline
-10000  & 1 & 3 & -2 & -2.001  \\ 
-   & 4 & ~ & -5 & -5.005   \\
-   & 7 & ~ & -8 & -8.015    \\
+$200$  & $1$ & $3$ & $-2$ &  $-2.145$ ($0.234$) \\ 
+   & $4$ & ~ & $-5$ &  $-5.453$ ($1.547$) \\ 
+   & $7$ & ~ & $-8$ &  $-9.722$ ($7.014$) \\ \hline
+$2000$  & $1$ & $3$ & $-2$ &  $-2.034$ ($0.056$)  \\ 
+   & $4$ & ~ & $-5$ &  $-5.042$ ($0.372$)   \\
+   & $7$ & ~ & $-8$ &  $-8.106$ ($0.877$)  \\ \hline
+$10000$  & $1$ & $3$ & $-2$ & $-2.008$ ($0.026$)  \\ 
+   & $4$ & ~ & $-5$ &  $-5.013$ ($0.143$)  \\
+   & $7$ & ~ & $-8$ &  $-8.046$ ($0.339$)   \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -249,17 +249,17 @@ De modo análogo, abaixo está a tabela que contém os resultados dos estimadore
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{Mom12}$} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{Mom12}$ (Desvio Padrão)} \\ 
 \midrule
-200  & 1 & 3 & -2 & -2.209  \\ 
-   & 4 & ~ & -5 & -5.254  \\ 
-   & 7 & ~ & -8 & -7.211  \\ \hline
-2000  & 1 & 3 & -2 & -2.012   \\ 
-   & 4 & ~ & -5 & -5.046    \\
-   & 7 & ~ & -8 & -8.172   \\ \hline
-10000  & 1 & 3 & -2 & -2.001  \\ 
-   & 4 & ~ & -5 & -5.069   \\
-   & 7 & ~ & -8 & -8.208    \\
+$200$  & $1$ & $3$ & $-2$ &  $-2.306$ ($1.172$) \\ 
+   & $4$ & ~ & $-5$ &  $-5.486$ ($4.270$)\\ 
+   & $7$ & ~ & $-8$ &  $-7.153$  ($4.040$) \\ \hline
+$2000$  & $1$ & $3$ & $-2$ &  $-2.012$ ($0.129$) \\ 
+   & $4$ & ~ & $-5$ &  $-5.410$ ($2.539$)  \\
+   & $7$ & ~ & $-8$ &  $-9.404$ ($5.387$) \\ \hline
+$10000$  & $1$ & $3$ & $-2$ & $-2.003$ ($0.055$) \\ 
+   & $4$ & ~ & $-5$ &  $-5.105$ ($0.564$) \\
+   & $7$ & ~ & $-8$ &  $-8.303$ ($1.633$)  \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -276,17 +276,17 @@ Por usa vez, a seguir encontram-se os estimadores de Log-Cumulantes encontrados 
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{LCum}$} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{LCum}$ (Desvio Padrão)} \\ 
 \midrule
-200  & 1 & 3 & -2 & -2.027  \\ 
-   & 4 & ~ & -5 & -4.972  \\ 
-   & 7 & ~ & -8 & -7.908  \\ \hline
-2000  & 1 & 3 & -2 & -2.004   \\ 
-   & 4 & ~ & -5 & -5.094   \\
-   & 7 & ~ & -8 & -8.225   \\ \hline
-10000  & 1 & 3 & -2 & -2.000  \\ 
-   & 4 & ~ & -5 & -5.008   \\
-   & 7 & ~ & -8 & -8.064    \\
+$200$  & $1$ & $3$ & $-2$ &  $-2.040$ ($0.226$)\\ 
+   & $4$ & ~ & $-5$ &  $-5.699$ ($3.360$)\\ 
+   & $7$ & ~ & $-8$ &  $-6.506$ ($2.827$)\\ \hline
+$2000$  & $1$ & $3$ & $-2$ &  $-2.006$  ($0.066$)\\ 
+   & $4$ & ~ & $-5$ &  $-5.083$  ($0.678$) \\
+   & $7$ & ~ & $-8$ &  $-8.371$ ($1.875$) \\ \hline
+$10000$  & $1$ & $3$ & $-2$ & $-2.001$ ($0.027$) \\ 
+   & $4$ & ~ & $-5$ &  $-5.022$ ($0.279$) \\
+   & $7$ & ~ & $-8$ &  $-8.067$ ($0.740$)  \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -303,42 +303,42 @@ Por fim, abaixo, encontram-se os estimadores gerados pela Minimização de Dist�
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{DT}$} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{DT}$ (Desvio Padrão)} \\ 
 \midrule
-200  & 1 & 3 & -2 & -2.037  \\ 
-   & 4 & ~ & -5 & -4.372  \\ 
-   & 7 & ~ & -8 & -6.865  \\ \hline
-2000  & 1 & 3 & -2 & -1.191   \\ 
-   & 4 & ~ & -5 & -4.094   \\
-   & 7 & ~ & -8 & -6.534   \\ \hline
-10000  & 1 & 3 & -2 & -1.194  \\ 
-   & 4 & ~ & -5 & -3.076   \\
-   & 7 & ~ & -8 & -6.538    \\
+$200$  & $1$ & $3$ & $-2$ &  $-2.031$ ($0.331$) \\ 
+   & $4$ & ~ & $-5$ &  $-4.088$ ($1.385$)\\ 
+   & $7$ & ~ & $-8$ &  $-5.594$ ($1.878$)\\ \hline
+$2000$  & $1$ & $3$ & $-2$ &  $-1.334$ ($1.122$) \\ 
+   & $4$ & ~ & $-5$ &  $-3.300$  ($0.803$) \\
+   & $7$ & ~ & $-8$ &  $-5.730$ ($0.813$) \\ \hline
+$10000$  & $1$ & $3$ & $-2$ & $-1.228$ ($0.196$) \\ 
+   & $4$ & ~ & $-5$ &  $-3.360$ ($1.924$) \\
+   & $7$ & ~ & $-8$ &  $-5.482$  ($2.765$) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-A seguir estão os gráficos que mostram uma comparação das estimativas providas pelas técnicas de estimação implementadas neste trabalho: Máxima Verossimilhança, Momentos, Log-Cumulantes e Distâncias Estocásticas.
+A seguir estão os gráficos que mostram uma comparação das estimativas providas pelas técnicas de estimação implementadas neste trabalho: Máxima Verossimilhança, Momentos, Log-Cumulantes e Distâncias Estocásticas. Os tamanhos de amostra estão nas abscissas (eixo-x), e estão apresentadas em escala logarítmica para melhor visualização. As estimativas da média são apresentadas com barras de erro que exibem o intervalo de confiança baseado na distribuição Gaussiana com nível de confiança de $95\%$.
 \begin{figure}[H]
      \centering
      \includegraphics[scale=0.5]{plots/ComparisonAlpha-2.pdf}
      \caption{Estimativas obtidas para o parâmetro $\alpha = -2$}
-     \label{graf_5}
+     \label{graf_1}
 \end{figure}
 \begin{figure}[H]
      \centering
      \includegraphics[scale=0.5]{plots/ComparisonAlpha-5.pdf}
      \caption{Estimativas obtidas para o parâmetro $\alpha = -5$}
-     \label{graf_6}
+     \label{graf_2}
 \end{figure}
 \begin{figure}[H]
      \centering
      \includegraphics[scale=0.5]{plots/ComparisonAlpha-8.pdf}
      \caption{Estimativas obtidas para o parâmetro $\alpha = -8$}
-     \label{graf_7}
+     \label{graf_3}
 \end{figure}
 
-Para o estudo de simulação feito, pode-se perceber através dos gráficos que 3 métodos de estimação conquistaram ótimos resultados e que, de certa forma, se mostraram semelhantes entre si. Tais métodos foram os baseados em Máxima Verossimilhança, Momentos e Log-Momentos e estes apresentaram convergência para o verdadeiro valor do parâmetro na maioria dos casos testados. O estimador baseado em mecanismos da Teoria da Informação, mas especificamente na Minimização de Distâncias Estocásticas, foi o que apresentou resultados mais discrepantes em relação aos demais métodos.
+Para o estudo de simulação feito, pode-se perceber através dos gráficos que 3 métodos de estimação conquistaram ótimos resultados e que, de certa forma, se mostraram semelhantes entre si. Tais métodos foram os baseados em Máxima Verossimilhança, Momentos e Log-Momentos e estes apresentaram boa capacidade de convergência para o verdadeiro valor do parâmetro à medida que o número de amostras (tamanho amostral) aumentou. O estimador baseado em mecanismos da Teoria da Informação, mas especificamente na Minimização de Distâncias Estocásticas, foi o que apresentou resultados mais discrepantes em relação aos demais métodos.
 
 Entretanto, este foi apenas um estudo inicial a respeito das técnicas de estimação de parâmetros implementadas e estão sendo feitos novos planos de simulação e investigação para avaliar o desempenho dos métodos de estimação implementados, bem como analisar suas possíveis restrições e aplicações em um contexto unificado, onde existirá uma rotina de estimação geral que engloba esses métodos e seja capaz de aplicar os mais adequados para cada situação com a mínima intervenção possível do usuário tendo em vista seus pontos fortes e fracos de aplicação. 
 
