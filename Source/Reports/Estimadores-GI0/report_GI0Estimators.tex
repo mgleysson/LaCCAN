@@ -148,13 +148,13 @@ As técnicas usuais de inferência incluem métodos baseados no princípio de an
 Dado uma amostra $Z = (Z_1, Z_2, \dots, Z_N)$ e assumindo que essas observações são resultados de variáveis aleatórias independentes e identicamente distribuídas que seguem a distribuição $D(\theta)$, com $\theta \in \Theta$, um estimador MV para $\theta$ é dado por
 %%% ACF Use \arg\max
 \begin{equation}
-    \widehat{\theta} = \arg\max L(\theta; z) \quad \text{para} \quad \theta \in \Theta, \label{eq:mv}
+    \hat{\theta} = \arg\max L(\theta; z) \quad \text{para} \quad \theta \in \Theta, \label{eq:mv}
 \end{equation}
 em que $L$ é a função de verossimilhança da amostra $Z$ sob o parâmetro $\theta$. Podemos utilizar as propriedades logarítmicas para simplificar os cálculos, aplicando o logaritmo natural, visto que o ponto que produz o máximo da função não varia, independentemente de aplicar o logaritmo. Além disso, sob várias condições é equivalente e muitas vezes mais fácil trabalhar com a função log-verossimilhança reduzida $l(\theta; Z)$, onde todos os termos que não dependem de $\theta$ são ignorados.
 
 Embora a maximização direta de \eqref{eq:mv} seja possível (seja analiticamente ou usando ferramentas numéricas) e desejável, muitas vezes encontramos estimadores de MV resolvendo o sistema de equações (geralmente não-lineares) dado por
 \begin{equation}
-    \nabla l(\widehat{\theta}) = 0 \label{eq:gradient} 
+    \nabla l(\hat{\theta}) = 0 \label{eq:gradient} 
 \end{equation}
 onde, neste caso, $\nabla$ denota o gradiente. Segundo \citet{FreryMinute2004}, a escolha entre resolver \eqref{eq:mv} ou \eqref{eq:gradient} depende muito de questões computacionais: disponibilidade de algoritmos confiáveis, esforço computacional necessário para implementar e/ou obter a solução e assim por diante. Essas equações, em geral, não têm solução explícita.
 
@@ -172,23 +172,23 @@ A partir da função acima, podemos escrever a função de log-verossimilhança 
 
 O sistema de equações representado em \eqref{eq:gradient} é, em nosso caso, dado por
 \begin{equation}
-  \frac{\partial l}{\partial \widehat{\alpha}} = N[\Psi(-\widehat{\alpha}) - \Psi(L-\widehat{\alpha})] + \sum_{i=1}^{N}\log\frac{\widehat{\gamma} + Z_iL}{\widehat{\gamma}} = 0
+  \frac{\partial l}{\partial \hat{\alpha}} = N[\Psi(-\hat{\alpha}) - \Psi(L-\hat{\alpha})] + \sum_{i=1}^{N}\log\frac{\hat{\gamma} + Z_iL}{\hat{\gamma}} = 0
 \end{equation}
 \begin{equation}
-   \frac{\partial l}{\partial \widehat{\gamma}} = -N\frac{\widehat{\alpha}}{\widehat{\gamma}} - (L - \widehat{\alpha})\sum_{i=1}^{N}(\widehat{\gamma} + Z_iL)^{-1} = 0
+   \frac{\partial l}{\partial \hat{\gamma}} = -N\frac{\hat{\alpha}}{\hat{\gamma}} - (L - \hat{\alpha})\sum_{i=1}^{N}(\hat{\gamma} + Z_iL)^{-1} = 0
 \end{equation}
-em que $\Psi(\tau) = \frac{\textit{d}log\Gamma(\tau)}{\textit{d}\tau}$ é a função $Digama$. Resolvendo esse sistema de equações obtemos os estimadores para os parâmetros $\alpha$ e $\gamma$ da distribuição $G_I^0$, denotados por $\widehat{\alpha}$ e $\widehat{\gamma}$. Em geral, nenhuma solução explícita para este sistema está disponível e, portanto, rotinas numéricas têm que ser usadas.
+em que $\Psi(\tau) = \frac{\textit{d}log\Gamma(\tau)}{\textit{d}\tau}$ é a função $Digama$. Resolvendo esse sistema de equações obtemos os estimadores para os parâmetros $\alpha$ e $\gamma$ da distribuição $G_I^0$, denotados por $\hat{\alpha}$ e $\hat{\gamma}$. Em geral, nenhuma solução explícita para este sistema está disponível e, portanto, rotinas numéricas têm que ser usadas.
 
-Assumindo a simplificação feita para o parâmetro de escala ($\gamma* = -\alpha - 1$), temos que o estimador de Máxima Verossimilhança para o parâmetro $\alpha$, chamado $\widehat{\alpha}$, é dado pela solução da seguinte equação não linear:
+Assumindo a simplificação feita para o parâmetro de escala ($\gamma* = -\alpha - 1$), temos que o estimador de Máxima Verossimilhança para o parâmetro $\alpha$, chamado $\hat{\alpha}$, é dado pela solução da seguinte equação não linear:
 \begin{eqnarray}
-    \Psi(-\widehat{\alpha}) - \Psi(L-\widehat{\alpha}) - \log(-\widehat{\alpha}-1) - \frac{\widehat{\alpha}}{\widehat{\alpha}+1} + \nonumber \\ \frac{1}{N}\sum_{i=1}^{N}\log(-\widehat{\alpha} - 1 + LZ_i) - \left ( \frac{\widehat{\alpha}-L}{N} \right )\sum_{i=1}^{N}(-\widehat{\alpha} - 1 + LZ_i)^{-1} & = & 0
+    \Psi(-\hat{\alpha}) - \Psi(L-\hat{\alpha}) - \log(-\hat{\alpha}-1) - \frac{\hat{\alpha}}{\hat{\alpha}+1} + \nonumber \\ \frac{1}{N}\sum_{i=1}^{N}\log(-\hat{\alpha} - 1 + LZ_i) - \left ( \frac{\hat{\alpha}-L}{N} \right )\sum_{i=1}^{N}(-\hat{\alpha} - 1 + LZ_i)^{-1} & = & 0
 \end{eqnarray}
 
 \subsection{Estimação pelo Método dos Momentos (MM)}
 
 Uma outra forma de encontrar estimadores de parâmetros populacionais, como a média e a variância por exemplo, é através do método dos momentos. Este método é baseado na comparação dos momentos teóricos com os momentos amostrais das variáveis aleatórias envolvidas, a partir de uma amostra de $N$ observações.
 
-Seja $Z$ uma variável aleatória contínua com função densidade de probabilidade $f_Z(z)$, os momentos teóricos são dados por $m_j = \int x^jf_Z(z)dz$. Os momentos amostrais, por sua vez, são definidos como $\widehat{m_j} = N^{-1}\sum_{i=1}^{N}z_i^j$. O índice $\textit{j}$ representa a ordem do momento. Após calcular os momentos teóricos e amostrais, o processo de inferência é simples e consiste em comparar os momentos amostrais, $\widehat{m_j}$, com os correspondentes momentos teóricos, $m_j$, até se ter tantas equações quantos forem os parâmetros a serem estimados. De posse do sistema de equações, basta resolver e calcular os estimadores para os parâmetros.
+Seja $Z$ uma variável aleatória contínua com função densidade de probabilidade $f_Z(z)$, os momentos teóricos são dados por $m_j = \int x^jf_Z(z)dz$. Os momentos amostrais, por sua vez, são definidos como $\hat{m_j} = N^{-1}\sum_{i=1}^{N}z_i^j$. O índice $\textit{j}$ representa a ordem do momento. Após calcular os momentos teóricos e amostrais, o processo de inferência é simples e consiste em comparar os momentos amostrais, $\hat{m_j}$, com os correspondentes momentos teóricos, $m_j$, até se ter tantas equações quantos forem os parâmetros a serem estimados. De posse do sistema de equações, basta resolver e calcular os estimadores para os parâmetros.
 
 Para estimar os parâmetros $\alpha$ e $\gamma$ da distribuição $G_I^0(\alpha, \gamma, L)$, é necessário estimar dois momentos. Neste relatório, serão utilizados momentos de ordem $\frac{1}{2}$ e $1$, ou seja, $m_{1/2}$ e $m_1$ respectivamente. Esses momentos, de acordo com a equação \eqref{eq:moments}, são dados por
 \begin{equation}
@@ -198,19 +198,19 @@ Para estimar os parâmetros $\alpha$ e $\gamma$ da distribuição $G_I^0(\alpha,
     m_{1} = \left ( \frac{\gamma}{L}\right ) \frac{\Gamma(-\alpha-1)\Gamma(L+1)}{\Gamma(-\alpha)\Gamma(L)} \quad \text{para} \quad \alpha < -1 \label{eq:m1}
 \end{equation}
 
-Podemos utilizar o momento $\widehat{m}_{1/2}^2$ para auxiliar nos cálculos e utilizar as equações acima \eqref{eq:m12} e \eqref{eq:m1} para determinar o estimador $\widehat{\alpha}$ que pode ser dado como solução da seguinte equação
+Podemos utilizar o momento $\hat{m}_{1/2}^2$ para auxiliar nos cálculos e utilizar as equações acima \eqref{eq:m12} e \eqref{eq:m1} para determinar o estimador $\hat{\alpha}$ que pode ser dado como solução da seguinte equação
 \begin{equation}
-    g(\widehat{\alpha}) - \zeta = 0
+    g(\hat{\alpha}) - \zeta = 0
 \end{equation}
 onde 
 \begin{equation}
-    g(\widehat{\alpha}) = \frac{\Gamma^2(-\widehat{\alpha} - 1/2)}{\Gamma(-\widehat{\alpha})\Gamma(-\widehat{\alpha} - 1)}
+    g(\hat{\alpha}) = \frac{\Gamma^2(-\hat{\alpha} - 1/2)}{\Gamma(-\hat{\alpha})\Gamma(-\hat{\alpha} - 1)}
 \end{equation}
 e
 \begin{equation}
-    \zeta = \frac{\widehat{m}_{1/2}^2\Gamma(L)\Gamma(L+1)}{\widehat{m}_{1}\Gamma^2(L+1/2)}
+    \zeta = \frac{\hat{m}_{1/2}^2\Gamma(L)\Gamma(L+1)}{\hat{m}_{1}\Gamma^2(L+1/2)}
 \end{equation}
-Dessa forma, encontrando o valor de $\widehat{\alpha}$ e o substituindo na equação \eqref{eq:m12} ou na equação \eqref{eq:m1}, obtemos o estimador $\widehat{\gamma}$.
+Dessa forma, encontrando o valor de $\hat{\alpha}$ e o substituindo na equação \eqref{eq:m12} ou na equação \eqref{eq:m1}, obtemos o estimador $\hat{\gamma}$.
 
 Como já mencionado, podemos simplificar o processo de estimação do parâmetro $\gamma$, obtendo-o este de tal forma que o valor esperado $E(Z^r)$ tenha valor unitário e, assim, definimos ele em função do parâmetro $\alpha$. Dessa forma, podemos encontrar $\gamma*$ a partir de \eqref{eq:moments} como a seguir
 \begin{equation}
@@ -220,9 +220,9 @@ onde, fazendo $\Gamma(n) = (n-1)!$, temos
 \begin{equation}
     \gamma* = -\alpha - 1
 \end{equation}
-Estimadores de momentos fracionários foram utilizadas amplamente em \citet{Clutter1997}. Dessa forma, assumindo a simplificação acima e utilizando $r=\frac{1}{2}$ na equação do $r$-ésimo momento da $G_I^0$ dada em \eqref{eq:moments} é preciso resolver a equação a seguir para se obter o estimador $\widehat{\alpha}$
+Estimadores de momentos fracionários foram utilizadas amplamente em \citet{Clutter1997}. Dessa forma, assumindo a simplificação acima e utilizando $r=\frac{1}{2}$ na equação do $r$-ésimo momento da $G_I^0$ dada em \eqref{eq:moments} é preciso resolver a equação a seguir para se obter o estimador $\hat{\alpha}$
 \begin{equation}
-    \frac{1}{N}\sum_{i=1}^{N}\sqrt{z_i}-\sqrt{\frac{-\widehat{\alpha} - 1}{L}}\frac{\Gamma(-\widehat{\alpha} - \frac{1}{2})}{\Gamma(-\widehat{\alpha})}\frac{\Gamma(L+\frac{1}{2})}{\Gamma(L)} = 0 \label{fractional_moments}
+    \frac{1}{N}\sum_{i=1}^{N}\sqrt{z_i}-\sqrt{\frac{-\hat{\alpha} - 1}{L}}\frac{\Gamma(-\hat{\alpha} - \frac{1}{2})}{\Gamma(-\hat{\alpha})}\frac{\Gamma(L+\frac{1}{2})}{\Gamma(L)} = 0 \label{fractional_moments}
 \end{equation}
 
 \section{Estimação pelo Método de Log-Cumulantes (MLC)}
@@ -271,7 +271,7 @@ Desta equação acima, pode-se destacar como exemplo os log-momentos e log-cumul
 
 Na maioria das vezes, $\tilde{k}_{v}$ é calculado como função do vetor de parâmetros $\theta$ e o processo de estimação de $\theta$ é feito substituindo $\tilde{m}_{v}$ pelo correspondente log-momento amostral, que é dado por:
 \begin{equation}
-    \widehat{\tilde{m}}_{v} = \frac{1}{n}\sum_{i=1}^{n}\log z_{i}^{v}
+    \hat{\tilde{m}}_{v} = \frac{1}{n}\sum_{i=1}^{n}\log z_{i}^{v}
     \label{eq:log_momAmostrais}
 \end{equation}
 em que $z_i$, $i \in \{1, 2, \dots, n\}$, é uma amostra da variável aleatória $Z$ que segue uma determinada distribuição de probabilidade. A seguir serão mostradas as etapas de construção dos estimadores dos parâmetros da $G_I^0$ mediante utilização do método de log-cumulantes(MLC). 
@@ -292,9 +292,9 @@ em que $\Psi^{0}(.)$ e $\Psi^{1}(.)$ correspondem às funções digama e trigama
 
 Portanto, para estimar o vetor de parâmetros dado por $\theta = (\alpha, \gamma)^{\top}$ da distribuição $G_I^0$, basta aplicarmos as duas primeiras equações do sistema dado em \eqref{eq:logcum123} que representam os valores de $\tilde{k}_{1}$ e $\tilde{k}_{2}$ e as equações encontradas logo acima. Por fim, para estimar os parâmetros, basta substituir os valores de $\tilde{m}_{1}$ e $\tilde{m}_{2}$ pelos correspondentes log-momentos amostrais dados pela equação \eqref{eq:log_momAmostrais}. 
 
-Assumindo a simplificação feita de que $\gamma* = -\alpha - 1$, o estimador Log-cumulante do parâmetro $\alpha$ da $G_I^0$ é dado pela solução de $\widehat{\tilde{k}_{1}} = \log \frac{1-\widehat{\alpha}}{L} + \Psi^{0}(L) - \Psi^{0}(-\alpha)$. Como sabemos que $\widehat{\tilde{k}}_{1} = \widehat{\tilde{m}}_{1} = n^{-1}\sum_{i=1}^{n}\log z_i$, então para encontrar o estimador $\widehat{\alpha}$ pelo MLC basta encontrar a solução para:
+Assumindo a simplificação feita de que $\gamma* = -\alpha - 1$, o estimador Log-cumulante do parâmetro $\alpha$ da $G_I^0$ é dado pela solução de $\hat{\tilde{k}_{1}} = \log \frac{1-\hat{\alpha}}{L} + \Psi^{0}(L) - \Psi^{0}(-\alpha)$. Como sabemos que $\hat{\tilde{k}}_{1} = \hat{\tilde{m}}_{1} = n^{-1}\sum_{i=1}^{n}\log z_i$, então para encontrar o estimador $\hat{\alpha}$ pelo MLC basta encontrar a solução para:
 \begin{equation}
-    \frac{1}{n}\sum_{i=1}^{n}\log z_i - \log \left ( \frac{-\widehat{\alpha}-1}{L} \right ) - \Psi^{0}(L) + \Psi^{0}(-\alpha) = 0
+    \frac{1}{n}\sum_{i=1}^{n}\log z_i - \log \left ( \frac{-\hat{\alpha}-1}{L} \right ) - \Psi^{0}(L) + \Psi^{0}(-\alpha) = 0
     \label{eq:alphaEst_logCum}
 \end{equation}
 
@@ -327,7 +327,7 @@ Sabemos que, por meio de medidas de divergência, é possível se obter express�
 \end{enumerate}
 Um caso particular ocorre quando temos $X$ e $Y$ pertecendo a mesma distribuição de probabilidade, porém com parâmetros diferentes. Nessa situação, é suficiente escrever a notação $d_\phi^h(\theta_1, \theta_2)$. Desse modo, temos que $d_\phi^h(\theta_1, \theta_2) \geq 0$ em que $d_\phi^h(\theta_1, \theta_2) = 0$ se, e somente se $\theta_1 = \theta_2$. Tendo essa igualdade de parâmetros, consequentemente as variáveis $X$ e $Y$ possuem a mesma distribuição e a distância entre elas é nula. Em suma, distâncias estocásticas são utilizadas para comparar e analisar distribuições de probabilidade definidas no mesmo espaço de probabilidades.
 
-No contexto da estimação de parâmetros, estamos interessados em distâncias entre funções de densidade de probabilidade. Neste trabalho, foi utilizado esse conceito de distância da Teoria da Informação para encontrar o melhor valor para o parâmetro de rugosidade ou textura da distribuição $G_I^0$ - o parâmetro $\alpha$ - de modo que a distribuição empírica de dados seja aproximada pela função de densidade de probabilidade da $G_I^0$. Em outras palavras, a ideia principal consiste de, dada a amostra de dados $z$, calcular $\widehat{\alpha}$, estimador de $\alpha$, como sendo o ponto do espaço paramétrico que minimiza a distância entre a função densidade $f_{G_I^0}$ e uma estimativa da função de densidade subjacente que caracteriza o modelo, isto é, a distribuição empírica dos dados da amostra. O custo computacional de avaliar cada ponto é relativamente pequeno, visto que o histograma está fixado e a densidade não envolve funções especiais. 
+No contexto da estimação de parâmetros, estamos interessados em distâncias entre funções de densidade de probabilidade. Neste trabalho, foi utilizado esse conceito de distância da Teoria da Informação para encontrar o melhor valor para o parâmetro de rugosidade ou textura da distribuição $G_I^0$ - o parâmetro $\alpha$ - de modo que a distribuição empírica de dados seja aproximada pela função de densidade de probabilidade da $G_I^0$. Em outras palavras, a ideia principal consiste de, dada a amostra de dados $z$, calcular $\hat{\alpha}$, estimador de $\alpha$, como sendo o ponto do espaço paramétrico que minimiza a distância entre a função densidade $f_{G_I^0}$ e uma estimativa da função de densidade subjacente que caracteriza o modelo, isto é, a distribuição empírica dos dados da amostra. O custo computacional de avaliar cada ponto é relativamente pequeno, visto que o histograma está fixado e a densidade não envolve funções especiais. 
 
 Nesse contexto, é possível encontrar o mínimo da distância em função do parâmetro $\alpha$ da $G_I^0$, o qual provê uma forma de estimação do parâmetro. Seja $V$ e $W$ duas variáveis aleatórias definidas sobre o mesmo espaço de probabilidades cujas funções densidade são dadas por $f_V(x; \theta_1)$ e $f_W(x; \theta_2)$. Assim, podemos definir como exemplo as seguintes distâncias estocásticas que são bastante discutidas na literatura:
 \begin{enumerate}
@@ -341,37 +341,41 @@ Nesse contexto, é possível encontrar o mínimo da distância em função do pa
 
 \subsection{Estimação pela Distância Triangular}
 
-Seja $z = (z_1, z_2, \dots, z_n)$ uma amostra aleatória de $n$ observações independentes distribuídas conforme a distribuição $G_I^0(\alpha_0, \gamma_0^{*}, L_0)$ em que, como já explicado anteriormente, $\gamma_0^{*} = - \alpha_0 - 1$. Uma estimativa para a função de densidade subjacente de $z$ (densidade empírica), denotada por $\widehat{f}$, é utilizada para definir a função objetivo a ser minimizada como uma função do parâmetro $\alpha$. Esta função empírica é calculada a partir do histograma dos dados e utilizando o método de Freedman-Diaconis que pode ser usado para selecionar a largura dos intervalos a serem usados em um histograma. Para um conjunto de medições empíricas amostradas a partir de alguma distribuição de probabilidade, a regra de Freedman-Diaconis é projetada para minimizar a diferença entre a área sob a distribuição de probabilidade empírica e a área sob a distribuição de probabilidade teórica. 
+Seja $z = (z_1, z_2, \dots, z_n)$ uma amostra aleatória de $n$ observações independentes distribuídas conforme a distribuição $G_I^0(\alpha_0, \gamma_0^{*}, L_0)$ em que, como já explicado anteriormente, $\gamma_0^{*} = - \alpha_0 - 1$. Uma estimativa para a função de densidade subjacente de $z$ (densidade empírica), denotada por $\hat{f}$, é utilizada para definir a função objetivo a ser minimizada como uma função do parâmetro $\alpha$. Esta função empírica é calculada a partir do histograma dos dados e utilizando o método de Freedman-Diaconis que pode ser usado para selecionar a largura dos intervalos a serem usados em um histograma. Para um conjunto de medições empíricas amostradas a partir de alguma distribuição de probabilidade, a regra de Freedman-Diaconis é projetada para minimizar a diferença entre a área sob a distribuição de probabilidade empírica e a área sob a distribuição de probabilidade teórica. 
 
-Nesse cenário, o estimador para o parâmetro $\alpha$ baseado na minimização da distância Triangular entre a densidade empírica dos dados $\widehat{f}$ e a densidade do modelo $f_{G_I^0}$, denotado por $\widehat{\alpha}_{T}$, é dado pelo cálculo da seguinte equação:
+Nesse cenário, o estimador para o parâmetro $\alpha$ baseado na minimização da distância Triangular entre a densidade empírica dos dados $\hat{f}$ e a densidade do modelo $f_{G_I^0}$, denotado por $\hat{\alpha}_{T}$, é dado pelo cálculo da seguinte equação:
 \begin{equation}
-    \widehat{\alpha}_{T} = \arg\min_{-10 \leq \alpha \leq -1} d_T(f_{G_I^0}(\alpha, \gamma_0^{*}, L_0), \widehat{f}(z)) 
+    \hat{\alpha}_{T} = \arg\min_{-10 \leq \alpha \leq -1} d_T(f_{G_I^0}(\alpha, \gamma_0^{*}, L_0), \hat{f}(z)) 
     \label{eq: minDT}
 \end{equation}
-onde $\gamma_0^{*}$ e $L_0$ são previamente conhecidos e $d_T$ é dada pela equação da distância Triangular já descrita anteriormente. Para resolver \eqref{eq: minDT} são requisitadas duas etapas: 1) a integração presente na formula da referida distância utilizando a densidade $G_I^0$ e a densidade estimada $\widehat{f}$ e 2) a otimização com relação ao parâmetro $\alpha$. Vale ressaltar novamente que para solucionar essa equação não há resultados analíticos explícitos, por isso devemos recorrer a procedimentos numéricos. O intervalo de busca é fundamental, sendo estabelecido para evitar instabilidades numéricas nos cálculos realizados.
+onde $\gamma_0^{*}$ e $L_0$ são previamente conhecidos e $d_T$ é dada pela equação da distância Triangular já descrita anteriormente. Para resolver \eqref{eq: minDT} são requisitadas duas etapas: 1) a integração presente na formula da referida distância utilizando a densidade $G_I^0$ e a densidade estimada $\hat{f}$ e 2) a otimização com relação ao parâmetro $\alpha$. Vale ressaltar novamente que para solucionar essa equação não há resultados analíticos explícitos, por isso devemos recorrer a procedimentos numéricos. O intervalo de busca é fundamental, sendo estabelecido para evitar instabilidades numéricas nos cálculos realizados.
 
 
-\section{Implementação dos Estimadores}
+\section{Estudo I: Monte Carlo inicial e Implementação dos Estimadores}
 
-Para a implementação dos estimadores foi proposto o uso do pacote \texttt{stats4} que disponibiliza a função \texttt{mle} que pode ser utilizada para se obter os estimadores de Máxima Verossimilhança tanto de distribuições populares, por exemplo, $Normal$, $Gama$ e $t$, quanto de distribuições que não possuem implementação nativa na plataforma \texttt{R}.
+A seguir estão descritos, para as técnicas de estimação descritas neste relatório, os procedimentos utilizados para a implementação dos respectivos estimadores: os pacotes utilizados na plataforma \texttt{R} e os cálculos necessários e implementados no desenvolvimento do estimador. Além disso, foi realizado também um experimento de Monte Carlo inicial para analisar e verificar os resultados obtidos.
 
-Foi feita a implementação dos estimadores de MV para o modelo $G_I^0$ utilizando esse pacote. Nessa implementação, utilizou-se dados simulados gerados pelo gerador de variáveis aleatórias $G_I^0$ implementado a partir do Modelo Multiplicativo, onde as variáveis aleatórias são geradas a partir da razão de variáveis aleatórias $Gama$.
+\subsection{Implementação do estimador de Máxima Verossimilhança}
+
+Para a implementação do estimador de Máxima Verossimilhança foi proposto o uso do pacote \texttt{stats4} que disponibiliza a função \texttt{mle} que pode ser utilizada para se obter os estimadores de Máxima Verossimilhança tanto de distribuições populares, por exemplo, $Normal$, $Gama$ e $t$, quanto de distribuições que não possuem implementação nativa na plataforma \texttt{R}.
+
+Foi feita a implementação dos estimadores de MV para o modelo $G_I^0$ utilizando esse pacote. Nessa implementação, utilizou-se dados simulados gerados pelo gerador de variáveis aleatórias $G_I^0$ implementado a partir do Modelo Multiplicativo, onde as variáveis aleatórias são geradas a partir da razão de variáveis aleatórias Gama ($\Gamma$).
 
 Como nota-se em \eqref{eq:mv}, a estimação por Máxima Verossimilhança consiste em encontrar o $\arg\max$ da função de Verossimilhança e, com base nessa ideia, estamos diante de um problema de otimização. Um método utilizado para encontrar tais pontos de máximo é fazer como em \eqref{eq:gradient}, calculando as derivadas parciais e igualando a zero. Mas, como alternativa a isso, podemos aplicar diversos otimizadores existentes na literatura e que estão disponíveis para uso na função \texttt{mle} do pacote \texttt{stats4}.
 
-\subsection{Otimizadores disponíveis para Máxima Verossimilhança}
+\subsubsection{Otimizadores de Máxima Verossimilhança}
 
-Dentre os otimizadores disponíveis, temos, talvez o mais utilizado deles, o \emph{BFGS} é um método quasi-Newton (também conhecido como algoritmo variável de métrica), especificamente aquele publicado simultaneamente em 1970 por Broyden, Fletcher, Goldfarb e Shanno. Esse algoritmo usa valores de função e gradientes para construir uma imagem da superfície a ser otimizada. Na simulação feita foram utilizados 3 otimizadores para análise, dentre eles, o otimizador \emph{L-BFGS-B} de \citet{Byrd_1995} que permite restrições de limite, ou seja, cada variável pode receber um limite inferior e/ou superior. O valor inicial deve satisfazer as restrições. Ou seja, ele consiste de uma modificação de memória limitada do método \emph{BFGS} quasi-Newton que diminui o espaço de busca dos valores para os estimadores, sendo uma abordagem bem interessante para simulações com grande espaço de parâmetros.
+Dentre os otimizadores disponíveis, temos, talvez o mais utilizado deles, o \emph{BFGS} é um método quasi-Newton (também conhecido como algoritmo variável de métrica), especificamente aquele publicado simultaneamente em 1970 por Broyden, Fletcher, Goldfarb e Shannon. Esse algoritmo usa valores de função e gradientes para construir uma imagem da superfície a ser otimizada. Na simulação feita foram utilizados 3 otimizadores para análise, dentre eles, o otimizador \emph{L-BFGS-B} de \citet{Byrd_1995} que permite restrições de limite, ou seja, cada variável pode receber um limite inferior e/ou superior. O valor inicial deve satisfazer as restrições. Ou seja, ele consiste de uma modificação de memória limitada do método \emph{BFGS} quasi-Newton que diminui o espaço de busca dos valores para os estimadores, sendo uma abordagem bem interessante para simulações com grande espaço de parâmetros.
 
 Na simulação feita, foram feitos testes também com o otimizador \emph{CG} que é um método de gradientes conjugados baseado em \citet{Fletcher64} em que fizemos uma análise com o otimizador \emph{L-BFGS-B}. Métodos baseados em gradiente conjugado geralmente são mais frágeis que aqueles baseados no método \emph{BFGS}, entretanto, como eles não armazenam uma matriz, podem ter sucesso em problemas de otimização muito maiores e mais complicados.
 
-Para finalizar, também foi utilizado o otimizador de \emph{Brent} que é utilizado somente para problemas unidimensionais. Sendo assim, neste caso, utilizou-se a simplificação feita de que $\widehat{\gamma}* = -\widehat{\alpha} - 1$ e, fornecemos para o algoritmo somente o parâmetro de textura ($\alpha$) para ser otimizado.
+Para finalizar, também foi utilizado o otimizador de \emph{Brent} que é utilizado somente para problemas unidimensionais. Sendo assim, neste caso, utilizou-se a simplificação feita de que $\hat{\gamma}* = -\hat{\alpha} - 1$ e, fornecemos para o algoritmo somente o parâmetro de textura ($\alpha$) para ser otimizado.
 
-\subsection{Experimento de Monte Carlo}
+\subsubsection{Experimento de Monte Carlo}
 
 De acordo com \citet{busto92}, experiências de Monte Carlo são uma poderosa técnica estatística usada para fornecer respostas aproximadas para questões sobre problemas complexos que podem incluir um componente estocástico, principalmente quando as técnicas analíticas e numéricas não fornecem, com uma quantidade aceitável de esforço, essas respostas de forma exata e completa. Estas técnicas de simulação são essencialmente baseadas em amostragem estatística controlada, e elas têm uma ampla gama de aplicações, incluindo, entre outras, mecânica estatística, biologia, jogos, otimização combinatória e engenharia. Ainda segundo os autores, um estudo de simulação deve ser cuidadosamente planejado, a fim de obter resultados significativos e úteis. É comum, quando a simulação é usada, ter várias amostras para serem analisadas. Cada amostra poderia ter sido obtida, por exemplo, por simulações similares do mesmo sistema e com diferentes valores de parâmetros.  
 
-Nesse sentido, um experimento de Monte Carlo foi definido para avaliar o desempenho de cada otimizador no cálculo dos estimadores. O espaço de parâmetros utilizado consiste na grade formada pela tabela a seguir. Onde variamos o parâmetro de textura $\alpha$ de modo a englobar a simulação de regiões extremamente texturizadas, de textura moderada e alvos sem textura. O parâmetro $n$, número de amostras, também foi variado de forma a representar amostras consideravelmente pequenas, médias e grandes. Os parâmetros $\gamma$ e $Looks$ tiveram seu valor constantes no experimento.
+Nesse sentido, um experimento de Monte Carlo foi definido para avaliar o desempenho de cada otimizador no cálculo dos estimadores. O espaço de parâmetros utilizado consiste na grade formada pela tabela a seguir. Onde variamos o parâmetro de textura $\alpha$ de modo a englobar a simulação de regiões extremamente texturizadas, de textura moderada e alvos sem textura. O parâmetro $n$, número de amostras, também foi variado de forma a representar amostras consideravelmente pequenas, médias e grandes. O parâmetro \textit{Looks} teve seu valor constante no experimento. Vale ressaltar que o valor $\gamma^*$ foi dado em função do parâmetro $\alpha$ de modo a simplificar os cálculos de geração dos estimadores.
 \begin{table}[H]
 \centering
 \caption{Espaço de parâmetros utilizado na simulação}
@@ -383,18 +387,18 @@ Nesse sentido, um experimento de Monte Carlo foi definido para avaliar o desempe
 \multicolumn{1}{c|}{Parâmetros} & \multicolumn{1}{c}{Valores}  \\ 
 \midrule
 \rowcolor[gray]{.9} 
-$n$ & \{200, 2000, 10000\} \\ \hline
-$\alpha$ & \{-2, -5, -8\} \\ \hline
-\rowcolor[gray]{.9} $\gamma$ & \{7\} \\ \hline
-$Looks$ & \{3\} \\ 
+$n$ & $\{200, 2000, 10000\}$ \\ \hline
+$\alpha$ & $\{-2, -5, -8\}$ \\ \hline
+\rowcolor[gray]{.9} $\gamma^*$ & $\{-\alpha - 1\}$ \\ \hline
+\textit{Looks} & \{3\} \\ 
 \bottomrule
 \end{tabular}
 \end{table}
 
-Nesse experimento foi feito um total de 1000 replicações onde mil amostras foram geradas para cada ponto do espaço de parâmetros considerado na tabela anterior. Dessa forma, foram produzidos os vetores de estimadores, $\{\widehat{\alpha}_{1}, \widehat{\alpha}_{2}, \dots, \widehat{\alpha}_{1000} \}$ e $\{\widehat{\gamma}_{1}, \widehat{\gamma}_{2}, \dots, \widehat{\gamma}_{1000} \}$, para os otimizadores \emph{L-BFGS-B} e \emph{CG}. Para o otimizador de \emph{Brent} foi gerado apenas o vetor com o estimadores para o parâmetro $\alpha$. Com esses vetores em mãos, foram então calculados para cada caso a média das mil estimativas, $ \overline{\widehat{\alpha}} = (1000)^{-1} \sum_{i=1}^{1000} \widehat{\alpha_{i}} $, e o erro quadrático médio. Abaixo encontra-se uma tabela com os resultados dos 3 otimizadores para o parâmetro $\alpha$ da $G_I^0$. 
+Nesse experimento foi feito um total de 1000 replicações onde 1000 amostras foram geradas para cada ponto do espaço de parâmetros considerado na tabela anterior. Dessa forma, foi produzido o vetor de estimadores, $\{\widehat{\alpha}_{1}, \widehat{\alpha}_{2}, \dots, \widehat{\alpha}_{1000} \}$ para cada valor do parâmetro $\alpha$ e para cada otimizador analisado. Com esses vetores em mãos, foram então calculados, para cada caso, a média das mil estimativas, $ \overline{\hat{\alpha}} = (1000)^{-1} \sum_{i=1}^{1000} \hat{\alpha_{i}} $. Abaixo encontra-se uma tabela com os resultados dos 3 otimizadores para o parâmetro $\alpha$ da $G_I^0$. 
 \begin{table}[H]
 \centering
-\caption{Estimadores para o parâmetro $\alpha$ ($ \overline{\widehat{\alpha}}$)} 
+\caption{Estimadores para o parâmetro $\alpha$ ($ \overline{\hat{\alpha}}$)} 
 \begin{tabular}{@{\extracolsep{4pt}}c|c|c|c|c|c|c}
 \toprule   
 \multicolumn{1}{c}{\textbf{Amostras}} & \multicolumn{1}{c}{\textbf{Escala}} & \multicolumn{1}{c}{\textbf{Looks}} & \multicolumn{1}{c}{\textbf{Textura}} & \multicolumn{3}{c}{\textbf{Otimizadores}} \\
@@ -405,15 +409,15 @@ Nesse experimento foi feito um total de 1000 replicações onde mil amostras for
  \cmidrule{5-7} 
 \multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{L-BFGS-B} & \multicolumn{1}{c}{CG} & \multicolumn{1}{c}{Brent} \\ 
 \midrule
-200  & 7 & 3 & -2 & -2.063 & -2.060 & -1.940 \\ 
-   & ~ & ~ & -5 & -4.301 & -5.317 & -5.275 \\ 
-   & ~ & ~ & -8 & -9.737 & -8.354 & -9.223 \\ \hline
-2000  & 7 & 3 & -2 & -2.009 & -2.069 & -2.001  \\ 
-   & ~ & ~ & -5 & -5.029 & -4.972 & -5.027    \\
-   & ~ & ~ & -8 & -8.059 & -9.759 & -8.074    \\ \hline
-10000  & 7 & 3 & -2 & -2.004 & -2.085 & -2.001  \\ 
-   & ~ & ~ & -5 & -5.011 & -4.949 & -5.005    \\
-   & ~ & ~ & -8 & -8.007 & -8.373 & -8.015    \\
+$200$  & $1$ & $3$ & $-2$ & $-2.063$ & $-2.060$ & $-1.940$ \\ 
+   & $4$ & ~ & $-5$ & $-4.301$ & $-5.317$ & $-5.275$ \\ 
+   & $7$ & ~ & $-8$ & $-9.737$ & $-8.354$ & $-9.223$ \\ \hline
+$2000$  & $1$ & $3$ & $-2$ & $-2.009$ & $-2.069$ & $-2.001$  \\ 
+   & $4$ & ~ & $-5$ & $-5.029$ & $-4.972$ & $-5.027$    \\
+   & $7$ & ~ & $-8$ & $-8.059$ & $-9.759$ & $-8.074$    \\ \hline
+$10000$  & $1$ & $3$ & $-2$ & $-2.004$ & $-2.085$ & $-2.001$  \\ 
+   & $4$ & ~ & $-5$ & $-5.011$ & $-4.949$ & $-5.005$    \\
+   & $7$ & ~ & $-8$ & $-8.007$ & $-8.373$ & $-8.015$    \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -438,43 +442,50 @@ A figura a seguir apresenta, de forma gráfica, os resultados para a estimação
      \label{graf_4}
 \end{figure}
 
-\begin{comment}
-Agora temos uma tabela equivalente só que válida para o parâmetro $\gamma$ que foi estimado nos otimizadores \emph{L-BFGS-B} e \emph{CG}.
-\begin{table}[H]
-\centering
-\caption{Estimadores para o parâmetro $\gamma$ ($ \overline{\widehat{\gamma}}$) }
-\vspace{0.2cm}
-\begin{tabular}{r|r|lr}
-\hline
-Configuração & L-BFGS-B & CG \\ 
-\hline                               
-$(200, -2, 7, 3)$ & 7.290 & 7.283  \\
-$(200, -5, 7, 3)$ & 7.477 & 7.506  \\
-$(200, -8, 7, 3)$ & 8.641 & 7.330  \\
-$(2000, -2, 7, 3)$ & 7.050 & 7.266  \\
-$(2000, -5, 7, 3)$ & 7.050 & 6.952  \\
-$(2000, -8, 7, 3)$ & 7.057 & 8.712  \\
-$(10000, -2, 7, 3)$ & 7.019 & 7.324  \\
-$(10000, -5, 7, 3)$ & 7.013 & 6.918  \\
-$(10000, -8, 7, 3)$ & 7.005 & 7.336  \\
-\end{tabular}
-\end{table}
-\end{comment}
-
 Diante dos gráficos que mostram os resultados obtidos no processo de estimação da $G_I^0$ por Máxima Verossimilhança, podemos observar que todos os otimizadores são bem sensíveis quanto ao tamanho de amostras utilizadas, se mostrando melhores quando o número de amostras é maior, isto é, convergem melhor quando atuam com tamanhos de amostras maiores. Dentre os três otimizadores utilizados os que forneceram melhores estimativas com menores erros foram os otimizadores de \emph{L-BFGS-B} e de \emph{Brent}. No quesito tempo de execução, o \emph{L-BFGS-B} obteve vantagem em relação ao otimizador de \emph{CG}, visto que apresentou menor tempo de execução para executar a simulação Monte Carlo com 1000 replicações. Este fato ocorreu justamente, por conta de sua estratégia de memória limitada, restrigindo o espaço de busca por meio dos limites de fronteira.
 
-O otimizador de \emph{Brent}, embora seja aplicado somente a problemas de otimização unidimensionais com somente um parâmetro sendo passado, também mostrou resultados bem satisfatórios em um tempo muito pequeno. Contudo, por conta da unidimensionalidade, o seu uso é restrito e deve ser utilizado assumindo algumas simplificações o que certamente é uma real desvantagem frente aos demais.
+O otimizador de \emph{Brent}, embora seja aplicado somente a problemas de otimização unidimensionais em que somente um parâmetro é passado, também mostrou resultados bem satisfatórios em um tempo muito pequeno. Contudo, por conta da unidimensionalidade, o seu uso é restrito e deve ser utilizado assumindo algumas simplificações o que certamente é uma real desvantagem frente aos demais.
 
-Como conclusão da análise feita, temos que o otimizador mais robusto e mais completo que forneceu os melhores resultados, no menor tempo de execução e sendo possível de ser utilizado com $n$-dimensões foi o \emph{L-BFGS-B}. Para os casos em que podemos tratar os problemas de forma unidimensional, visando encontrar somente um parâmetro desconhecido, podemos aplicar o otimizador de \emph{Brent} que é próprio para tais situações e oferece resultados bem satisfatórios.
+Como conclusão da análise feita, temos que o otimizador mais robusto e mais completo que forneceu os melhores resultados, no menor tempo de execução e sendo possível de ser utilizado com $n$-dimensões foi o \emph{L-BFGS-B}. Para os casos em que podemos tratar os problemas de forma unidimensional, visando encontrar somente um parâmetro desconhecido, temos a possibilidade de aplicar o otimizador de \emph{Brent} que é próprio para tais situações e oferece resultados também bem satisfatórios.
+
+\subsubsection{Estimador de Máxima Verossimilhança}
+
+Nesta subseção, será descrito e analisado o desenvolvimento do estimador de Máxima verossimilhança utilizando o otimizador \emph{L-BFGS-B}. Foi realizado novamente o experimento de Monte Carlo descrito acima em que gerou-se um total de 1000 replicações, onde as amostras foram geradas para cada ponto do espaço de parâmetros considerado na tabela \ref{tab:tabela_parameters}. Dessa forma, foram produzidos os vetores de estimadores, $\{\hat{\alpha}_{1}, \hat{\alpha}_{2}, \dots, \hat{\alpha}_{1000}\}$. A partir desses vetores, foram então calculados, para cada caso, a média das estimativas, $\overline{\hat{\alpha}} = (1000)^{-1} \sum_{i=1}^{1000} \hat{\alpha_{i}}$ e o desvio padrão correspondente.
+
+Abaixo encontra-se uma tabela com os resultados dos estimadores de Máxima Verossimilhança para o parâmetro $\alpha$ da $G_I^0$.
+\begin{table}[H]
+\centering
+\caption{Estimadores de Máxima Verossimilhança} 
+\begin{tabular}{@{\extracolsep{4pt}}c|c|c|c|c}
+\toprule   
+\multicolumn{1}{c}{\textbf{Amostras}} & \multicolumn{1}{c}{\textbf{Escala}} & \multicolumn{1}{c}{\textbf{Looks}} & \multicolumn{1}{c}{\textbf{Textura}} & \multicolumn{1}{c}{\textbf{Est. de Max. Ver.}} \\
+ \cmidrule{1-1} 
+ \cmidrule{2-2} 
+ \cmidrule{3-3} 
+ \cmidrule{4-4} 
+ \cmidrule{5-5} 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{MV}$ (Desvio Padrão)} \\ 
+\midrule
+$200$  & $1$ & $3$ & $-2$ &  $-2.145$ ($0.234$) \\ 
+   & $4$ & ~ & $-5$ &  $-5.453$ ($1.547$) \\ 
+   & $7$ & ~ & $-8$ &  $-9.722$ ($7.014$) \\ \hline
+$2000$  & $1$ & $3$ & $-2$ &  $-2.034$ ($0.056$)  \\ 
+   & $4$ & ~ & $-5$ &  $-5.042$ ($0.372$)   \\
+   & $7$ & ~ & $-8$ &  $-8.106$ ($0.877$)  \\ \hline
+$10000$  & $1$ & $3$ & $-2$ & $-2.008$ ($0.026$)  \\ 
+   & $4$ & ~ & $-5$ &  $-5.013$ ($0.143$)  \\
+   & $7$ & ~ & $-8$ &  $-8.046$ ($0.339$)   \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Implementação do estimador de Momentos}
 
-Como já discutido, estimadores de Momentos são bastante utilizados nos processos de estimação de parâmetros para diversas distribuições. Nesse contexto, vale frisar que os estimadores de momentos fracionarios foram amplamente utilizados com sucesso no trabalho de \citet{Clutter1997}. Com isso, utilizando-se $r = 1/2$ na equação \eqref{eq:moments} basta resolver a equação dada em \eqref{fractional_moments} para obter o valor de $\widehat{\alpha}$. Dessa forma, tendo em mãos este valor, podemos utilizar a simplificação adotada em que obtemos o parâmetro $\gamma$ da $G_I^0$ fazendo o valor esperado ($E(Z)$) valer 1 e, assim, obtemos que o estimador $\widehat{\gamma}$ pode ser calculado como sendo $\widehat{\gamma} = -\widehat{\alpha} - 1$ como já explicado anteriormente.
+Como já discutido, estimadores de Momentos são bastante utilizados nos processos de estimação de parâmetros para diversas distribuições. Nesse contexto, vale frisar que os estimadores de momentos fracionarios foram amplamente utilizados com sucesso no trabalho de \citet{Clutter1997}. Com isso, utilizando-se $r = 1/2$ na equação \eqref{eq:moments} basta resolver a equação dada em \eqref{fractional_moments} para obter o valor de $\hat{\alpha}$. Dessa forma, tendo em mãos este valor, podemos utilizar a simplificação adotada em que obtemos o parâmetro $\gamma$ da $G_I^0$ fazendo o valor esperado ($E(Z)$) valer 1 e, assim, obtemos que o estimador $\hat{\gamma}$ pode ser calculado como sendo $\hat{\gamma} = -\hat{\alpha} - 1$ como já explicado anteriormente.
 
-O estimador de momentos foi implementado com o auxílio do pacote do \texttt{R} chamado \texttt{rootSolve}. Este pacote foi criado para resolver os exemplos de análise de estabilidade e estado estacionário no livro de \citet{Soetaert2009}. Neste pacote, temos o método chamado \textit{uniroot} em que passamos a equação dada em \eqref{fractional_moments} e, dessa forma, obteve-se de maneira simples, rápida e precisa o estimador $\widehat{\alpha}$.
+O estimador de momentos foi implementado com o auxílio do pacote do \texttt{R} chamado \texttt{rootSolve}. Este pacote foi criado para resolver os exemplos de análise de estabilidade e estado estacionário no livro de \citet{Soetaert2009}. Neste pacote, temos o método chamado \textit{uniroot} em que passamos a equação dada em \eqref{fractional_moments} e, dessa forma, obteve-se de maneira simples, rápida e precisa o estimador $\hat{\alpha}$.
 
-Vale ressaltar que, de modo similar ao procedimento feito com os estimadores de Máxima Verossimilhança descritos anteriormente, foi realizado um experimento de Monte Carlo em que gerou-se um total de 1000 replicações onde as amostras foram geradas para cada ponto do espaço de parâmetros considerado na tabela \ref{tab:tabela_parameters}. Dessa forma, foram produzidos os vetores de estimadores, $\{\widehat{\alpha}_{1}, \widehat{\alpha}_{2}, \dots, \widehat{\alpha}_{1000}\}$. A partir desses vetores, foram então calculados, para cada caso, a média das estimativas, $\overline{\widehat{\alpha}} = (1000)^{-1} \sum_{i=1}^{1000} \widehat{\alpha_{i}}$, e o erro quadrático médio.
-
+Vale ressaltar que, de modo similar ao procedimento feito com os estimadores de Máxima Verossimilhança descritos anteriormente, foi realizado o mesmo experimento de Monte Carlo em que gerou-se, de modo análogo, um total de 1000 replicações onde as amostras foram geradas para cada ponto do espaço de parâmetros considerado na tabela \ref{tab:tabela_parameters}. Dessa forma, gerou-se para cada caso, a média das estimativas obtidas, $\overline{\hat{\alpha}} = (1000)^{-1} \sum_{i=1}^{1000} \hat{\alpha_{i}}$ e o desvio padrão correspondente. 
 
 Abaixo está a tabela que contém os resultados dos estimadores de momentos encontrados com o procedimento realizado.
 \begin{table}[H]
@@ -488,17 +499,17 @@ Abaixo está a tabela que contém os resultados dos estimadores de momentos enco
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{Mom12}$} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{Mom12}$ (Desvio Padrão)} \\ 
 \midrule
-200  & 7 & 3 & -2 & -2.209  \\ 
-   & ~ & ~ & -5 & -5.254  \\ 
-   & ~ & ~ & -8 & -7.211  \\ \hline
-2000  & 7 & 3 & -2 & -2.012   \\ 
-   & ~ & ~ & -5 & -5.046    \\
-   & ~ & ~ & -8 & -8.172   \\ \hline
-10000  & 7 & 3 & -2 & -2.001  \\ 
-   & ~ & ~ & -5 & -5.069   \\
-   & ~ & ~ & -8 & -8.208    \\
+$200$  & $1$ & $3$ & $-2$ &  $-2.306$ ($1.172$) \\ 
+   & $4$ & ~ & $-5$ &  $-5.486$ ($4.270$)\\ 
+   & $7$ & ~ & $-8$ &  $-7.153$  ($4.040$) \\ \hline
+$2000$  & $1$ & $3$ & $-2$ &  $-2.012$ ($0.129$) \\ 
+   & $4$ & ~ & $-5$ &  $-5.410$ ($2.539$)  \\
+   & $7$ & ~ & $-8$ &  $-9.404$ ($5.387$) \\ \hline
+$10000$  & $1$ & $3$ & $-2$ & $-2.003$ ($0.055$) \\ 
+   & $4$ & ~ & $-5$ &  $-5.105$ ($0.564$) \\
+   & $7$ & ~ & $-8$ &  $-8.303$ ($1.633$)  \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -518,17 +529,17 @@ Os estimadores baseados no método de Log-Cumulantes (MLC) foram também encontr
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{LCum}$} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{LCum}$ (Desvio Padrão)} \\ 
 \midrule
-200  & 7 & 3 & -2 & -2.027  \\ 
-   & ~ & ~ & -5 & -4.972  \\ 
-   & ~ & ~ & -8 & -7.908  \\ \hline
-2000  & 7 & 3 & -2 & -2.004   \\ 
-   & ~ & ~ & -5 & -5.094   \\
-   & ~ & ~ & -8 & -8.225   \\ \hline
-10000  & 7 & 3 & -2 & -2.000  \\ 
-   & ~ & ~ & -5 & -5.008   \\
-   & ~ & ~ & -8 & -8.064    \\
+$200$  & $1$ & $3$ & $-2$ &  $-2.040$ ($0.226$)\\ 
+   & $4$ & ~ & $-5$ &  $-5.699$ ($3.360$)\\ 
+   & $7$ & ~ & $-8$ &  $-6.506$ ($2.827$)\\ \hline
+$2000$  & $1$ & $3$ & $-2$ &  $-2.006$  ($0.066$)\\ 
+   & $4$ & ~ & $-5$ &  $-5.083$  ($0.678$) \\
+   & $7$ & ~ & $-8$ &  $-8.371$ ($1.875$) \\ \hline
+$10000$  & $1$ & $3$ & $-2$ & $-2.001$ ($0.027$) \\ 
+   & $4$ & ~ & $-5$ &  $-5.022$ ($0.279$) \\
+   & $7$ & ~ & $-8$ &  $-8.067$ ($0.740$)  \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -540,7 +551,7 @@ Como já discutido anteriormente, para implementação dos estimadores obtidos p
 Nesse contexto, foi utilizado o pacote da plataforma \texttt{R} chamado \texttt{cubature} e, em especial, a função \texttt{adaptIntegrate} deste pacote para resolver a integral referente ao cálculo da distância Triangular. O algoritmo utilizado é uma integração multidimensional adaptativa sobre hipercubos. Abaixo, encontram-se os estimadores obtidos conforme este procedimento e também após ser feito o experimento de Monte Carlo.
 \begin{table}[H]
 \centering
-\caption{Estimadores de Log-Cumulantes} 
+\caption{Estimadores de Distâncias Estocásticas} 
 \begin{tabular}{@{\extracolsep{4pt}}c|c|c|c|c}
 \toprule   
 \multicolumn{1}{c}{\textbf{Amostras}} & \multicolumn{1}{c}{\textbf{Escala}} & \multicolumn{1}{c}{\textbf{Looks}} & \multicolumn{1}{c}{\textbf{Textura}} & \multicolumn{1}{c}{\textbf{Est. Distâncias Estocásticas}} \\
@@ -549,24 +560,24 @@ Nesse contexto, foi utilizado o pacote da plataforma \texttt{R} chamado \texttt{
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{DT}$} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{DT}$ (Desvio Padrão)} \\ 
 \midrule
-200  & 7 & 3 & -2 & -2.037  \\ 
-   & ~ & ~ & -5 & -4.372  \\ 
-   & ~ & ~ & -8 & -6.865  \\ \hline
-2000  & 7 & 3 & -2 & -1.191   \\ 
-   & ~ & ~ & -5 & -4.094   \\
-   & ~ & ~ & -8 & -6.534   \\ \hline
-10000  & 7 & 3 & -2 & -1.194  \\ 
-   & ~ & ~ & -5 & -3.076   \\
-   & ~ & ~ & -8 & -6.538    \\
+$200$  & $1$ & $3$ & $-2$ &  $-2.031$ ($0.331$) \\ 
+   & $4$ & ~ & $-5$ &  $-4.088$ ($1.385$)\\ 
+   & $7$ & ~ & $-8$ &  $-5.594$ ($1.878$)\\ \hline
+$2000$  & $1$ & $3$ & $-2$ &  $-1.334$ ($1.122$) \\ 
+   & $4$ & ~ & $-5$ &  $-3.300$  ($0.803$) \\
+   & $7$ & ~ & $-8$ &  $-5.730$ ($0.813$) \\ \hline
+$10000$  & $1$ & $3$ & $-2$ & $-1.228$ ($0.196$) \\ 
+   & $4$ & ~ & $-5$ &  $-3.360$ ($1.924$) \\
+   & $7$ & ~ & $-8$ &  $-5.482$  ($2.765$) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Comparação dos estimadores implementados}
 
-A seguir estão os gráficos que mostram uma comparação das estimativas providas pelas técnicas de estimação implementadas neste trabalho: Máxima Verossimilhança, Momentos, Log-Cumulantes e Distâncias Estocásticas.
+A seguir estão os gráficos que mostram uma comparação das estimativas providas pelas técnicas de estimação implementadas neste trabalho: Máxima Verossimilhança, Momentos, Log-Cumulantes e Distâncias Estocásticas. Os tamanhos de amostra estão nas abscissas (eixo-x), e estão apresentadas em escala logarítmica para melhor visualização. As estimativas da média são apresentadas com barras de erro que exibem o intervalo de confiança baseado na distribuição Gaussiana com nível de confiança de $95\%$.
 \begin{figure}[H]
      \centering
      \includegraphics[scale=0.5]{plots/ComparisonAlpha-2.pdf}
@@ -586,20 +597,103 @@ A seguir estão os gráficos que mostram uma comparação das estimativas provid
      \label{graf_7}
 \end{figure}
 
+Para o estudo de simulação feito, pode-se perceber através dos gráficos que 3 métodos de estimação conquistaram ótimos resultados e que, de certa forma, se mostraram semelhantes entre si. Tais métodos foram os baseados em Máxima Verossimilhança, Momentos e Log-Momentos e estes apresentaram boa capacidade de convergência para o verdadeiro valor do parâmetro à medida que o número de amostras (tamanho amostral) aumentou. O estimador baseado em mecanismos da Teoria da Informação, mas especificamente na Minimização de Distâncias Estocásticas, foi o que apresentou resultados mais discrepantes em relação aos demais métodos.
 
-\subsection{Fluxograma de execução da rotina de estimação}
- TO DO
+Entretanto, este foi apenas um estudo inicial a respeito das técnicas de estimação de parâmetros implementadas e estão sendo feitos novos planos de simulação e investigação para avaliar o desempenho dos métodos de estimação implementados, bem como analisar suas possíveis restrições e aplicações em um contexto unificado, onde existirá uma rotina de estimação geral que engloba esses métodos e seja capaz de aplicar os mais adequados para cada situação com a mínima intervenção possível do usuário tendo em vista seus pontos fortes e fracos de aplicação.
 
-\section{Conclusões}
- TO DO
+
+\section{Estudo II: Experimento de Monte Carlo mais elaborado}
+
+Agora nessa seção será descrito o segundo experimento de Monte Carlo que foi construído de forma mais minuciosa e elaborada de modo a possibilitar uma análise mais robusta a cerca das técnicas de estimação implementadas. Nesse contexto, temos a seguir uma tabela contendo o espaço de parâmetros utilizado nesta simulação.
+\begin{table}[H]
+\centering
+\caption{Espaço de parâmetros utilizado na simulação}
+\smallskip
+\sisetup{table-format = 3.2}
+\label{tab:tabela_parameters_2}
+\begin{tabular}{c|c}
+\toprule 
+\multicolumn{1}{c|}{Parâmetros} & \multicolumn{1}{c}{Valores}  \\ 
+\midrule
+\rowcolor[gray]{.9} 
+$n$ & $\{30, 100, 1000\}$ \\ \hline
+$\alpha$ & $\{-1.5, -3, -8\}$ \\ \hline
+\rowcolor[gray]{.9} $\gamma^*$ & $\{-\alpha - 1\}$ \\ \hline
+\textit{Looks} & $\{1, 3, 5, 8\}$ \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+Para realizar este experimento de Monte Carlo levou-se em consideração que amostras maiores apresentam maior variabilidade de dados em comparação com amostrar menores, então no contexto das replicações existentes no experimento definiu-se uma constante $R = 100.000$ onde o número de réplicas/repetições de amostras é dado conforme a seguinte fórmula:
+\begin{equation}
+    Rep = [R/n] \label{eq:rep}
+\end{equation}
+Nesse contexto, o número de replicações varia de acordo com cada tamanho de amostra em que amostras menores precisam ser replicadas um número maior de vezes para possibilitar a coleta de maior variabilidade dos dados, enquanto que amostras maiores não necessariamente precisam ser replicadas um número grande de vezes como no caso das amostras menores, sendo suficiente apenas um número de replicações inferior. 
+
+Assim, os estimadores foram gerados com base nesse experimento e foram calculados e comparados tanto o viés denotado por $\hat{B}(\hat{\alpha}) = \alpha_i - \alpha$ quanto o erro quadrático médio. Nas figuras seguintes, "ML", "Mom", "LCum" e "DT" denotam os estimadores baseados em Máxima Verossimilhança (do inglês, Maximum likelihood), Momentos, Log-Cumulantes e Distância Triangular. Os tamanhos amostrais se encontram nas abscissas dos gráficos e, para uma melhor visualização, estão apresentados em uma escala logarítmica. O valor real do parâmetro está presente em cada gráfico representado pela linha de cor vermelha. Abaixo estão os gráficos gerados agrupados pelo número de \textit{Looks}.
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{plots/estimators_L=1.pdf}
+     \caption{Estimativas obtidas para $L=1$}
+     \label{graf_8}
+\end{figure}
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{plots/estimators_L=3.pdf}
+     \caption{Estimativas obtidas para $L=3$}
+     \label{graf_9}
+\end{figure}
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{plots/estimators_L=5.pdf}
+     \caption{Estimativas obtidas para $L=5$}
+     \label{graf_10}
+\end{figure}
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{plots/estimators_L=8.pdf}
+     \caption{Estimativas obtidas para $L=8$}
+     \label{graf_11}
+\end{figure}
+
+Ao analisar os gráficos gerados, podemos perceber que duas técnicas de estimação apresentam, em média, estimadores muito próximos do valor verdadeiro: Máxima Verossimilhança e Distância Triangular. Os gráficos ainda mostram que para valores de $\alpha$ cada vez menores, independentemente do número de \textit{Looks}, as estimativas vão se tornando cada vez discrepantes em relação ao valor verdadeiro. É bastante notável a discrepância dos estimadores de Momentos e Log-Cumulantes Log-Momentos) quando $\alpha = -8$, e, mais especificamente, quando $L = 1$. Não obstante, é perceptível que $\alpha_{ML}$ tem uma tendência sistemática para subestimar o verdadeiro valor de $\alpha$. Além dessas observações, vale salientar que para o valor de $\alpha = -1.5$ as estimativas providas por todas as técnicas se mostraram bem próximas do valor verdadeiro do parâmetro em questão. \citet{FreryStochasticDistances2015} calcularam uma aproximação de primeira ordem de tal viés para um modelo estreitamente relacionado, e os resultados obtidos aqui estão de acordo com aqueles.
+
+Abaixo agora encontram-se as figuras relativas aos erros quadráticos médios que foram calculados durante a experiência de Monte Carlo realizada. 
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{plots/mse_L=1.pdf}
+     \caption{Erros obtidos para $L=1$}
+     \label{graf_12}
+\end{figure}
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{plots/mse_L=3.pdf}
+     \caption{Erros obtidos para $L=3$}
+     \label{graf_13}
+\end{figure}
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{plots/mse_L=5.pdf}
+     \caption{Erros obtidos para $L=5$}
+     \label{graf_14}
+\end{figure}
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{plots/mse_L=8.pdf}
+     \caption{Erros obtidos para $L=8$}
+     \label{graf_15}
+\end{figure}
+
+Nas figuras acima, onde estão mostrados os erros quadráticos médios referentes à cada técnica de estimação, pode-se perceber que, na maioria dos casos, todos os estimadores têm erro quadrático médio (\textit{mse - mean square error}) muito semelhante, não sendo possível afirmar que um deles é sistematicamente o melhor. Essa conclusão de fato evidencia que o estimador baseado em Distância Estocástica apresenta a primeira propriedade de um bom estimador robusto.
+
+\section{Fluxograma de execução da rotina de estimação}
+TO DO
 
 \section{Trabalhos Futuros}
 
-Diante das técnicas de estimação já implementadas com suas respectivas estimativas já exibidas em tabelas e gráficos, os trabalhos futuros consistem agora em pensar no funcionamento da rotina de estimação que encapsula essas técnicas e escolhe a mais adequada para cada situação.
+Diante das técnicas de estimação já implementadas e analisadas conforme as experiências de Monte Carlo realizadas, os trabalhos futuros consistem agora em pensar no funcionamento da rotina de estimação que encapsula essas técnicas e escolhe a mais adequada para cada situação.
 
-Os esforços agora serão direcionados para gerar o fluxograma de execução dessa rotina de estimação, em que por meio deste, podemos ter compreensão clara de como o sistema de estimação se comporta diante de cada situação que lhe aparece.
-
-
+Nesse sentido, os esforços agora serão direcionados para gerar o fluxograma de execução dessa rotina de estimação, em que por meio deste, podemos ter compreensão clara de como o sistema de estimação se comporta diante de cada situação que lhe aparece.
 
 
 \newpage
