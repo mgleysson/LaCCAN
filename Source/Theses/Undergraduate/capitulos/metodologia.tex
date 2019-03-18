@@ -1,0 +1,44 @@
+\mychapter{Metodologia}{cap:metodologia}
+
+As etapas básicas necessárias para executar as tarefas com êxito e alcançar os objetivos propostos neste trabalho são compostas por diversas atividades que vão desde a busca de materiais (artigos, livros, revistas, entre outros) relacionados à temática do projeto até a aplicação dos conhecimentos adquiridos na implementação de \textit{scripts} utilizando a plataforma \texttt{R}.
+
+Logo, para o desenvolvimento da pesquisa foram necessários duas etapas fundamentais: a etapa teórica e a etapa prática de implementação das funções e algoritmos. A primeira consiste em um processo de pesquisa, a partir do qual foram feitas análises e estudos em um conjunto de referências bibliográficas de qualidade, objetivando a ampliação dos conhecimentos que permeiam a área em questão. A segunda consiste em aplicar o conhecimento obtido por meio da implementação em \texttt{R}. Lembrando que essas atividades ocorrem de maneira cíclica em que constantemente é retomada a parte teórica para revisão e aperfeiçoamento do código desenvolvido.
+
+Para a execução das tarefas necessárias de modo a cumprir os objetivos propostos neste trabalho, foram planejadas as seguintes etapas de execução descritas logo a seguir.
+
+\section{Estudo das teorias e conceitos}
+
+O estudo das teorias e conceitos foi realizado a partir da análise de um conjunto de referências bibliográficas de qualidade, visando ampliar os conhecimentos a cerca do tema proposto.
+
+Foram estudados ao longo deste momento, temas fundamentais como imagens SAR, suas propriedades e modelagem estatística \citep{Gao2010StatisticalMO, Clutter1997, Mejail2002}, conceitos relacionados a inferência estatística \citep{CasellaBergerStatisticalInference}, mais precisamente voltada para estimação de parâmetros de modelos para imagens SAR (Lei $G^{0}$) \citep{FreryMinute2004,FreryStochasticDistances2015,Cassetti2013}, Teoria da informação e distâncias estocásticas \citep{StatisticalInferenceBasedonDivergenceMeasures,Shannon48}, conceito de Log-Cumulantes ou Log-Momentos \citep{nicolas2002,krylov2013}, a linguagem de programação \texttt{R} \citep{RCore}, dentre outros temas que se mostraram relevantes para compreender os conceitos que permeiam o tema deste trabalho e desenvolver os algoritmos propostos.
+
+Então, como pode-se perceber, essa primeira parte consistiu em compreender profundamente os conceitos a cerca da temática proposta com o objetivo principal de conhecer técnicas de estimação de parâmetros, suas limitações, possíveis implementações e aplicações, bem como aprender o uso da plataforma \texttt{R}.
+
+\section{Projeto e implementação}
+
+Após o término da revisão bibliográfica da literatura existente, foi dado então início à implementação do trabalho, desenvolvido em \texttt{R}. Dessa forma, foram estudadas técnicas de projeto e implementação de software científico utilizando \texttt{R} para que sempre houvesse o uso de boas práticas de desenvolvimento de software científico.
+
+Para que tal ferramenta seja aplicada na análise de dados é de suma importância realizar a validação numérica. Portanto, a avaliação da qualidade numérica das funcionalidades desenvolvidas foi feita utilizando uma metodologia própria baseada em dados simulados. Como ferramenta para possibilidade de acompanhamento das atividades por parte do orientador utilizou-se o \texttt{Git} para controle de versões e gestão de arquivos.
+
+\section{Protótipos dos algoritmos de estimação}
+
+Esta etapa destinou-se à implementação de protótipos dos algoritmos de estimação estudados: Máxima Verossimilhança, Momentos, Log-Cumulantes e baseado em Distâncias Estocásticas. Após as implementações feitas, os protótipos foram submetidos a testes de acurácia e robustez com conjuntos de dados de propriedades conhecidas para que houvesse a validação dos algoritmos desenvolvidos de modo a garantir o seu correto funcionamento.
+
+Nesta etapa, o experimento ou método de Monte Carlo foi utilizado para análise dos dados gerados. Amostragens aleatórias massivas (várias replicações) foram geradas para obter os resultados numéricos, isto é, sucessivas simulações foram realizadas em um determinado número de vezes. No capítulo \ref{cap:resultados} o experimento Monte Carlo feito neste trabalho será melhor explicado. Este tipo de método é utilizado em simulações estocásticas com diversas aplicações em áreas como a física, matemática e biologia \citep{busto92}. Diante disso, esta técnica tem sido utilizado há bastante tempo como forma de obter aproximações numéricas de funções complexas em que não é viável, ou é mesmo impossível, obter uma solução analítica ou, pelo menos, determinística.
+
+\section{Integração dos algoritmos desenvolvidos}
+
+O objetivo principal deste trabalho consiste em gerar uma rotina que tenha todos os algoritmos de estimação integrados. Dessa forma, a integração dessas técnicas em um método unificado foi feita verificando a aplicação de cada uma para cada caso, como por exemplo, diante dos estudos realizados na literatura e resultados obtidos na prática, a estimação de Log-Cumulantes pode ser bem apropriada para o caso de pequenas amostras.
+
+Com base nesse e em outros critérios definidos, verificando sempre a aplicabilidade de cada técnica de estimação para cada caso em função apenas dos dados de entrada, foi feita a integração desses algoritmos em uma única rotina para que o usuário possa utilizar com a mínima intervenção possível por meio da plataforma \texttt{R}.
+
+Para guiar e auxiliar no desenvolvimento da rotina de estimação com todas as técnicas integradas, foi feito um fluxograma de execução que será apresentado e explicado no capítulo de \ref{cap:resultados}.
+
+
+\section{Otimização, validação e documentação das funções implementadas}
+
+Após o desenvolvimento dos protótipos e algoritmos, foi feita uma otimização no código implementado de modo a facilitar o entendimento e diminuir o custo computacional de execução do código, por meio, por exemplo, da redução do número de variáveis e uso de funções auxiliares provenientes de pacotes (a citar \texttt{stats4}) que facilitaram o desenvolvimento, deixando o código mais otimizado.
+
+Como já citado, é de fundamental importância para tal projeto a verificação da qualidade numérica do software desenvolvido, portanto um dos seus objetivos consistiu em validar as funções por meio de uma bateria de casos de teste para verificar a corretude das funções implementadas e se a rotina de estimação está seguindo corretamente o fluxograma de execução idealizado e projetado.
+
+Foram também desenvolvidos manuais de uso e uma breve documentação das funções implementadas, informando as suas funcionalidades, parâmetros de entrada e o resultado final computado. Todas essas descrições se encontram apresentados no apêndice A deste trabalho.

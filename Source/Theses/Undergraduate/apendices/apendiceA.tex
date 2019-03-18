@@ -1,0 +1,178 @@
+\chapter{Manual de utilização das funções desenvolvidas} \label{apendiceA}
+
+\section{Pacotes necessários}
+
+Para que seja possível utilizar plenamente as funções desenvolvidas ao longo deste trabalho será necessário que os seguintes pacotes estejam instalados no ambiente \textit{RStudio}:
+
+\begin{itemize}
+    \item stats4
+    \item rootSolve
+    \item cubature
+\end{itemize}
+
+Após a instalação, o usuário pode realizar normalmente as chamadas das funções implementadas.
+
+\section{Principais funções desenvolvidas}
+
+%------------------------------------------------------------------------------------------------------------------
+
+Basicamente três funções principais foram desenvolvidas neste trabalho: \textit{densGI0}, \textit{randGI0} e \textit{estimationGI0}. Não estão listadas aqui as funções auxiliares ou subfunções utilizadas para desenvolvimento dessas funções principais, como, por exemplo, na macro função \textit{estimationGI0} temos basicamente quatro funções auxiliares encapsuladas que são dadas pelas implementações dos respectivos algoritmos de estimação desenvolvidos neste trabalho: \textit{MVestim} (estimação por Máxima Verossimilhança), \textit{MOMestim} (estimação por Momentos), \textit{LCUMestim} (estimação por Log-Cumulantes) e \textit{DTestim} (estimação por Distâncias Estocásticas onde a Distância Triangular foi utilizada).  
+
+Vale ressaltar que todas as funções listadas a seguir possuem tratamento de exceções que possam vir a ocorrer decorrentes de entradas inválidas por parte do usuário. Por exemplo, sabemos que o parâmetro $\alpha$ da $G_I^0$ deve ser negativo, dentre outras restrições.
+
+\newpage
+
+\hrulefill   
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabularx}{\textwidth}{ X X}
+\hspace{0.5cm} \textbf{densGI0} & \textit{Retorna a densidade de probabilidade da distribuição $G_I^0$}\\
+\end{tabularx}
+\end{center}
+\end{table} 
+
+\vspace{-0.5cm}
+\hrulefill  
+\vspace{0.5cm}
+
+\textbf{Utilização}
+
+\begin{lstlisting}
+   densGI0(x, alpha, gamma, Looks)
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\textbf{Argumentos}
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabularx}{\textwidth}{X X}
+\hspace{0.5cm} \textit{x} & Vetor contendo os quantis.\\
+\hspace{0.5cm} \textit{alpha} & Parâmetro $\alpha$ da distribuição.\\
+\hspace{0.5cm} \textit{gamma} & Parâmetro $\gamma$ da distribuição..\\
+\hspace{0.5cm} \textit{Looks} & Parâmetro \textit{Looks} da distribuição..\\
+\end{tabularx}
+\end{center}
+\end{table} 
+
+\textbf{Possíveis Exceções}
+
+\vspace{0.5cm}
+
+A mensagem "Entrada Inválida!" será mostrada ao usuário se pelo menos um dos seguintes casos ocorrerem:
+
+\begin{itemize}
+    \item Se o parâmetro \textit{x} não for numérico ou contiver algum valor negativo;
+    \item Se o parâmetro \textit{alpha} não for numérico ou for maior ou igual a $0$;
+    \item Se o parâmetro \textit{gamma} não for numérico ou for menor ou igual a $0$;
+    \item Se o parâmetro \textit{Looks} não for numérico ou for menor que $1$.
+\end{itemize}
+
+\newpage
+
+%------------------------------------------------------------------------------------------------------------------
+
+\hrulefill   
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabularx}{\textwidth}{ X X}
+\hspace{0.5cm} \textbf{randGI0} & \textit{Gera variáveis aleatórias $G_I^0$}\\
+\end{tabularx}
+\end{center}
+\end{table} 
+
+\vspace{-0.5cm}
+\hrulefill  
+\vspace{0.5cm}
+
+\textbf{Utilização}
+
+\begin{lstlisting}
+  randGI0(n, alpha, gamma, Looks)
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\textbf{Argumentos}
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabularx}{\textwidth}{X X}
+\hspace{0.5cm} \textit{n} & Tamanho da amostra (núm. de observações).\\
+\hspace{0.5cm} \textit{alpha} & Parâmetro $\alpha$ da distribuição.\\
+\hspace{0.5cm} \textit{gamma} & Parâmetro $\gamma$ da distribuição.\\
+\hspace{0.5cm} \textit{Looks} & Parâmetro \textit{Looks} da distribuição.\\
+\end{tabularx}
+\end{center}
+\end{table} 
+
+\textbf{Possíveis Exceções}
+
+\vspace{0.5cm}
+
+A mensagem "Entrada Inválida!" será mostrada ao usuário se pelo menos um dos seguintes casos ocorrerem:
+
+\begin{itemize}
+    \item Se o parâmetro \textit{n} não for numérico ou for negativo;
+    \item Se o parâmetro \textit{alpha} não for numérico ou for maior ou igual a $0$;
+    \item Se o parâmetro \textit{gamma} não for numérico ou for menor ou igual a $0$;
+    \item Se o parâmetro \textit{Looks} não for numérico ou for menor que $1$.
+\end{itemize}
+
+\newpage
+
+%------------------------------------------------------------------------------------------------------------------
+
+\hrulefill   
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabularx}{\textwidth}{ X X}
+\hspace{0.5cm} \textbf{estimationGI0} & \textit{Rotina de estimação integrada com os algoritmos de estimação}\\
+\end{tabularx}
+\end{center}
+\end{table} 
+
+\vspace{-0.5cm}
+\hrulefill  
+\vspace{0.5cm}
+
+\textbf{Utilização}
+
+\begin{lstlisting}
+   estimationGI0(algorithm, alpha, Looks, sampleSize)
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\textbf{Argumentos}
+
+\begin{table}[!ht]
+\begin{center}
+\begin{tabularx}{\textwidth}{X X}
+\hspace{0.5cm} \textit{algorithm} & Algoritmo de estimação a ser utilizado, cujas opções são NULL, "MV", "MOM", "LCUM" ou "DT". \\
+\hspace{0.5cm} \textit{alpha} & Parâmetro $\alpha$ da distribuição. \\
+\hspace{0.5cm} \textit{Looks} & Parâmetro $\gamma$ da distribuição. \\
+\hspace{0.5cm} \textit{sampleSize} & Parâmetro \textit{Looks} da distribuição. \\
+\end{tabularx}
+\end{center}
+\end{table} 
+
+\textbf{Possíveis Exceções}
+
+\vspace{0.5cm}
+
+A mensagem "Entrada Inválida!" será mostrada ao usuário se pelo menos um dos seguintes casos ocorrerem:
+
+\begin{itemize}
+    \item Se o parâmetro \textit{algorithm} for diferente de todas das opções acima;
+    \item Se o parâmetro \textit{alpha} não for numérico ou for maior ou igual a $0$;
+    \item Se o parâmetro \textit{gamma} não for numérico ou for menor ou igual a $0$;
+    \item Se o parâmetro \textit{Looks} não for numérico ou for menor que $1$.
+\end{itemize}
+
+
+

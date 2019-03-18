@@ -1,0 +1,146 @@
+\documentclass[tcc]{ic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hypersetup{
+colorlinks = {true},
+linktocpage = {false},
+plainpages = {false},
+linkcolor = {black},
+citecolor = {Blue},
+urlcolor = {Red},
+unicode = {true},
+pdftitle = {TCC Marcos},
+pdfauthor = {Marcos Gleysson Silva do Nascimento},
+pdfsubject = {Trabalho de Conclusão de Curso},
+pdfkeywords={Estatística Computacional, Imagens SAR, linguagem de programação R},
+pdfcreator = {LaTeX2e},
+pdffitwindow = {false},
+pdfstartview = {FitH},
+pdftoolbar = {true},
+pdfpagemode = {UseOutlines},
+pdfview = {XYZ null null null}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\titulo{Desenvolvimento de Bibliotecas para Simulação e Inferência em Modelos para Imagens SAR: Um estudo a cerca da Lei $G^{0}$}
+
+\autor{Marcos Gleysson Silva do Nascimento}{mgsn@laccan.ufal.br}{}
+
+\orientador{Prof.\ Dr.\ Alejandro Cesar Frery Orgambide}{}{Instituto de Computação}{Universidade Federal de Alagoas}
+
+\examinador{A decidir}{}{A decidir}{A decidir}
+
+\examinadorDois{A decidir}{}{A decidir}{A decidir}
+
+\dataMesAno{Abril}{2019}
+
+\begin{document}
+
+\selectlanguage{portuguese}
+
+\capa
+
+\begin{agradecimentos}
+
+TO DO
+
+
+\vspace{2em}
+\begin{epigraph}{Autor, \textit{Obra}}
+`` TO DO ''
+\end{epigraph}
+
+
+
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{epigraph}{Autor, \textit{Obra}}
+`` TO DO ''
+\end{epigraph}
+
+\begin{resumo}
+
+Conforme \citet{FreryMinute2004}, o sensoriamento remoto por microondas pode ser usado para obter informações sobre cenas inacessíveis e/ou não observáveis. Radares de abertura sintética (SARs) são usados para monitorar regiões terrestres inacessíveis, como a Amazônia, os polos e assim por diante.
+%
+Dessa forma, a modelagem estatística é essencial para a interpretação de imagens SAR. Tem como objetivo descrever essas imagens através de métodos estatísticos e revelar as suas características. Diversos modelos estatísticos foram desenvolvidos para descrever dados de imagens SAR, sendo o principal deles o Modelo Multiplicativo que é estudado neste trabalho. As imagens são formadas detectando o eco do alvo (\textit{backscatter}) e, nesse processo, um ruído é introduzido devido a fenômenos de interferência. A esse ruído, damos o nome de \textit{speckle}. As propriedades desse ruído são bem descritas pelo Modelo Multiplicativo.
+%
+Vale ressaltar que para utilizar métodos para a interpretação de imagens SAR, uma adequada distribuição estatística deve ser adotada para modelagem. É nesse contexto que esse trabalho se insere, já que visa o desenvolvimento de rotinas para simulação e estimação de modelos para imagens SAR, direcionando o foco para a Lei $G^{0}$ que constitui o Modelo Universal para dados ruidosos, focando em especial nos dados SAR em intensidade.  
+%
+Para atingir os objetivos, foram implementados e comparados dois principais métodos de geração de variáveis $G_I^{0}$: o primeiro refere-se à geração de variáveis baseada no Modelo Multiplicativo, enquanto que o segundo aborda o Teorema de Inversão onde as variáveis são geradas pela inversa da função de distribuição acumulada. Além disso, foram estudados e implementados quatro algoritmos de estimação do parâmetro que indexa a distribuição $G_I^{0}$ para modelar dados SAR: Máxima Verossimilhança, Momentos Fracionários, Log-Cumulantes e Distâncias Estocásticas.
+%
+Após implementação dessas técnicas, foram feitos Experimentos de Monte Carlo e comparações com a literatura de modo a fornecer uma base para a integração dessas técnicas em um método unificado que seja capaz de aplicar as mais adequadas para cada caso com a mínima intervenção possível do usuário utilizando a plataforma \texttt{R}. Foram executados uma bateria de testes e, de fato, a rotina de estimação implementada funcionou corretamente em todos os casos testados provendo para o usuário boas estimativas.
+
+\vspace{2em}
+\textbf{Palavras-chave}: Estatística Computacional; Imagens SAR; Linguagem \texttt R.
+
+\end{resumo}
+
+\selectlanguage{english}
+\begin{abstract}
+
+According to \citet{FreryMinute2004}, microwave remote sensing can be used to obtain information about inaccessible and / or unobservable scenes. Synthetic aperture radars (SARs) are used to monitor inaccessible terrestrial regions such as the Amazon, the poles, and so on.
+%
+Thus, statistical modeling is essential for the interpretation of SAR images. It aims to describe these images through statistical methods and reveal their characteristics. Several statistical models were developed to describe data from SAR images, the main one being the Multiplicative Model that is studied in this work. The images are formed by detecting the echo of the target (\textit{backscatter}) and, in this process, a noise is introduced due to interference phenomena. To this noise, we give the name of \ textit {speckle}. The properties of this noise are well described by the Multiplicative Model.
+%
+It is worth mentioning that to use methods for the interpretation of SAR images, an adequate statistical distribution must be adopted for modeling. It is in this context that this work is inserted, since it aims at the development of routines for simulation and estimation of models for SAR images, directing the focus to $G_I^{0}$ law that constitutes the Universal Model for noisy data, focusing in particular on SAR data in intensity .
+%
+To achieve the objectives, two main methods of generation of $G_I^{0}$ variables were implemented and compared: the first refers to the generation of variables based on the Multiplicative Model, while the second deals with the Inversion Theorem where the variables are generated by the inverse of the function accumulated distribution. In addition, four parameter estimation algorithms that index the $G_I^{0}$ distribution to model SAR data were studied and implemented: Maximum Likelihood, Fractional Moments, Log-Cumulators and Stochastic Distances.
+%
+After implementation of these techniques, Monte Carlo Experiments and comparisons with the literature were done in order to provide a basis for the integration of these techniques in a unified method that is able to apply the most appropriate for each case with the least possible intervention of the user using the \texttt{R} platform. A battery of tests was performed and, in fact, the implemented routine of implantation worked correctly in all the cases tested providing to the user good estimates.
+
+\vspace{2em}
+\textbf{Keywords}: Computational Statistics; SAR Images; Language \texttt R.
+
+\end{abstract}
+
+\selectlanguage{portuguese}
+
+\tableofcontents
+
+\listoffigures
+\addcontentsline{toc}{table}{Lista de Figuras}
+
+\listoftables
+\addcontentsline{toc}{table}{Lista de Tabelas}
+
+\inicio
+
+\include{capitulos/introducao}
+\include{capitulos/fundamentacao}
+\include{capitulos/metodologia}
+\include{capitulos/resultados}
+\include{capitulos/conclusoes}
+
+\selectlanguage{portuguese}
+\appendix
+\include{apendices/apendiceA}
+
+% 
+\begin{raggedright}
+\bibliographystyle{plainnat}
+\renewcommand{\bibsection}{
+\chapter*{\begin{flushright}Referências bibliográficas\end{flushright}}
+\addcontentsline{toc}{chapter}{Referências bibliográficas}
+}
+\lhead{REFERÊNCIAS BIBLIOGRÁFICAS}
+%\bibliography{references}
+\bibliography{../../../Bibliography/references}
+\newpage\lhead{\rightmark}
+\end{raggedright}
+
+
+% \chapter*{}
+% \vfill
+% \singlespacing
+% \thispagestyle{empty}
+% \begin{center}
+% Este trabalho foi redigido em {\large\LaTeX}\ utilizando uma modifição do estilo \textsf{IC-UFAL}.
+% As referências bibliográficas foram preparadas no \textsf{JabRef} e administradas pelo {\large\BibTeX}\ com o estilo \textsf{plainnat}.
+% O texto utiliza fonte \NomeFonte em corpo de 12 pontos.
+% A numeração dos capítulos segue com a familia tipográfica \NomeFonteCap.\\ 
+% \vspace{.5cm}
+% %\includegraphics[width=.5\textwidth]{Eye_of_Horus_bw}
+% \end{center}
+
+\end{document}
