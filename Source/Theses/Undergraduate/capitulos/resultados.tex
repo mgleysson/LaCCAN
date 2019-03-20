@@ -16,7 +16,7 @@ Ainda segundo os autores, um estudo de simulação deve ser cuidadosamente plane
 
 \subsection{Implementação do estimador de Máxima Verossimilhança}
 
-Para a implementação do estimador de Máxima Verossimilhança foi proposto o uso do pacote \texttt{stats4} que disponibiliza a função \texttt{mle} que pode ser utilizada para se obter os estimadores de Máxima Verossimilhança tanto de distribuições populares, por exemplo, $Normal$, $Gama$ e $t$, quanto de distribuições que não possuem implementação nativa na plataforma \texttt{R}.
+Para a implementação do estimador de Máxima Verossimilhança foi proposto o uso do pacote \texttt{stats4} que disponibiliza a função \texttt{mle} que pode ser utilizada para se obter os estimadores de Máxima Verossimilhança tanto de distribuições populares, por exemplo, \textit{Normal}, \textit{Gama} e \textit{t}, quanto de distribuições que não possuem implementação nativa na plataforma \texttt{R}.
 
 Foi feita a implementação dos estimadores de MV para o modelo $G_I^0$ utilizando esse pacote. Nessa implementação, utilizou-se dados simulados gerados pelo gerador de variáveis aleatórias $G_I^0$ implementado a partir do Modelo Multiplicativo, onde as variáveis aleatórias são geradas a partir da razão de variáveis aleatórias Gama ($\Gamma$).
 
@@ -60,7 +60,7 @@ $\alpha$ & $\{-2, -5, -8\}$ \\ \hline
 \end{tabular}
 \end{table}
 
-Nesse experimento foi feito um total de 1000 replicações onde 1000 amostras foram geradas para cada ponto do espaço de parâmetros considerado na tabela anterior. Dessa forma, foi produzido o vetor de estimadores, $\{\widewidehat{\alpha}_{1}, \widewidehat{\alpha}_{2}, \dots, \widewidehat{\alpha}_{1000} \}$ para cada valor do parâmetro $\alpha$ e para cada otimizador analisado. Com esses vetores em mãos, foram então calculados, para cada caso, a média das mil estimativas, $ \overline{\widehat{\alpha}} = (1000)^{-1} \sum_{i=1}^{1000} \widehat{\alpha_{i}} $, e o desvio padrão correspondente para medir a dispersão dos dados obtidos em torno da média. 
+Nesse experimento foi feito um total de 1000 replicações onde 1000 amostras foram geradas para cada ponto do espaço de parâmetros considerado na tabela anterior. Dessa forma, foi produzido o vetor de estimadores, $(\widehat{\alpha}_{1}, \widehat{\alpha}_{2}, \dots, \widehat{\alpha}_{1000})$ para cada valor do parâmetro $\alpha$ e para cada otimizador analisado. Com esses vetores em mãos, foram então calculados, para cada caso, a média das mil estimativas, $ \overline{\widehat{\alpha}} = (1000)^{-1} \sum_{i=1}^{1000} \widehat{\alpha_{i}} $, e o desvio padrão correspondente para medir a dispersão dos dados obtidos em torno da média. 
 
 Abaixo encontram-se as tabelas com os resultados dos estimadores de Máxima Verossimilhança, Momentos, Log-Cumulantes e Distâncias Estocásticas para o parâmetro $\alpha$ da $G_I^0$.
 \begin{table}[H]
@@ -74,7 +74,7 @@ Abaixo encontram-se as tabelas com os resultados dos estimadores de Máxima Vero
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widewidehat{\alpha}_{MV}$ (Desvio Padrão)} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{MV}$ (Desvio Padrão)} \\ 
 \midrule
 $200$  & $1$ & $3$ & $-2$ &  $-2.145$ ($0.234$) \\ 
    & $4$ & ~ & $-5$ &  $-5.453$ ($1.547$) \\ 
@@ -100,7 +100,7 @@ $10000$  & $1$ & $3$ & $-2$ & $-2.008$ ($0.026$)  \\
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widewidehat{\alpha}_{Mom12}$ (Desvio Padrão)} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{Mom12}$ (Desvio Padrão)} \\ 
 \midrule
 $200$  & $1$ & $3$ & $-2$ &  $-2.306$ ($1.172$) \\ 
    & $4$ & ~ & $-5$ &  $-5.486$ ($4.270$)\\ 
@@ -126,7 +126,7 @@ $10000$  & $1$ & $3$ & $-2$ & $-2.003$ ($0.055$) \\
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widewidehat{\alpha}_{LCum}$ (Desvio Padrão)} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{LCum}$ (Desvio Padrão)} \\ 
 \midrule
 $200$  & $1$ & $3$ & $-2$ &  $-2.040$ ($0.226$)\\ 
    & $4$ & ~ & $-5$ &  $-5.699$ ($3.360$)\\ 
@@ -152,7 +152,7 @@ $10000$  & $1$ & $3$ & $-2$ & $-2.001$ ($0.027$) \\
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widewidehat{\alpha}_{DT}$ (Desvio Padrão)} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{DT}$ (Desvio Padrão)} \\ 
 \midrule
 $200$  & $1$ & $3$ & $-2$ &  $-2.031$ ($0.331$) \\ 
    & $4$ & ~ & $-5$ &  $-4.088$ ($1.385$)\\ 
@@ -291,7 +291,7 @@ Na subseção seguinte temos o fluxograma do funcionamento geral da rotina de es
 
 \subsection{Fluxograma de Execução da Rotina de Estimação}
 
-Abaixo encontra-se o fluxograma de execução propriamente dito. O seguinte raciocínio foi levado em consideração para a construção desse fluxograma:
+Abaixo encontra-se o fluxograma de execução propriamente dito. Como pode-se perceber, a rotina de estimação desenvolvida é tolerante a falhas. Tolerância a falhas é a propriedade que permite que sistemas computacionais ou outros tipos de sistemas continuem a operar normalmente mesmo após ocorrência de falhas em alguns de seus componentes, seguindo, nesse caso, um fluxo de execução alternativo. Nesse sentido, a rotina desenvolvida sempre vai tentar retornar para o usuário um valor para o estimador, independente de falha em algum algoritmo, a não ser que a entrada de dados definida por ele seja inválida. O seguinte raciocínio foi levado em consideração para a construção desse fluxograma:
 \begin{itemize}
     \item No início temos a interação com o usuário onde o mesmo tem a opção de escolher um algoritmo em especial para executar a estimação ou então não indicar opção alguma e deixar o sistema escolher a mais apropriada para cada caso.
     \item Se foi escolhido um algoritmo específico, o sistema vai tentar executar esse algoritmo e, se não ocorrer falhas, retorna o estimador calculado. Se houver falha, o sistema também saberá como agir verificando o tamanho da amostra e seguindo adiante até a execução de outro estimador.

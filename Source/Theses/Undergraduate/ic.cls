@@ -72,12 +72,12 @@ de Curso e Dissertacoes]
 
 %\RequirePackage{yfonts} %
 
-\RequirePackage{tikz} % Pacote para desenhos (fig:diagrama)
+%\RequirePackage{tikz} % Pacote para desenhos (fig:diagrama)
 \RequirePackage{xcolor} % Definição das cores
 \RequirePackage{bm} % Pacote para criação do modelo de RSsF (fig:model_rssf)
 \RequirePackage{float} %
 \RequirePackage{pdfcomment} % Comentário do Abstract
-\RequirePackage[pdftex]{hyperref} %
+%\RequirePackage[pdftex]{hyperref} %
 \RequirePackage{fancybox}
 \RequirePackage{multicol}
 
