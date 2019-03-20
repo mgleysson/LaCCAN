@@ -230,19 +230,19 @@ Pesquisadores têm utilizado os parâmetros estimados pelo método de log-cumula
 
 Seja $Z$ uma variável aleatória contínua com função densidade de probabilidade $f_Z(z, \theta)$ definida em $\mathbb{R}^{+}$. O Método de log-cumulantes, baseado na transformada de Mellin de $f_Z(z, \theta)$, é definido como:
 \begin{equation}
-    \phi_{Z}(s) = \int_{0}^{\infty} u^{s-1} f_{Z}(u, \theta)\mathrm{d}u = E(Z^{s-1}) \label{eq:logcum}
+    \phi_{Z}(s) = \int_{0}^{\infty} u^{s-1} f_{Z}(u, \theta)du = E(Z^{s-1}) \label{eq:logcum}
 \end{equation}
 com $s$ sendo um número complexo com norma unitária \citep{nicolas2002}.
 
 Existem dois conceitos importantes para a construção de estimadores utilizando o método de log-cumulantes que são os log-momentos e log-cumulantes de ordem $v$. É possível obter expressões analíticas para os log-momentos e log-cumulantes de ordem $v$ por simples derivações de $\phi_{Z}(s)$, avaliadas em $s = 1$. O log-momento de ordem $v$ pode ser definido como:
 \begin{equation}
-    \widetilde{m}_{v} = \frac{\mathrm{d}^{v}\phi_{Z}(s)}{\mathrm{d}s^{v}}\Bigr|_{\substack{s=1}} \quad , \quad  v \in \mathbb{N}
+    \widetilde{m}_{v} = \frac{d^{v}\phi_{Z}(s)}{ds^{v}}\Bigr|_{\substack{s=1}} \quad , \quad  v \in \mathbb{N}
     \label{eq:logmomV}
 \end{equation}
 
 Tomando como base o logaritmo natural($ln$) de $\phi_{Z}(s)$, pode-se obter o log-cumulante de ordem $v$ de forma bem similar e análoga à equação anterior. Temos que:
 \begin{equation}
-    \widetilde{k}_{v} = \frac{\mathrm{d}^{v}\psi_Z(s)}{\mathrm{d}s^{v}}\Bigr|_{\substack{s=1}} \quad , \quad  v \in \mathbb{N}
+    \widetilde{k}_{v} = \frac{d^{v}\psi_Z(s)}{ds^{v}}\Bigr|_{\substack{s=1}} \quad , \quad  v \in \mathbb{N}
     \label{eq:logcumV}
 \end{equation}
 com $\psi_Z(s) = \log(\phi_{Z}(s))$.
@@ -309,7 +309,7 @@ De maneira formal, a divergência pode ser definida como uma função não negat
 
 Uma imagem pode ser vista como um conjunto de regiões, em que cada uma possui seus pixels descritos por uma variável aleatória que, por sua vez, segue uma determinada distribuição. Assim, \citet{Nascimento2010} propuseram medidas de contraste baseadas em divergências estocásticas para quantificar diferenças entre áreas de imagens SAR. 
 
-Segundo \citet{tese_abraao}, após os primeiros conceitos de divergência, deu-se início ao estudo de classes desta medida. Entre elas pode-se citar a classe de divergências $\phi$ ou família de divergências $\phi$ desenvolvida no trabalho de \citet{Csiszár67}. Esta classe é caracterizada por um procedimento analítico sistematizado e formalizado que permite se obter medidas de divergência a partir da escolha apropriada de uma função convexa $\phi$. Esse estudo foi posteriormente estendido por \citet{salicruetal1993}, no qual foi inserida nesse contexto a função $h$ que permitiu a geração de expressões para uma quantidade maior de divergências conhecidas em relação ao trabalho anterior feito por Csiszár. A nova família de divergências ficou conhecida como família $h - \phi$. 
+Segundo \citet{tese_abraao}, após os primeiros conceitos de divergência, deu-se início ao estudo de classes desta medida. Entre elas pode-se citar a classe de divergências $\phi$ ou família de divergências $\phi$ desenvolvida no trabalho de \citet{Csiszar67}. Esta classe é caracterizada por um procedimento analítico sistematizado e formalizado que permite se obter medidas de divergência a partir da escolha apropriada de uma função convexa $\phi$. Esse estudo foi posteriormente estendido por \citet{salicruetal1993}, no qual foi inserida nesse contexto a função $h$ que permitiu a geração de expressões para uma quantidade maior de divergências conhecidas em relação ao trabalho anterior feito por Csiszár. A nova família de divergências ficou conhecida como família $h - \phi$. 
 
 Sabemos que, por meio de medidas de divergência, é possível se obter expressões para distâncias entre distribuições de probabilidade que, por sua vez, recebem a denominação de distâncias estocásticas ou simplesmente distâncias. De modo geral, uma distância estocástica é uma divergência que além de satisfazer as propriedades de não-negatividade e definitividade, satisfaz a propriedade de simetria. Conforme estudo feito no livro de \citet{StatisticalInferenceBasedonDivergenceMeasures}, a definição formal de distância estocástica será dada a seguir. 
 \begin{quote}
