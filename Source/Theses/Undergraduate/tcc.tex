@@ -1,4 +1,8 @@
+%!TEX program = xelatex
 \documentclass[tcc]{ic}
+
+\usepackage{microtype}
+\usepackage{siunitx}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \hypersetup{
@@ -22,7 +26,7 @@ pdfview = {XYZ null null null}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\titulo{Desenvolvimento de Bibliotecas para Simulação e Inferência em Modelos para Imagens SAR: Um estudo a cerca da Lei $G^{0}$}
+\titulo{Desenvolvimento de Bibliotecas para Simulação e Inferência em Modelos para Imagens SAR: Um estudo acerca da Lei $G^{0}$}
 
 \autor{Marcos Gleysson Silva do Nascimento}{mgsn@laccan.ufal.br}{}
 
@@ -61,15 +65,29 @@ A decidir
 
 \begin{resumo}
 
-Conforme \citet{FreryMinute2004}, o sensoriamento remoto por microondas pode ser usado para obter informações sobre cenas inacessíveis e/ou não observáveis. Radares de abertura sintética (SARs) são usados para monitorar regiões terrestres inacessíveis, como a Amazônia, os polos e assim por diante.
+Conforme \citet{FreryMinute2004}, o sensoriamento remoto por microondas pode ser usado para obter informações sobre cenas inacessíveis e/ou não observáveis.
+%%% ACF É mais adequado citar um livro de sensoriamento remoto com SAR do que esse artigo, que é bem específico
+Radares de abertura sintética (SAR -- \textit{Synthetic Aperture Radar}) são usados para monitorar regiões terrestres inacessíveis ou com intensa cobertura de nuvens, como a Amazônia e os polos.
 %
-Dessa forma, a modelagem estatística é essencial para a interpretação de imagens SAR. Tem como objetivo descrever essas imagens através de métodos estatísticos e revelar as suas características. Diversos modelos estatísticos foram desenvolvidos para descrever dados de imagens SAR, sendo o principal deles o Modelo Multiplicativo que foi utilizado neste trabalho. Tais imagens são formadas detectando o eco do alvo (\textit{backscatter}) e, nesse processo, um ruído é introduzido devido a fenômenos de interferência. A esse ruído, damos o nome de \textit{speckle}. As propriedades desse ruído são bem descritas pelo Modelo Multiplicativo.
+%%% ACF "Desta maneira" não cabe, pois não há uma concatenação lógica entre as duas partes
+Dessa forma, a modelagem estatística é essencial para a interpretação de imagens SAR. 
+Tem como objetivo descrever essas imagens através de métodos estatísticos e revelar as suas características. 
+Diversos modelos estatísticos foram desenvolvidos para descrever dados de imagens SAR, sendo o principal deles o Modelo Multiplicativo que foi utilizado neste trabalho. 
+Tais imagens são formadas detectando o eco do alvo (\textit{backscatter}) e, nesse processo, um ruído é introduzido devido a fenômenos de interferência. 
+A esse ruído damos o nome de \textit{speckle}. 
+As propriedades desse ruído são bem descritas pelo Modelo Multiplicativo.
 %
-Vale ressaltar que para utilizar métodos para a interpretação de imagens SAR, uma adequada distribuição estatística deve ser adotada para modelagem dos dados. É nesse contexto que esse trabalho se insere, já que visa o desenvolvimento de rotinas para simulação e estimação de modelos para imagens SAR, direcionando o foco para a Lei $G^{0}$ que constitui o Modelo Universal para dados ruidosos, focando em especial nos dados SAR em intensidade.  
+Vale ressaltar que para utilizar métodos para a interpretação de imagens SAR, uma adequada distribuição estatística deve ser adotada para modelagem dos dados. 
+É nesse contexto que esse trabalho se insere, já que visa o desenvolvimento de rotinas para simulação e estimação de modelos para imagens SAR, direcionando o foco para a Lei $G^{0}$ que constitui o Modelo Universal para dados ruidosos, focando em especial nos dados SAR em intensidade.
+%%% ACF Apoie-se em uma referência para dizer que é um "modelo universal".
 %
-Para atingir os objetivos, foi implementada a função de densidade de probabilidade da distribuição $G_I^0$, além de uma função para gerar variáveis aleatórias que seguem essa distribuição, visto que ambas são fundamentais para realizar simulações. Além disso, do ponto de vista inferencial, foram estudados e implementados $4$ algoritmos de estimação do parâmetro que indexa a distribuição $G_I^{0}$ para modelar dados SAR: Máxima Verossimilhança, Momentos Fracionários, Log-Cumulantes e Distâncias Estocásticas.
+Para atingir os objetivos, foi implementada a função de densidade de probabilidade da distribuição $G_I^0$, além de uma função para gerar variáveis aleatórias que seguem essa distribuição, visto que ambas são fundamentais para realizar simulações. 
+Além disso, do ponto de vista inferencial, foram estudados e implementados quatro algoritmos de estimação do parâmetro que indexa a distribuição $G_I^{0}$ para modelar dados SAR: Máxima Verossimilhança, Momentos Fracionários, Log-Cumulantes e Distâncias Estocásticas.
 %
-Após implementação desses algoritmos, estudos foram realizados para prover integração em um método unificado que seja capaz de aplicar as mais adequadas para cada caso com a mínima intervenção possível do usuário utilizando a plataforma \texttt{R}. Foram executados uma bateria de testes e, de fato, a rotina de estimação implementada funcionou corretamente em todos os casos testados, além de fornecer para o usuário estimativas precisas.
+%%% ACF A frase a seguir não está clara: a quem se refere "as mais adequadas"?
+Após a implementação desses algoritmos, estudos foram realizados para prover integração em um método unificado que seja capaz de aplicar as mais adequadas para cada caso com a mínima intervenção possível do usuário utilizando a plataforma \texttt{R}. 
+%%% ACF Problema de concordância de número e de gênero
+Foram executados uma bateria de testes e, de fato, a rotina de estimação implementada funcionou corretamente em todos os casos testados, além de fornecer para o usuário estimativas precisas.
 
 \vspace{2em}
 \textbf{Palavras-chave}: Estatística Computacional; Imagens SAR; Linguagem \texttt R.
@@ -78,6 +96,7 @@ Após implementação desses algoritmos, estudos foram realizados para prover in
 
 \selectlanguage{english}
 \begin{abstract}
+%%% ACF Refazer após correção do resumo
 
 According to \citet{FreryMinute2004}, microwave remote sensing can be used to obtain information about inaccessible and / or unobservable scenes. Synthetic aperture radars (SARs) are used to monitor inaccessible terrestrial regions such as the Amazon, the poles, and so on.
 %
