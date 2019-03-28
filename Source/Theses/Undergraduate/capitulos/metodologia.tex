@@ -12,7 +12,7 @@ O estudo das teorias e conceitos foi realizado a partir da análise de um conjun
 
 Foram estudados ao longo deste momento, temas fundamentais como imagens SAR, suas propriedades e modelagem estatística \citep{Gao2010StatisticalMO, Clutter1997, Mejail2002}, conceitos relacionados a inferência estatística \citep{CasellaBergerStatisticalInference}, mais precisamente voltada para estimação de parâmetros de modelos para imagens SAR (Lei $G^{0}$) \citep{FreryMinute2004,FreryStochasticDistances2015,Cassetti2013}, Teoria da informação e distâncias estocásticas \citep{StatisticalInferenceBasedonDivergenceMeasures,Shannon48}, conceito de Log-Cumulantes ou Log-Momentos \citep{nicolas2002,krylov2013}, a linguagem de programação \texttt{R} \citep{RCore}, dentre outros temas que se mostraram relevantes para compreender os conceitos que permeiam o tema deste trabalho e desenvolver os algoritmos propostos.
 
-Então, como pode-se perceber, essa primeira parte consistiu em compreender os conceitos a cerca da temática proposta com o objetivo principal de conhecer técnicas de estimação de parâmetros, suas limitações, possíveis implementações e aplicações, bem como aprender o uso da plataforma \texttt{R}.
+Então, como pode-se perceber, essa primeira parte consistiu em compreender os conceitos a cerca da temática proposta com o objetivo principal de conhecer técnicas de estimação de parâmetros, suas limitações, possíveis implementações e aplicações, bem como aprender o uso da plataforma \texttt{R}. Além disso, tais estudos iniciais forneceram bases teóricas necessárias para a compreensão e implementação das rotinas referentes à simulação.
 
 \section{Projeto e implementação}
 
@@ -20,9 +20,9 @@ Após o término da revisão bibliográfica da literatura existente, foi dado en
 
 Para que tal ferramenta seja aplicada na análise de dados é de suma importância realizar a validação numérica. Portanto, a avaliação da qualidade numérica das funcionalidades desenvolvidas foi feita utilizando uma metodologia própria baseada em dados simulados. Como ferramenta para possibilidade de acompanhamento das atividades por parte do orientador utilizou-se o \texttt{Git} para controle de versões e gestão de arquivos.
 
-\section{Protótipos dos algoritmos de estimação}
+\section{Protótipos dos algoritmos de estimação e simulação}
 
-Esta etapa destinou-se à implementação de protótipos dos algoritmos de estimação estudados: Máxima Verossimilhança, Momentos, Log-Cumulantes e baseado em Distâncias Estocásticas. Após as implementações feitas, os protótipos foram submetidos a testes de acurácia e robustez com conjuntos de dados de propriedades conhecidas para que houvesse a validação dos algoritmos desenvolvidos de modo a garantir o seu correto funcionamento.
+Esta etapa destinou-se à implementação de protótipos dos algoritmos de estimação estudados: Máxima Verossimilhança, Momentos, Log-Cumulantes e baseado em Distâncias Estocásticas. Ademais, algoritmos referentes à simulação também foram implementados. Após as implementações feitas, os protótipos foram submetidos a testes de acurácia e robustez com conjuntos de dados de propriedades conhecidas para que houvesse a validação dos algoritmos desenvolvidos de modo a garantir o seu correto funcionamento. 
 
 Nesta etapa, o experimento ou método de Monte Carlo foi utilizado para análise dos dados gerados. Amostragens aleatórias massivas (várias replicações) foram geradas para obter os resultados numéricos, isto é, sucessivas simulações foram realizadas em um determinado número de vezes. 
 No capítulo~\ref{cap:resultados} o experimento Monte Carlo feito neste trabalho será melhor explicado. Este tipo de método é utilizado em simulações estocásticas com diversas aplicações em áreas como a física, matemática e biologia \citep{busto92}. Diante disso, esta técnica tem sido utilizado há bastante tempo como forma de obter aproximações numéricas de funções complexas em que não é viável, ou é mesmo impossível, obter uma solução analítica ou, pelo menos, determinística.
@@ -42,4 +42,4 @@ Após o desenvolvimento dos protótipos e algoritmos, foi feita uma otimização
 
 Como já citado, é de fundamental importância para tal projeto a verificação da qualidade numérica do software desenvolvido, portanto um dos seus objetivos consistiu em validar as funções por meio de uma bateria de casos de teste para verificar a corretude das funções implementadas e se a rotina de estimação está seguindo corretamente o fluxograma de execução idealizado e projetado.
 
-Foram também desenvolvidos manuais de uso e uma breve documentação das funções implementadas, informando as suas funcionalidades, parâmetros de entrada e o resultado final computado. Todas essas descrições se encontram apresentados no apêndice~\ref{apendiceA} deste trabalho.
+Uma breve documentação das principais funções implementadas foi desenvolvida, informando as suas respectivas funcionalidades, parâmetros de entrada, o resultado final computado e os possíveis casos de exceção. Essas descrições se encontram no apêndice~\ref{apendiceA} deste trabalho.

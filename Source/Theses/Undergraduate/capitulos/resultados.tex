@@ -1,10 +1,46 @@
 \mychapter{Resultados e Discussões}{cap:resultados}    
 
-Nesta seção serão descritos os resultados obtidos com a implementação das bibliotecas para simulação e inferência em modelos para imagens SAR, mais precisamente o modelo $G_I^0$. Em suma, estão descritos, para as técnicas de estimação descritas neste relatório, os procedimentos utilizados para a implementação dos respectivos estimadores: desde os pacotes utilizados na plataforma \texttt{R} e os cálculos necessários e implementados no desenvolvimento do estimador até os gráficos gerados com os resultados obtidos.
+Nesta seção serão descritos os resultados obtidos com o estudo e a implementação das bibliotecas para simulação e inferência em modelos para imagens SAR, mais precisamente o modelo $G_I^0$. Em suma, serão descritos o estudo de simulação feito em que dois métodos de geração de variáveis aleatórias $G_I^0$ foram implementados e comparados (o primeiro baseado nas diretrizes do Modelo Multiplicativo e o segundo baseado no Teorema da Inversão) e, além disso, também serão debatidos os resultados referentes às técnicas de estimação e os procedimentos utilizados para a implementação dos respectivos estimadores: desde os pacotes utilizados na plataforma \texttt{R} até os gráficos gerados com os resultados obtidos.
 
 Neste trabalho foram desenvolvidos dois experimentos de Monte Carlo em que várias amostras foram geradas obedecendo uma determinada grade de parâmetros utilizada na simulação. O primeiro experimento realizado foi mais simples com menos variação no espaço de parâmetros da $G_I^0$, enquanto que o segundo foi realizado de um modo mais completo, seguindo uma grade parâmetros a ser testada mais variada e mais elaborada. Ambos os experimentos estão descritos a seguir.
 
 Do ponto de vista da construção da rotina de estimação, também será mostrado nesse capítulo um fluxograma de execução da mesma em que todos os caminhos percorridos e executados são exibidos de forma clara e intuitiva por meio dessa representação gráfica.
+
+\section{Estudo de simulação desenvolvido}
+
+No contexto de simulação, como já explicado, foi desenvolvido um estudo comparativo entre dois métodos distintos de geração de variáveis aleatórias que seguem a distribuição $G_I^0$. O primeiro segue as diretrizes do Modelo Multiplicativo e, como já debatido no capítulo~\ref{cap:fundamentacao}, as variáveis podem ser geradas a partir de variáveis aleatórias Gama, mais precisamente a partir da razão das mesmas. O segundo por sua vez foi implementado tomando como base a inversa da função de distribuição acumulada da lei $G_I^0$.
+
+Após a implementação dos métodos de geração, o objetivo consistiu de descobrir qual a melhor maneira de gerar variáveis aleatórias $G_I^0$. O critério de avaliação adotado foi o desempenho em termos de tempo de execução. Para medição dos tempos utilizou-se o pacote do \texttt{R} chamado \textit{microbenchmark} que possui alta qualidade nesse processo e que executa 100 vezes, por padrão, cada método de geração e fornece as medidas. Para realizar os testes em ambos os métodos foram considerados o seguinte espaço de parâmetros da tabela~\ref{tab:tabela_parameters_3}:
+\begin{table}[H]
+\centering
+\caption{Espaço de parâmetros usado na avaliação dos métodos de geração}
+\sisetup{table-format = 3.2}
+\label{tab:tabela_parameters_3}
+\begin{tabular}{c|c}
+\toprule 
+\multicolumn{1}{c|}{Parâmetros} & \multicolumn{1}{c}{Valores}  \\ 
+\midrule
+\rowcolor[gray]{.9} 
+$n$ & $\{10000\}$ \\ \hline
+$\alpha$ & $\{-1.5, -3, -8\}$ \\ \hline
+\rowcolor[gray]{.9} $\gamma$ & $\{1\}$ \\ \hline
+\textit{Looks} & $\{1, 3, 5, 8\}$ \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+Com base nessa tabela de parâmetros, foram gerados um total de doze gráficos de tempo de execução baseado no número de combinações possíveis para os três parâmetros da distribuição $G_I^0$. Por meio desses gráficos foi possível comparar ambos os métodos segundo o seu desempenho em termos de tempo de execução. Na figura~\ref{graf_runtimes} estão dois dos gráficos gerados. Os demais apresentaram comportamento similar.
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.45]{plots/Runtime_1.pdf}
+     \includegraphics[scale=0.45]{plots/Runtime_2.pdf}
+     \caption{Tempos de execução dos métodos de geração implementados}
+     \label{graf_runtimes}
+\end{figure}
+
+Como pode-se perceber por meio da análise dos gráficos, o método de geração de variáveis aleatórias $G_I^0$ baseado no Modelo Multiplicativo obteve desempenho bem superior em termos de tempo de execução quando comparado com o Método baseado no Teorema da Inversão. No primeiro gráfico em que 10.000 amostras de variáveis aleatórias $G_I^0(-1.5, 1, 1)$ foram geradas, o Modelo Multiplicativo chegou a ser, em média, 9.5x mais rápido do que o Teorema da Inversão. Já no segundo gráfico em que o mesmo número de amostras foi utilizado e foram utilizados os parâmetros $G_I^0(-8, 1, 8)$ a vantagem desse método ficou ainda maior, alcançando a marca de aproximadamente 14x, em média, mais rápido. Para os demais casos testados, a vantagem do Modelo Multiplicativo prevaleceu.
+
+Como conclusão, o Método de geração de variáveis aleatórias baseado no Modelo Multiplicativo foi utilizado no estudo de inferência desenvolvido no presente trabalho, visto que apresentou desempenho muito superior em todos os casos testados.
 
 \section{Introdução ao Método de Monte Carlo}
 
@@ -53,8 +89,7 @@ A minimização, por ser mais simples, foi feita sem o uso de funções auxiliar
 \section{Experimento I: Monte Carlo inicial}
 
 Depois de implementados os algoritmos de estimação, um experimento inicial de Monte Carlo foi projetado para avaliar a acurácia e precisão (em relação ao valor real do parâmetro $\alpha$) de cada uma das técnicas no cálculo dos estimadores. 
-O espaço de parâmetros utilizado consiste na grade formada pela tabela a seguir: 
-%%% ACF Evite "a seguir"; forneça o número da tabela
+O espaço de parâmetros utilizado consiste na grade formada pela tabela~\ref{tab:tabela_parameters}: 
 variamos o parâmetro de textura $\alpha$ de modo a englobar a simulação de regiões extremamente texturizadas, de textura moderada e alvos sem textura. 
 O parâmetro $n$, número de amostras, também foi variado de forma a representar amostras consideravelmente pequenas, médias e grandes. 
 O parâmetro \textit{Looks} teve seu valor constante no experimento. 
@@ -81,7 +116,7 @@ $\alpha$ & $\{-2, -5, -8\}$ \\ \hline
 Nesse experimento foi feito um total de 1000 replicações onde 1000 amostras foram geradas para cada ponto do espaço de parâmetros considerado na tabela anterior. Dessa forma, foi produzido o vetor de estimadores, $(\widehat{\alpha}_{1}, \widehat{\alpha}_{2}, \dots, \widehat{\alpha}_{1000})$ para cada valor do parâmetro $\alpha$ e para cada otimizador analisado. Com esses vetores em mãos, foram então calculados, para cada caso, a média das mil estimativas, $ \overline{\widehat{\alpha}} = (1000)^{-1} \sum_{i=1}^{1000} \widehat{\alpha_{i}} $, e o desvio padrão correspondente para medir a dispersão dos dados obtidos em torno da média. 
 
 %%% ACF Evite "abaixo"
-Abaixo encontram-se as tabelas com os resultados dos estimadores de Máxima Verossimilhança, Momentos, Log-Cumulantes e Distâncias Estocásticas para o parâmetro $\alpha$ da $G_I^0$.
+As tabelas~\ref{tab_maxver}, \ref{tab:mom}, \ref{tab:logcum} e \ref{tab:dt} mostram, respectivamente, os resultados dos estimadores de Máxima Verossimilhança, Momentos, Log-Cumulantes e Distâncias Estocásticas para o parâmetro $\alpha$ da $G_I^0$.
 
 \begin{table}[H]
 \centering
@@ -94,8 +129,7 @@ Abaixo encontram-se as tabelas com os resultados dos estimadores de Máxima Vero
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\overline{\widehat{\alpha}_{MV}}$ (Desvio Padrão)} \\ 
-%%% ACF Repare que a tabela mostra a média das estimativas, por isso coloquei \overline; corrija todas as tabelas
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\overline{\widehat{\alpha}}_{MV}$ (Desvio Padrão)} \\ 
 \midrule
 $200$  & $1$ & $3$ & $-2$ &  $-2.145$ ($0.234$) \\ 
    & $4$ & ~ & $-5$ &  $-5.453$ ($1.547$) \\ 
@@ -108,6 +142,7 @@ $10000$  & $1$ & $3$ & $-2$ & $-2.008$ ($0.026$)  \\
    & $7$ & ~ & $-8$ &  $-8.046$ ($0.339$)   \\
 \bottomrule
 \end{tabular}
+\label{tab_maxver}
 \end{table}
 
 \begin{table}[H]
@@ -121,7 +156,7 @@ $10000$  & $1$ & $3$ & $-2$ & $-2.008$ ($0.026$)  \\
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{Mom12}$ (Desvio Padrão)} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\overline{\widehat{\alpha}}_{Mom12}$ (Desvio Padrão)} \\ 
 \midrule
 $200$  & $1$ & $3$ & $-2$ &  $-2.306$ ($1.172$) \\ 
    & $4$ & ~ & $-5$ &  $-5.486$ ($4.270$)\\ 
@@ -134,6 +169,7 @@ $10000$  & $1$ & $3$ & $-2$ & $-2.003$ ($0.055$) \\
    & $7$ & ~ & $-8$ &  $-8.303$ ($1.633$)  \\
 \bottomrule
 \end{tabular}
+\label{tab:mom}
 \end{table}
 
 \begin{table}[H]
@@ -147,7 +183,7 @@ $10000$  & $1$ & $3$ & $-2$ & $-2.003$ ($0.055$) \\
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{LCum}$ (Desvio Padrão)} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\overline{\widehat{\alpha}}_{LCum}$ (Desvio Padrão)} \\ 
 \midrule
 $200$  & $1$ & $3$ & $-2$ &  $-2.040$ ($0.226$)\\ 
    & $4$ & ~ & $-5$ &  $-5.699$ ($3.360$)\\ 
@@ -160,6 +196,7 @@ $10000$  & $1$ & $3$ & $-2$ & $-2.001$ ($0.027$) \\
    & $7$ & ~ & $-8$ &  $-8.067$ ($0.740$)  \\
 \bottomrule
 \end{tabular}
+\label{tab:logcum}
 \end{table}
 
 \begin{table}[H]
@@ -173,7 +210,7 @@ $10000$  & $1$ & $3$ & $-2$ & $-2.001$ ($0.027$) \\
  \cmidrule{3-3} 
  \cmidrule{4-4} 
  \cmidrule{5-5} 
-\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\widehat{\alpha}_{DT}$ (Desvio Padrão)} \\ 
+\multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{$\gamma$} & \multicolumn{1}{c}{$L$} & \multicolumn{1}{c}{$\alpha$} & \multicolumn{1}{c}{$\overline{\widehat{\alpha}}_{DT}$ (Desvio Padrão)} \\ 
 \midrule
 $200$  & $1$ & $3$ & $-2$ &  $-2.031$ ($0.331$) \\ 
    & $4$ & ~ & $-5$ &  $-4.088$ ($1.385$)\\ 
@@ -186,9 +223,10 @@ $10000$  & $1$ & $3$ & $-2$ & $-1.228$ ($0.196$) \\
    & $7$ & ~ & $-8$ &  $-5.482$  ($2.765$) \\
 \bottomrule
 \end{tabular}
+\label{tab:dt}
 \end{table}
 
-A seguir estão os gráficos que mostram uma comparação das estimativas providas pelas técnicas de estimação implementadas neste trabalho: Máxima Verossimilhança, Momentos, Log-Cumulantes e Distâncias Estocásticas. Nas figuras seguintes, "MLE" denota os estimadores baseados em Máxima Verossimilhança (do inglês, \textbf{M}aximum \textbf{L}ikelihood \textbf{E}stimation). Os tamanhos de amostra estão nas abscissas (eixo-x), e estão apresentadas em escala logarítmica para melhor visualização. As estimativas da média são apresentadas com barras de erro que exibem o intervalo de confiança baseado na distribuição Gaussiana com nível de confiança de \SI{95}{\percent}.
+As figuras~\ref{graf_5}, \ref{graf_6} e \ref{graf_7} mostram uma comparação das estimativas providas pelas técnicas de estimação implementadas neste trabalho: Máxima Verossimilhança, Momentos, Log-Cumulantes e Distâncias Estocásticas. Nas figuras seguintes, "MLE" denota os estimadores baseados em Máxima Verossimilhança (do inglês, \textbf{M}aximum \textbf{L}ikelihood \textbf{E}stimation). Os tamanhos de amostra estão nas abscissas (eixo-x), e estão apresentadas em escala logarítmica para melhor visualização. As estimativas da média são apresentadas com barras de erro que exibem o intervalo de confiança baseado na distribuição Gaussiana com nível de confiança de \SI{95}{\percent}.
 
 \begin{figure}[H]
      \centering
@@ -217,7 +255,7 @@ Entretanto, este foi apenas um estudo inicial a respeito das técnicas de estima
 \section{Experimento II: Monte Carlo mais elaborado}
 
 Agora nessa seção será descrito o segundo experimento de Monte Carlo que foi construído de forma mais minuciosa e elaborada de modo a possibilitar uma análise mais profunda acerca das técnicas de estimação implementadas. 
-Nesse contexto, temos a seguir uma tabela contendo o espaço de parâmetros utilizado nesta simulação.
+Nesse contexto, temos a tabela~\ref{tab:tabela_parameters_2} contendo o espaço de parâmetros utilizado nesta simulação.
 
 \begin{table}[H]
 \centering
@@ -244,9 +282,9 @@ Para realizar este experimento de Monte Carlo levou-se em consideração que amo
 \end{equation}
 Assim, o número de replicações varia de acordo com cada tamanho de amostra em que amostras menores precisam ser replicadas um número maior de vezes para possibilitar a coleta de maior variabilidade dos dados, enquanto que amostras maiores não necessariamente precisam ser replicadas um número grande de vezes como no caso das amostras menores, sendo suficiente apenas um número de replicações inferior. 
 
-Desta maneira, os estimadores foram gerados com base nesse experimento e foram calculados e comparados tanto o viés denotado por $\widehat{B}(\widehat{\alpha}) = \alpha_i - \alpha$ 
+Desta maneira, os estimadores foram gerados com base nesse experimento. A estimativa do viés, denotada por $\widehat{B}(\widehat{\alpha}) = \overline{\widehat{\alpha_i}} - \alpha$, 
 %%% ACF Diferencie o viés teórico da estimativa do viés. A equação acima está errada para ambos.
-quanto o erro quadrático médio para análise da acurácia. Nas figuras seguintes, "ML", "Mom", "LCum" e "DT" denotam os estimadores baseados em Máxima Verossimilhança (do inglês, \textbf{M}aximum \textbf{L}ikelihood), Momentos, Log-Cumulantes e Distância Triangular. Os tamanhos amostrais se encontram nas abscissas dos gráficos e, para uma melhor visualização, estão apresentados em uma escala logarítmica. O valor real do parâmetro está presente em cada gráfico representado pela linha de cor vermelha. Abaixo estão os gráficos gerados agrupados pelo número de \textit{Looks}.
+e o erro quadrático médio foram calculados e comparados para análise da acurácia. Nas figuras seguintes, "ML", "Mom", "LCum" e "DT" denotam os estimadores baseados em Máxima Verossimilhança (do inglês, \textbf{M}aximum \textbf{L}ikelihood), Momentos, Log-Cumulantes e Distância Triangular. Os tamanhos amostrais se encontram nas abscissas dos gráficos e, para uma melhor visualização, estão apresentados em uma escala logarítmica. O valor real do parâmetro está presente em cada gráfico representado pela linha de cor vermelha. Abaixo estão os gráficos gerados agrupados pelo número de \textit{Looks}.
 \begin{figure}[H]
      \centering
      \includegraphics[scale=0.5]{plots/estimators_L=1.pdf}
@@ -272,7 +310,7 @@ quanto o erro quadrático médio para análise da acurácia. Nas figuras seguint
      \label{graf_11}
 \end{figure}
 
-Abaixo agora encontram-se as figuras relativas aos erros quadráticos médios que foram calculados durante a experiência de Monte Carlo realizada. 
+As figuras~\ref{graf_12}, \ref{graf_13}, \ref{graf_14} e \ref{graf_15} são relativas aos erros quadráticos médios que foram calculados durante a experiência de Monte Carlo realizada. 
 \begin{figure}[H]
      \centering
      \includegraphics[scale=0.5]{plots/mse_L=1.pdf}
@@ -301,8 +339,7 @@ Abaixo agora encontram-se as figuras relativas aos erros quadráticos médios qu
 Ao analisar todos os gráficos gerados, podemos perceber que duas técnicas de estimação apresentam, em média, estimadores muito próximos do valor verdadeiro: Máxima Verossimilhança e Distância Triangular. Os gráficos ainda mostram que para valores de $\alpha$ cada vez menores, independentemente do número de \textit{Looks}, as estimativas vão se tornando cada vez discrepantes em relação ao valor verdadeiro. É bastante notável a discrepância dos estimadores de Momentos e Log-Cumulantes quando $\alpha = -8$, e, mais especificamente, quando $L = 1$. 
 
 Não obstante, é perceptível que 
-%%% ACF Estimador?
-$\alpha_{ML}$ tem uma tendência sistemática para subestimar o verdadeiro valor de $\alpha$. Além dessas observações, vale salientar que para o valor de $\alpha = -1.5$ as estimativas providas por todas as técnicas se mostraram bem próximas do valor verdadeiro do parâmetro em questão. \citet{FreryStochasticDistances2015} calcularam uma aproximação de primeira ordem de tal viés para um modelo estreitamente relacionado, e os resultados obtidos aqui estão de acordo com aqueles.
+$\widehat{\alpha}_{ML}$ tem uma tendência sistemática para subestimar o verdadeiro valor de $\alpha$. Além dessas observações, vale salientar que para o valor de $\alpha = -1.5$ as estimativas providas por todas as técnicas se mostraram bem próximas do valor verdadeiro do parâmetro em questão. \citet{FreryStochasticDistances2015} calcularam uma aproximação de primeira ordem de tal viés para um modelo estreitamente relacionado, e os resultados obtidos aqui estão de acordo com aqueles.
 
 Vale ressaltar ainda que há possibilidade de uma eventual falta de convergência inerente a todos os algoritmos de estimação, visto que nem sempre tais algoritmos são extremamente precisos no cálculo e/ou podem falhar resultando em estimadores bem discrepantes do valor real ou simplesmente não conseguir encontrar a solução, devido, por exemplo, a não existência de raízes das equações lineares que os algoritmos de Momentos e Log-Cumulantes utilizam ou a falha na otimização dos algoritmos de Máxima Verossimilhança e Distância Triangular.
 
@@ -321,14 +358,13 @@ Na subseção seguinte temos o fluxograma do funcionamento geral da rotina de es
 
 \subsection{Fluxograma de Execução da Rotina de Estimação}
 
-%%% ACF Sem "abaixo" 
-Abaixo encontra-se o fluxograma de execução propriamente dito. Como pode-se perceber, a rotina de estimação desenvolvida é tolerante a falhas. Tolerância a falhas é a propriedade que permite que sistemas computacionais ou outros tipos de sistemas continuem a operar normalmente mesmo após ocorrência de falhas em alguns de seus componentes, seguindo, nesse caso, um fluxo de execução alternativo. Nesse sentido, a rotina desenvolvida sempre vai tentar retornar para o usuário um valor para o estimador, independente de falha em algum algoritmo, a não ser que a entrada de dados definida por ele seja inválida. O seguinte raciocínio foi levado em consideração para a construção desse fluxograma:
+A figura~\ref{fig_fluxograma} apresenta o fluxograma de execução propriamente dito. Como pode-se perceber, a rotina de estimação desenvolvida é tolerante a falhas. Tolerância a falhas é a propriedade que permite que sistemas computacionais ou outros tipos de sistemas continuem a operar normalmente mesmo após ocorrência de falhas em alguns de seus componentes, seguindo, nesse caso, um fluxo de execução alternativo. Nesse sentido, a rotina desenvolvida sempre vai tentar retornar para o usuário um valor para o estimador, independente de falha em algum algoritmo, a não ser que a entrada de dados definida por ele seja inválida. O seguinte raciocínio foi levado em consideração para a construção desse fluxograma:
 \begin{itemize}
-    \item No início temos a interação com o usuário onde o mesmo tem a opção de escolher um algoritmo em especial para executar a estimação ou então não indicar opção alguma e deixar o sistema escolher a mais apropriada para cada caso.
+    \item No início temos a interação com o usuário onde o mesmo tem a opção de escolher um algoritmo em especial para executar a estimação ou então não indicar opção alguma (opção nula) e deixar o sistema escolher a mais apropriada para cada caso.
     \item Se foi escolhido um algoritmo específico, o sistema vai tentar executar esse algoritmo e, se não ocorrer falhas, retorna o estimador calculado. Se houver falha, o sistema também saberá como agir verificando o tamanho da amostra e seguindo adiante até a execução de outro estimador.
-    \item Se não foi escolhido um algoritmo específico ou se houver falha no passo anterior, há a verificação do tamanho da amostra da entrada. Se $n < 200$, parte-se para o método de Log-Cumulantes que se mostrou apropriado para trabalhar com amostras pequenas. O sistema vai tentar executar esse método e, se não houver falhas, retorna o estimador calculado. Se houver falha, parte-se para a verificação do número de \textit{Looks} e o sistema segue adiante até a execução de outro estimador.
-    \item Se o tamanho da amostra for maior ou igual que 200 ($n \geq 200$) ou se houver falha no passo anterior, há a verificação do número de \textit{Looks}. No caso em que $L \leq 5$ executa-se a estimação por Máxima Verossimilhança que forneceu resultados bem precisos nesse caso e o estimador é calculado, se não houver falhas. Se falhar, parte-se para a verificação da textura da região.
-    \item No caso em que temos $L > 5$ ou se houver falha no passo anterior, faz-se a verificação da textura por meio do parâmetro $\alpha$. A estimação por Distâncias Estocásticas utiliza métodos de minimização que são mais estáveis e possuem menor erro nos casos em que temos um número grande de \textit{Looks} e valores próximos de zero do parâmetro $\alpha$ que correspondem a regiões extremamente rugosas da imagem, conforme aborda \citet{Cassetti2013} em seu trabalho. Assim, o sistema vai tentar executar esse algoritmo de Distâncias Estocásticas e exibir o resultado. Se houver falhas, parte-se para o método dos Momentos. 
+    \item Se não foi escolhido um algoritmo específico ou se houver falha no passo anterior, há a verificação do tamanho da amostra da entrada. Se $n$ < $200$, parte-se para o método de Log-Cumulantes que se mostrou apropriado para trabalhar com amostras pequenas. O sistema vai tentar executar esse método e, se não houver falhas, retorna o estimador calculado. Se houver falha, parte-se para a verificação do número de \textit{Looks} e o sistema segue adiante até a execução de outro estimador.
+    \item Se o tamanho da amostra for maior ou igual que $200$ ($n \geq 200$) ou se houver falha no passo anterior, há a verificação do número de \textit{Looks}. No caso em que $L \leq 5$ executa-se a estimação por Máxima Verossimilhança que forneceu resultados bem precisos nesse caso e o estimador é calculado, se não houver falhas. Se falhar, parte-se para a verificação da textura da região.
+    \item No caso em que temos $L$ > $5$ ou se houver falha no passo anterior, faz-se a verificação da textura por meio do parâmetro $\alpha$. A estimação por Distâncias Estocásticas utiliza métodos de minimização que são mais estáveis e possuem menor erro nos casos em que temos um número grande de \textit{Looks} e valores próximos de zero do parâmetro $\alpha$ que correspondem a regiões extremamente rugosas da imagem, conforme aborda \citet{Cassetti2013} em seu trabalho. Assim, o sistema vai tentar executar esse algoritmo de Distâncias Estocásticas e exibir o resultado. Se houver falhas, parte-se para o método dos Momentos. 
     \item Por sua vez, o método dos momentos vai ser executado no caso em que o parâmetro $\alpha \leq -3$ ou se houver falha no passo anterior e, caso não ocorra falhas, o resultado será exibido. Se houver falhas, executa-se a estimação pelo algoritmo de Máxima Verossimilhança (foi o que apresentou os melhores resultados no geral) e exibe-se o resultado. Se esse algoritmo falhar, exibe-se a mensagem de erro para o usuário e solicita-se para o mesmo tentar novamente com dados válidos.
 \end{itemize}
 %%% ACF Verifique por que < e > não aparecem no PDF
@@ -337,6 +373,6 @@ Abaixo encontra-se o fluxograma de execução propriamente dito. Como pode-se pe
      \centering
      \includegraphics[width=\linewidth]{plots/FluxogramaDeExecucao-A4.pdf}
      \caption{Fluxograma de execução da rotina de estimação}
-     \label{fig1}
+     \label{fig_fluxograma}
 \end{figure}
 

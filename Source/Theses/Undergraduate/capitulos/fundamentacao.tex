@@ -13,7 +13,7 @@ Este último foi utilizado neste trabalho.
 Ademais, o tipo de detecção do sinal de retorno em um sistema SAR convencional pode ser linear ou quadrático. 
 Deste modo, a imagem do terreno pode ser formada tanto em amplitude (detecção linear) quanto em intensidade (detecção quadrática) \citep{dissert_lucca}. 
 
-Nesse cenário, o imageamento por RADAR consiste na emissão de pulsos de microondas a intervalos regulares sobre a região alvo e da recuperação dos sinais de retorno provenientes da interação entre os pulsos eletromagnéticos e a região alvo à medida que o sensor se desloca.  
+Nesse cenário, o imageamento por radar consiste na emissão de pulsos de microondas a intervalos regulares sobre a região alvo e da recuperação dos sinais de retorno provenientes da interação entre os pulsos eletromagnéticos e a região alvo à medida que o sensor se desloca.  
 
 Estudos feitos por \citet{Clutter1997} e \citet{Gao2010StatisticalMO} caracterizam as regiões de imagens SAR quanto ao grau de textura ou homogeneidade apresentado e são elencadas nos seguintes tipos:
 \begin{description}
@@ -38,7 +38,9 @@ O campo aleatório $Y$ leva em consideração que as imagens SAR são o resultad
 
 Então, nesse contexto, o Modelo Multiplicativo se mostra adequado para modelagem de dados SAR, já que o modelo empregado  deve ser capaz de separar tal ruído do que seria efetivamente a resposta do alvo na direção do sensor (\textit{backscatter}) e o presente modelo atende à essa restrição, sendo o mais utilizado para modelar dados SAR. 
 
-Conforme proposto e avaliado por \citet{Clutter1997}, a família de distribuições $G$ pode ser utilizada com sucesso para descrever os dados contaminados pelo ruído (\textit{speckle}) e, assim, a apresenta como ``Modelo Universal'' já que, através dela, é possível realizar a modelagem de dados SAR para o caso geral (regiões com diferentes graus de homogeneidade). 
+Conforme proposto e avaliado por \citet{Clutter1997}, a família de distribuições $G$ pode ser utilizada com sucesso para descrever os dados contaminados pelo ruído (\textit{speckle}).
+Através dela, é possível realizar a modelagem de dados SAR para o caso geral (regiões com diferentes graus de homogeneidade).
+A Lei $G^0$ foi denominada no trabalho de \citet{FreryMinute2004} como sendo o ``Modelo Universal'' para dados ruidosos. 
 %%% ACF A denominação "universal" não foi proposta nesse artigo. Revise a literatura.
 Dessa forma, os dados ruidosos foram descritos no modelo multiplicativo usando a família $G$ de distribuições que é capaz de descrever áreas extremamente  melhor que a distribuição $K$.
 Nesse contexto, existem os casos especiais mais simples que têm se mostrado úteis na modelagem de áreas com diferentes graus de homogeneidade, como é o caso da distribuição $G_I^0$, e possuem a vantagem de tornar menos complicada a estimação dos parâmetros das distribuições. 
@@ -58,11 +60,26 @@ Nesse contexto, conforme explica \citet{dissert_torres}, a principal finalidade 
 
 Como discutido anteriormente, no Modelo Multiplicativo há a suposição de que o valor observado em cada pixel é a ocorrência de uma variável aleatória $Z$, formada pelo produto de duas variáveis aleatórias independentes, a primeira delas é dada por $X$ que consiste na variável aleatória que modela o \textit{backscatter} e a segunda é dada por $Y$ que consiste na variável aleatória que modela o \textit{speckle}.
 
-Conforme \citet{FreryStochasticDistances2015}, para dados SAR monopolarizados e no caso da distribuição $G_I^0$, o \textit{speckle} é modelado como uma variável aleatória \textit{Gama} ($\Gamma$), com parâmetro de forma $L \geq 1$, que corresponde ao número de \textit{Looks}, e média unitária, ou seja, o \textit{speckle} ($Y$) é modelado seguindo a distribuição dada por $\Gamma(L,1)$. 
-O \textit{backscatter} ($X$), por sua vez, é modelado obedecendo a uma recíproca da lei \textit{Gama}, isto é, $\Gamma^{-1}(\alpha,\gamma)$. 
-Com base nessas diretrizes provenientes do Modelo Multiplicativo, foi possível construir um método de geração variáveis aleatórias $G_I^0$, representadas pelo retorno $Z$, bastante útil nas simulações que foram realizadas ao longo deste trabalho, haja vista que a geração de variáveis aleatórias é imprescindível em qualquer programa de simulação.
+Conforme \citet{FreryStochasticDistances2015}, para dados SAR monopolarizados e no caso da distribuição $G_I^0$, o \textit{speckle} é modelado como uma variável aleatória \textit{Gama} ($\Gamma$), com parâmetro de forma $L \geq 1$, que corresponde ao número de \textit{Looks}, e média unitária, ou seja, o \textit{speckle} ($Y$) é modelado seguindo a distribuição dada por $\Gamma(L,1)$.
+O \textit{backscatter} ($X$), por sua vez, é modelado obedecendo a uma recíproca da lei \textit{Gama}, isto é, $\Gamma^{-1}(\alpha,\gamma)$. Se $X$ segue essa distribuição, então temos a seguinte relação $X = \frac{1}{{X}'}$, em que, por sua vez, ${X}'$  segue a distribuição $\Gamma(-\alpha, \gamma)$. 
 
-Desse modo, temos que, se $Z \sim G_I^0(\alpha, \gamma, L)$, então sua função de densidade de probabilidade é dada por
+Com base nessas diretrizes provenientes do Modelo Multiplicativo, foi possível construir um método de geração variáveis aleatórias $G_I^0$ baseado na razão de variáveis aleatórias Gama, representadas pelo retorno $Z$. Desse modo, a geração por meio desse método se dá pela seguinte fórmula que utiliza a relação $X = \frac{1}{{X}'}$ dada acima:
+\begin{equation}
+    Z = XY = \frac{Y}{X'}
+\end{equation}
+em que $Y \sim \Gamma(L,1)$ e $X' \sim \Gamma(-\alpha, \gamma)$. 
+
+Além disso, neste trabalho foi construído um segundo método de geração de variáveis aleatórias $G_I^0$ que posteriormente foi comparado, em termos de desempenho (tempo de execução), com o método de geração baseado no Modelo Multiplicativo descrito acima.
+Esse método alternativo é baseado no Teorema da Inversão em que as variáveis foram geradas com base na inversa da função de distribuição acumulada.
+\citet{Mejail2002} provaram que a família de distribuições $G^0$ é uma reparametrização da lei Fisher-Snedekor $\mathcal{F}$. Sendo assim, suas funções de distribuição acumuladas estão relacionadas:
+\begin{equation}
+    F_{G_I^0(\alpha, \gamma, L)}(z) = \Upsilon_{2L,-2\alpha} \left ( \frac{-\alpha z}{\gamma} \right )
+\end{equation}
+em que $\Upsilon_{s,t}$ é a função de distribuição acumulada de uma variável aleatória que segue a distribuição de Fisher-Snedekor $\mathcal{F}_{s,t}$ com $s$ e $t$ graus de liberdade. \citet{SamplingfromtheGI0Distribution2018} também utilizaram esse método de geração e, conforme os autores, a fórmula descrita acima pode ser utilizada para gerar amostras a partir da lei $G_I^0(\alpha, \gamma, L)$ e para obter quantis.
+
+Tais métodos de geração de variáveis aleatórias foram bastante úteis nas simulações que foram realizadas ao longo deste trabalho, haja vista que a geração de variáveis aleatórias é imprescindível em qualquer programa de simulação. 
+
+Temos que, se $Z \sim G_I^0(\alpha, \gamma, L)$, então sua função de densidade de probabilidade é dada por
 \begin{equation}
     f_Z(z; \alpha, \gamma, \textit{L})= \frac{L^L\Gamma(L-\alpha)z^{L-1}}{\gamma^\alpha\Gamma(-\alpha)\Gamma(L)(\gamma + zL)^{L-\alpha}}, \label{eq:fdpGI0}
 \end{equation}
@@ -80,33 +97,50 @@ No processo de estimação, podemos fazer simplificações para reduzir a comple
 
 Uma característica crucial da distribuição caracterizada por \eqref{eq:fdpGI0} é que seus parâmetros são interpretáveis: $\gamma$ é um parâmetro de escala e o número de \textit{Looks} é conhecido antecipadamente ou é estimado para a imagem inteira usando alvos estendidos (amostras muito grandes). Uma das características mais importantes da distribuição $G_I^0$ é a interpretação de seu parâmetro $\alpha$ que está relacionado com a rugosidade ou homogeneidade do alvo. Valores próximos de $0$, tipicamente maiores que $-3$, sugerem alvos extremamente texturizados ou heterogêneos, como zonas urbanas. Em situações intermediárias, à medida que o valor diminui, há o indicativo de regiões com textura moderada ou heterogêneas e produzem geralmente $\alpha$ $\in$ [$-6$,$-3$]. Exemplos de regiões desse tipo são as áreas irregulares, como zonas florestais. Alvos sem textura ou homogêneos geralmente produzem $\alpha \in (-\infty, -6)$ como é o caso de regiões lisas, por exemplo, pastagem, culturas e campos queimados. Esta é a razão pela qual a precisão na estimativa do parâmetro $\alpha$ é tão importante.
 
-A figura a seguir apresenta as curvas de densidade da distribuição $G_I^0$ para determinados parâmetros.
-% GI0 Densities
+Vale reforçar que sistemas que empregam iluminação coerente são usados para explorar regiões inacessíveis e/ou inobserváveis (a superfície de Vênus, o interior do corpo humano, o fundo do mar, áreas sob nebulosidade, etc.). É, portanto, de suma importância poder fazer inferências confiáveis sobre o tipo de alvo em análise, uma vez que informações visuais raramente estão disponíveis.
+
+As figuras a seguir exibem as curvas de densidade da distribuição $G_I^0$ para diferentes parâmetros de textura ($\alpha$), considerando a escala linear e semilogarítmica para as densidades.
+%%% Arquivo: GI0Densities.pdf 
 \begin{figure}[H]
      \centering
      \includegraphics[scale=0.5]{plots/GI0Densities.pdf}
-     \caption{Densidades da distribuição $G_I^0(\alpha, -\alpha - 1, 3)$, com $\alpha \in \left \{  -8.0, -3.0, -1.5 \right \}$}
-     \label{graf_1}
+     \caption{Densidades da distribuição $G_I^0(\alpha, -\alpha - 1, 3)$, com $\alpha \in \left \{  -8.0, -3.0, -1.5 \right \}$ em escala linear}
+     \label{graf_densGI0}
 \end{figure}
-%%% ACF Os gráficos devem estar em português.
-%%% ACF A cada gráfico associe o arquivo e linha que o produz, como um comentário.
-%%% ACF Ilustre também as densidades em escala semilogarítmica, acrescente a densidade gama de parâmetro de forma 3 (o caso limite para $\alpha\to-\infty$) 
-%%% ACF Faça outro gráfico mostrando a variação com o número de looks, mantendo a média constante
+%%% Arquivo: GI0DensitiesSemiLog.pdf 
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{plots/GI0DensitiesSemiLog.pdf}
+     \caption{Densidades da distribuição $G_I^0(\alpha, -\alpha - 1, 3)$, com $\alpha \in \left \{  -8.0, -3.0, -1.5 \right \}$ em escala semilogarítmica}
+     \label{graf_densGI0_Log}
+\end{figure}
 
-Já na figura abaixo temos o resultado do histograma feito a partir de um conjunto de $10.000$ variáveis aleatórias $G_I^0$ geradas a partir da função que segue o Modelo Multiplicativo, conforme explicado anteriormente. Juntamente a esse histograma, temos o traçado da curva de densidade de probabilidade e, com isso, é possível perceber um determinado ajuste entre ambos.
+A figura abaixo, por sua vez, exibe as curvas de densidade da distribuição Gama ($\Gamma$) considerando diferentes parâmetros de forma (\textit{Looks} ou $L$) e mantendo a média constante unitária. Novamente, as escalas linear e semilogarítmica foram utilizadas para plotar os gráficos.
+%%% Arquivo: DensGamaLooksVar.pdf 
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{plots/DensGamaLooksVar.pdf}
+     \caption{Densidades da distribuição $\Gamma(L, 1)$, com $ L \in \left \{  1, 3, 5, 8 \right \}$ em escala linear}
+     \label{graf_densGama}
+\end{figure}
+%%% Arquivo: DensGamaLooksVarSemiLog.pdf 
+\begin{figure}[H]
+     \centering
+     \includegraphics[scale=0.5]{plots/DensGamaLooksVarSemiLog.pdf}
+     \caption{Densidades da distribuição $\Gamma(L, 1)$, com $ L \in \left \{  1, 3, 5, 8 \right \}$ em escala semilogarítmica}
+     \label{graf_densGama_Log}
+\end{figure}
 
-% GI0 Generation
+Já na figura abaixo temos o resultado do histograma feito a partir de um conjunto de $30.000$ variáveis aleatórias $G_I^0$ geradas a partir da função que segue o Modelo Multiplicativo. Juntamente a esse histograma, temos o traçado da curva de densidade de probabilidade e, com isso, é possível perceber um determinado ajuste entre ambos.
+
+%%% Arquivo: GI0RandVar.pdf 
 \begin{figure}[H]
      \centering
      \includegraphics[scale=0.5]{plots/GI0RandVar.pdf}
      \caption{Histograma de variáveis aleatórias $G_I^0(-3.0, 2.0, 3)$ juntamente com sua densidade de probabilidade}
-     \label{graf_2}
+     \label{graf_genGI0}
 \end{figure}
-%%% ACF A densidade não está suave o suficiente. Use mais pontos.
 
-Vale reforçar que sistemas que empregam iluminação coerente são usados para explorar regiões inacessíveis e/ou inobserváveis (a superfície de Vênus, o interior do corpo humano, o fundo do mar, áreas sob nebulosidade, etc.). É, portanto, de suma importância poder fazer inferências confiáveis sobre o tipo de alvo em análise, uma vez que informações visuais raramente estão disponíveis.
-
-				
 %=========================================================
 
 \section{Introdução à Estatística Inferencial}
@@ -130,27 +164,27 @@ A ideia básica deste método é bem intuitiva. Parece razoável que uma boa est
  
 Conforme descrito no livro de \citet{CasellaBergerStatisticalInference}, suponha que tenhamos uma amostra aleatória \begin{math} \bm X = (X_{1}, X_{2}, \dots, X_{n}) \end{math} para a qual a função de densidade de probabilidade de cada \begin{math} X_{i} \end{math} é \begin{math} f(x_{i}; \theta)\end{math}, e que as variáveis aleatórias sejam independentes.
 
-Então, a função de densidade de probabilidade conjunta da amostra aleatória \begin{math} X \end{math}, denotada por \begin{math} L(\theta) \end{math} é dada por:
-%%% ACF Aqui temos um conflito de notação: $L$ foi definido como o número de loooks. Sugiro usar $\mathcal L$ para a verossimilhança
+Então, a função de densidade de probabilidade conjunta da amostra aleatória \begin{math} \bm X \end{math}, denotada por \begin{math} \mathcal L(\theta) \end{math} é dada por:
+%%% ACF Aqui temos um conflito de notação: $L$ foi definido como o número de looks. Sugiro usar $\mathcal L$ para a verossimilhança
 \begin{equation}
-L(\theta) = P (X_{1} = x_{1}, \dots, X_{n} = x_{n}) =  f(x_{1}; \theta) \cdots f(x_{n}; \theta) =  \prod_{1}^{n} f(x_{i}; \theta).
+\mathcal L(\theta) = P (X_{1} = x_{1}, \dots, X_{n} = x_{n}) =  f(x_{1}; \theta) \cdots f(x_{n}; \theta) =  \prod_{1}^{n} f(x_{i}; \theta).
 \end{equation}
 
-A segunda igualdade escrita acima é proveniente do fato de que temos uma amostra aleatória, o que implica, por definição, que cada \begin{math} X_{i} \end{math} seja independente e igualmente distribuída. Agora, à luz da ideia básica da estimação por máxima verossimilhança, uma maneira razoável de proceder é tratar a função de verossimilhança dada por \begin{math} L (\theta) \end{math} como uma função de \begin{math} \theta \end{math}, e encontrar o valor do parâmetro que a maximiza.
+A segunda igualdade escrita acima é proveniente do fato de que temos uma amostra aleatória, o que implica, por definição, que cada \begin{math} X_{i} \end{math} seja independente e igualmente distribuída. Agora, à luz da ideia básica da estimação por máxima verossimilhança, uma maneira razoável de proceder é tratar a função de verossimilhança dada por \begin{math} \mathcal L (\theta) \end{math} como uma função de \begin{math} \theta \end{math}, e encontrar o valor do parâmetro que a maximiza.
 
 No contexto das imagens SAR, os estimadores de Máxima Verossimilhança são amplamente utilizados, uma vez que possuem boas propriedades ótimas bem conhecidas, como consistência, eficiência e normalidade assintótica, entre outras. 
 Por exemplo, esses estimadores foram utilizados para a análise de imagens SAR sob o modelo $K$ no trabalho de \citet{KMaxVer_Joughin}.
 
 \subsection{Estimadores MV para os parâmetros da lei $G_I^0$}
 
-Então como visto, dado uma amostra $\bm Z = (Z_1, Z_2, \dots, Z_N)$ e supondo que essas observações são resultados de variáveis aleatórias independentes e identicamente distribuídas que seguem a distribuição $D(\theta)$, com $\theta \in \Theta$, um estimador de Máxima Verossimilhança para $\theta$ é dado por
+Então como visto, dado uma amostra $\bm Z = (Z_1, Z_2, \dots, Z_N)$ e supondo que essas observações são resultados de variáveis aleatórias independentes e identicamente distribuídas que seguem a distribuição $\mathcal D(\theta)$, com $\theta \in \Theta$, um estimador de Máxima Verossimilhança para $\theta$ é dado por
 \begin{equation}
-    \widehat{\theta} = \arg\max L(\theta; z) \text{, para } \theta \in \Theta, \label{eq:mv}
+    \widehat{\theta} = \arg\max \mathcal L(\theta; Z) \text{, para } \theta \in \Theta, \label{eq:mv}
 \end{equation}
-em que $L$ é a função de verossimilhança da amostra $Z$ sob o parâmetro $\theta$. Podemos utilizar as propriedades logarítmicas para simplificar os cálculos, aplicando o logaritmo natural, visto que se trata de uma função positiva e que o ponto que produz o máximo da função não varia, independentemente de aplicar ou não o logaritmo. 
+em que $\mathcal L$ é a função de verossimilhança da amostra $\bm Z$ sob o parâmetro $\theta$. Podemos utilizar as propriedades logarítmicas para simplificar os cálculos, aplicando o logaritmo natural, visto que se trata de uma função positiva e que o ponto que produz o máximo da função não varia, independentemente de aplicar ou não o logaritmo. 
 Além disso, sob várias condições é equivalente e muitas vezes mais fácil trabalhar com a função log-verossimilhança reduzida $ \ell (\theta; Z)$, onde todos os termos que não dependem de $\theta$ são ignorados.
 
-Embora a maximização direta de~\eqref{eq:mv} seja possível (seja analiticamente ou usando ferramentas numéricas) e desejável, muitas vezes encontramos estimadores de MV resolvendo o sistema de equações (geralmente não-lineares) dado por
+Embora a maximização direta de~\eqref{eq:mv} seja possível (analiticamente ou usando ferramentas numéricas) e desejável, muitas vezes encontramos estimadores de MV resolvendo o sistema de equações (geralmente não-lineares) dado por
 \begin{equation}
     \nabla \ell (\widehat{\theta}) = \bm 0, \label{eq:gradient} 
 \end{equation}
@@ -160,11 +194,11 @@ Essas equações, em geral, não têm solução explícita.
 
 Para a construção dos estimadores de Máxima Verossimilhança para o modelo $G_I^0$, considere $\bm Z = (Z_1, Z_2, \dots, Z_N)$ uma amostra aleatória de $N$ variáveis, independentes e igualmente distribuídas, que seguem essa distribuição. 
 Os parâmetros $\alpha$ e $\gamma$ são desconhecidos, enquanto que o parâmetro \textit{Looks} ($L$) é conhecido. 
-Nesse caso, a função de verossimilhança é $L((\alpha, \gamma); Z) = \prod_{i=1}^{N} f_Z(Z_i)$, em que $f_Z$ é a função densidade de probabilidade definida anteriormente em \eqref{eq:fdpGI0}. 
+Nesse caso, a função de verossimilhança é $\mathcal L((\alpha, \gamma); Z) = \prod_{i=1}^{N} f_Z(Z_i)$, em que $f_Z$ é a função densidade de probabilidade definida anteriormente em \eqref{eq:fdpGI0}. 
 
-Assim, a função de log-verossimilhança ($\log L$) é escrita como
+Assim, a função de log-verossimilhança ($\log \mathcal L$) é escrita como
 \begin{equation}
-    \log L((\alpha, \gamma); Z) = N\log \frac{L^{L}\Gamma(L-\alpha)}{\gamma^{\alpha}\Gamma(-\alpha)\Gamma(L)} +  (L-1)\sum_{i=1}^{N}\log Z_i - (L-\alpha)\sum_{i=1}^{N}\log (\gamma + Z_iL). \label{eq:logVer}
+    \log \mathcal L((\alpha, \gamma); Z) = N\log \frac{L^{L}\Gamma(L-\alpha)}{\gamma^{\alpha}\Gamma(-\alpha)\Gamma(L)} +  (L-1)\sum_{i=1}^{N}\log Z_i - (L-\alpha)\sum_{i=1}^{N}\log (\gamma + Z_iL). \label{eq:logVer}
 \end{equation}
 
 A partir da função acima, podemos escrever a função de log-verossimilhança reduzida, excluindo os termos que não dependem de $\alpha$ e $\gamma$:
@@ -200,30 +234,28 @@ A seguir estão algumas definições:
     \item $M_k=\dfrac{1}{N}\sum\limits_{i=1}^N X_i^k$ é o k-ésimo momento amostral 
 \end{enumerate}
 
-A ideia por trás desse método é bastante simples. Vejamos os seguintes passos da primeira forma de se calcular os estimadores por este método, utilizando o primeiro e o segundo momento:
+A ideia por trás desse método é bastante simples. Vejamos os seguintes passos para se calcular os estimadores por este método, utilizando o primeiro e o segundo momento:
 \begin{enumerate}
   \item Equacione o primeiro momento da amostra  $M_1=\dfrac{1}{N}\sum\limits_{i=1}^N X_i=\bar{X}$ ao primeiro momento teórico $E(x)$
   \item Equacione o segundo momento da amostra $M_2=\dfrac{1}{N}\sum\limits_{i=1}^N X_i^2$ ao segundo momento teórico $E(x^2)$
-  \item Continuar igualando momentos amostrais, $M_k$, com os correspondentes momentos teóricos  $E(X^k)$, $k = 3, 4, \dots $, até que se tenha tantas equações quanto se tem de parâmetros.
-  \item Por fim, basta resolver o sistema e calcular os estimadores para os parâmetros.
+  \item Continuar igualando momentos amostrais, $M_k$, com os correspondentes momentos teóricos  $E(X^k)$, $k = 3, 4, \dots $, até que se tenha tantas equações quanto se tem de parâmetros a serem estimados.
+  \item Por fim, basta resolver o sistema e calcular os estimadores para os parâmetros. Essa é a ideia geral de funcionamento do Método dos Momentos implementado neste trabalho.
 \end{enumerate}
 
 Os valores resultantes são chamados de estimadores de método de momentos. Parece razoável que esse método forneça boas estimativas, já que a distribuição empírica converge, em certo sentido\footnote{A convergência é no sentido da Lei dos Grandes Números, isto é, convergência em probabilidade}, para a distribuição de probabilidade. Portanto, os momentos correspondentes devem ser aproximadamente iguais. Desse modo, estimadores de momentos são favorecidos em aplicações, já que são fáceis de derivar e são, em geral, computacionalmente atraentes. De certo modo, são mais simples de calcular em relação ao método de Máxima Verossimilhança, entretanto podem gerar, com mais frequência, estimadores menos precisos. 
 
-Então, de modo resumido, seja $Z$ uma variável aleatória contínua com função densidade de probabilidade $f_Z(z)$, os momentos teóricos são dados por $m_j = \int x^jf_Z(z)dz$. Os momentos amostrais, por sua vez, são definidos como $\widehat{m_j} = N^{-1}\sum_{i=1}^{N}z_i^j$. Após calcular os momentos teóricos e amostrais, o processo de inferência é simples e consiste em comparar os momentos amostrais, $\widehat{m_j}$, com os correspondentes momentos teóricos, $m_j$, até se ter tantas equações quantos forem os parâmetros a serem estimados. De posse do sistema de equações, basta resolver e calcular os estimadores para os parâmetros. Essa é a ideia geral de funcionamento do Método dos Momentos implementado neste trabalho.
-
-\subsection{Estimadores de Momentos para os parâmetros da $G_I^0$}
+\subsection{Estimadores de Momentos para os parâmetros da lei $G_I^0$}
 
 Para estimar os parâmetros $\alpha$ e $\gamma$ da distribuição $G_I^0(\alpha, \gamma, L)$, é necessário estimar dois momentos. 
-Neste relatório, serão utilizados momentos de ordem $\frac{1}{2}$ e $1$, ou seja, $m_{1/2}$ e $m_1$ respectivamente. 
+Neste trabalho, serão utilizados momentos teóricos de ordem $\frac{1}{2}$ e $1$, ou seja, $E(Z^{1/2})$ e $E(Z^{1})$ respectivamente. 
 Esses momentos, de acordo com a equação \eqref{eq:moments}, são dados por
 %%% ACF Mudou a notação de M para m?
 \begin{align}
-    m_{1/2} &= \left ( \frac{\gamma}{L}\right )^{1/2} \frac{\Gamma(-\alpha-1/2)\Gamma(L+1/2)}{\Gamma(-\alpha)\Gamma(L)}  \text{ para } \alpha < -1/2 \label{eq:m12}, \text{ e }\\
-    m_{1} &= \left ( \frac{\gamma}{L}\right ) \frac{\Gamma(-\alpha-1)\Gamma(L+1)}{\Gamma(-\alpha)\Gamma(L)} \text{ para } \alpha < -1. \label{eq:m1}
+    E(Z^{1/2}) &= \left ( \frac{\gamma}{L}\right )^{1/2} \frac{\Gamma(-\alpha-1/2)\Gamma(L+1/2)}{\Gamma(-\alpha)\Gamma(L)}  \text{ para } \alpha \text{ < } -1/2 \label{eq:m12}, \text{ e }\\
+    E(Z^{1}) &= \left ( \frac{\gamma}{L}\right ) \frac{\Gamma(-\alpha-1)\Gamma(L+1)}{\Gamma(-\alpha)\Gamma(L)} \text{ para } \alpha \text{ < } -1. \label{eq:m1}
 \end{align}
 
-Podemos utilizar o momento $\widehat{m}_{1/2}^2$ para auxiliar nos cálculos e utilizar as equações acima \eqref{eq:m12} e \eqref{eq:m1} para determinar o estimador $\widehat{\alpha}$ que pode ser dado como solução da seguinte equação
+Podemos utilizar o quadrado do momento amostral fracionário $M_{1/2}^2$ para auxiliar nos cálculos e utilizar as equações acima \eqref{eq:m12} e \eqref{eq:m1} para determinar o estimador $\widehat{\alpha}$ que pode ser dado como solução da seguinte equação
 \begin{equation}
     g(\widehat{\alpha}) - \zeta = 0,
 \end{equation}
@@ -233,20 +265,20 @@ em que
 \end{equation}
 e
 \begin{equation}
-    \zeta = \frac{\widehat{m}_{1/2}^2\Gamma(L)\Gamma(L+1)}{\widehat{m}_{1}\Gamma^2(L+1/2)}.
+    \zeta = \frac{M_{1/2}^2\Gamma(L)\Gamma(L+1)}{M_{1}\Gamma^2(L+1/2)}.
 \end{equation}
 Dessa forma, encontrando o valor de $\widehat{\alpha}$ e o substituindo na equação \eqref{eq:m12} ou na equação \eqref{eq:m1}, obtemos o estimador $\widehat{\gamma}$.
 
-Como já mencionado, podemos simplificar o processo de estimação do parâmetro $\gamma$, obtendo-o este de tal forma que o valor esperado $E(Z^r)$ tenha valor unitário e, assim, definimos ele em função do parâmetro $\alpha$. Como já citado antes o valor de $\gamma^{*}$ vale $-\alpha - 1$. Contudo, abaixo está o cálculo a partir de \eqref{eq:moments} que levou a essa conclusão:
+Como já mencionado, podemos simplificar o processo de estimação do parâmetro $\gamma$, obtendo-o este de tal forma que o valor esperado $E(Z)$ tenha valor unitário e, assim, definimos ele em função do parâmetro $\alpha$. Como já citado antes o valor de $\gamma^{*}$ vale $-\alpha - 1$. Contudo, abaixo está o cálculo a partir de \eqref{eq:moments} que levou a essa conclusão:
 \begin{equation}
-    E(Z^r) = 1 \Rightarrow \left (\frac{\gamma*}{L}\right ) \frac{\Gamma(-\alpha-1)\Gamma(L+1)}{\Gamma(-\alpha)\Gamma(L)} = 1 \Rightarrow \gamma* = L\left ( \frac{\Gamma(-\alpha)\Gamma(L)}{\Gamma(-\alpha-1)\Gamma(L+1)} \right ) ,
+    E(Z) = 1 \Rightarrow \left (\frac{\gamma^{*}}{L}\right ) \frac{\Gamma(-\alpha-1)\Gamma(L+1)}{\Gamma(-\alpha)\Gamma(L)} = 1 \Rightarrow \gamma^{*} = L\left ( \frac{\Gamma(-\alpha)\Gamma(L)}{\Gamma(-\alpha-1)\Gamma(L+1)} \right ) ,
 \end{equation}
 e, sabendo que $\Gamma(n) = (n-1)!$, temos que
 \begin{equation}
     \gamma^{*} = -\alpha - 1.
 \end{equation}
 
-Estimadores de momentos fracionários foram utilizadas amplamente em \citet{Clutter1997}. Dessa forma, assumindo a simplificação acima e utilizando $r=\frac{1}{2}$ na equação do $r$-ésimo momento da $G_I^0$ dada em \eqref{eq:moments} é preciso resolver a equação a seguir para se obter o estimador de momentos denotado por $\widehat{\alpha}$.
+Estimadores de momentos fracionários foram utilizadas amplamente em \citet{Clutter1997}. Dessa forma, assumindo a simplificação acima e utilizando $r=\frac{1}{2}$ na equação do $r$-ésimo momento teórico da $G_I^0$ dada em \eqref{eq:moments} é preciso resolver a equação a seguir para se obter o estimador de momentos denotado por $\widehat{\alpha}$.
 \begin{equation}
     \frac{1}{N}\sum_{i=1}^{N}\sqrt{z_i}-\sqrt{\frac{-\widehat{\alpha} - 1}{L}}\frac{\Gamma(-\widehat{\alpha} - \frac{1}{2})}{\Gamma(-\widehat{\alpha})}\frac{\Gamma(L+\frac{1}{2})}{\Gamma(L)} = 0 .\label{fractional_moments}
 \end{equation} 
@@ -284,7 +316,6 @@ Existem dois conceitos importantes para a construção de estimadores utilizando
     \right\vert}_{s=1} ,  v \in \mathbbm{N}
     \label{eq:logmomV}
 \end{equation}
-%%% ACF Não consegui fazer com que a barra vertical fique do tamanho da fração :-(
 
 Tomando como base o logaritmo natural ($\ln$) de $\phi_{Z}(s)$, pode-se obter o log-cumulante de ordem $v$ de forma bem similar e análoga à equação anterior. Temos que:
 \begin{equation}
@@ -297,16 +328,14 @@ O funcionamento e estratégia do método de log-cumulantes para estimar o vetor 
 \begin{equation}
     \widetilde{k}_{v} = \widetilde{m}_{v} - \sum_{i=1}^{v-1}\binom{v-1}{i-1}\widetilde{k}_{i}\widetilde{m}_{v-i},
 \end{equation}
-%%% ACF Defina os novos elementos desta equação
 
 Desta equação acima, pode-se destacar como exemplo os log-momentos e log-cumulantes de ordem $1$, $2$ e $3$ que, por sua vez, obedecem a seguinte relação:
-%%% ACF Use a pontuação adequada
 \begin{equation}
     \begin{matrix}
         \widetilde{k}_{1} = \widetilde{m}_{1} \\ 
         \widetilde{k}_{2} = \widetilde{m}_{2} - \widetilde{m}_{1}^{2} \\
         \widetilde{k}_{3} = \widetilde{m}_{3} - 3\widetilde{m}_{1}\widetilde{m}_{2} + 2\widetilde{m}_{1}^{3} 
-    \end{matrix}  
+    \end{matrix}
     \label{eq:logcum123}
 \end{equation}
 
@@ -317,16 +346,14 @@ Na maioria das vezes, $\widetilde{k}_{v}$ é calculado como função do vetor de
 \end{equation}
 em que $z_i$, $i \in \{1, 2, \dots, n\}$, é uma amostra da variável aleatória $Z$ que segue uma determinada distribuição de probabilidade. A seguir serão mostradas as etapas de construção dos estimadores dos parâmetros da $G_I^0$ mediante utilização do método de log-cumulantes (MLC). 
 
-\subsection{Estimadores MLC para os parâmetros da $G_I^0$}
+\subsection{Estimadores MLC para os parâmetros da lei $G_I^0$}
 
 Para a distribuição $G_I^0$, a função $\phi_{Z}(s)$ é obtida por meio da equação dada anteriormente em~\eqref{eq:logcum}, isto é, precisamos utilizar a equação do $r$-ésimo momento da $G_I^0$ dada em \eqref{eq:moments} para obter a expressão para $E(Z^{s-1})$. Portanto, temos:
-%%% ACF Não exagere com os \quad; veja como eu fiz acima
 \begin{equation}
-    \phi_{G_I^0}(s) = \left ( \frac{\gamma}{L} \right )^{s-1}\frac{\Gamma(1-s-\alpha)\Gamma(L+s-1)}{\Gamma(-\alpha)\Gamma(L)}  \qquad \alpha \quad \text{<} \quad -s+1
+    \phi_{G_I^0}(s) = \left ( \frac{\gamma}{L} \right )^{s-1}\frac{\Gamma(1-s-\alpha)\Gamma(L+s-1)}{\Gamma(-\alpha)\Gamma(L)}  \quad \alpha \text{ < } -s+1
 \end{equation}
 
 Utilizando a expressão acima obtida para $\phi_{G_I^0}(s)$ na equação dada em \eqref{eq:logcumV}, obtém-se o seguinte sistema de equações:
-%%% ACF Por que matrix? Use alinhamento como eu fiz acima
 \begin{equation}
     \begin{matrix}
         \widetilde{k}_{1} = \log \left ( \frac{\gamma}{L} \right ) + \Psi^{0}(L) - \Psi^{0}(-\alpha)  \\ 
@@ -335,8 +362,7 @@ Utilizando a expressão acima obtida para $\phi_{G_I^0}(s)$ na equação dada em
 \end{equation}
 em que $\Psi^{0}(.)$ e $\Psi^{1}(.)$ correspondem às funções \textit{digama} e \textit{trigama}, respectivamente.
 
-%%% ACF Precisa usar o transposto? Se sim, defina.
-Portanto, para estimar o vetor de parâmetros dado por $\theta = (\alpha, \gamma)^{\top}$ da distribuição $G_I^0$, basta aplicarmos as duas primeiras equações do sistema dado em \eqref{eq:logcum123} que representam os valores de $\widetilde{k}_{1}$ e $\widetilde{k}_{2}$ e as equações encontradas logo acima. Por fim, para estimar os parâmetros, basta substituir os valores de $\widetilde{m}_{1}$ e $\widetilde{m}_{2}$ pelos correspondentes log-momentos amostrais dados pela equação \eqref{eq:log_momAmostrais}. 
+Portanto, para estimar o vetor de parâmetros dado por $\theta = (\alpha, \gamma)$ da distribuição $G_I^0$, basta aplicarmos as duas primeiras equações do sistema dado em \eqref{eq:logcum123} que representam os valores de $\widetilde{k}_{1}$ e $\widetilde{k}_{2}$ e as equações encontradas logo acima. Por fim, para estimar os parâmetros, basta substituir os valores de $\widetilde{m}_{1}$ e $\widetilde{m}_{2}$ pelos correspondentes log-momentos amostrais dados pela equação \eqref{eq:log_momAmostrais}. 
 
 Assumindo a simplificação feita de que $\gamma^{*} = -\alpha - 1$, o estimador Log-cumulante do parâmetro $\alpha$ da $G_I^0$ é dado pela solução de $\widehat{\widetilde{k}_{1}} = \log \frac{1-\widehat{\alpha}}{L} + \Psi^{0}(L) - \Psi^{0}(-\alpha)$. Como sabemos que $\widehat{\widetilde{k}}_{1} = \widehat{\widetilde{m}}_{1} = n^{-1}\sum_{i=1}^{n}\log z_i$, então para encontrar o estimador $\widehat{\alpha}$ pelo MLC basta encontrar a solução para:
 \begin{equation}
@@ -353,8 +379,7 @@ Em particular, o processamento de imagens polarimétricas também obteve benefí
 Ademais, no trabalho de \citet{Goudail:04} a distância de Bhattacharyya foi proposta como um meio de fornecer uma medida de contraste escalar para imagens de SAR polarimétrica e interferométrica.
 
 Nesse contexto, temos que a teoria da informação tem sido amplamente aplicada à estatística e teoria da probabilidade, obtendo determinado sucesso. 
-\citet{Shannon48} propôs em seu artigo a informação $I(X,Y)$ entre as variáveis aleatórias $X$ e $Y$ como sendo uma divergência calculada usando as funções de densidade correspondentes $P_{X}$ e $P_{Y}$.
-%%% ACF Você vinha utilizando f para denotar densidades; por que mudou?
+\citet{Shannon48} propôs em seu artigo a informação $I(X,Y)$ entre as variáveis aleatórias $X$ e $Y$ como sendo uma divergência calculada usando as funções de densidade correspondentes $f_{X}$ e $f_{Y}$.
 Essas divergências foram amplamente estudadas por Kullback e Leibler, e Renyi, entre outros autores. 
 Essas divergências têm múltiplas aplicações no processamento de sinais e imagens \citep{Aviyente}, classificação de texturas e detecção automática de regiões em imagens SAR.
 
@@ -369,14 +394,14 @@ Nesse sentido, se a distância também satisfaz a desigualdade triangular, ela �
 Por meio do conceito de divergência é que se obtém distâncias entre distribuições de probabilidade. 
 Essas propriedades citadas anteriormente relativas à divergência --definitividade, não negatividade e simetria-- são melhor explicadas posteriormente.
 
-Uma imagem pode ser vista como um conjunto de regiões, em que cada uma possui seus pixels descritos por uma variável aleatória que, por sua vez, segue uma determinada distribuição. 
+Uma imagem pode ser vista como um conjunto de regiões, em que cada uma possui seus \textit{pixels} descritos por uma variável aleatória que, por sua vez, segue uma determinada distribuição. 
 Assim, \citet{Nascimento2010} propuseram medidas de contraste baseadas em divergências estocásticas para quantificar diferenças entre áreas de imagens SAR. 
 
 Segundo \citet{tese_abraao}, após os primeiros conceitos de divergência, deu-se início ao estudo de classes desta medida. 
 Entre elas pode-se citar a classe de divergências $\phi$ ou família de divergências $\phi$ desenvolvida no trabalho de \citet{Csiszar67}. 
 Esta classe é caracterizada por um procedimento analítico sistematizado e formalizado que permite se obter medidas de divergência a partir da escolha apropriada de uma função convexa $\phi$. 
 Esse estudo foi posteriormente estendido por \citet{salicruetal1993}, no qual foi inserida nesse contexto a função $h$ que permitiu a geração de expressões para uma quantidade maior de divergências conhecidas em relação ao trabalho anterior feito por Csiszár. 
-%%% ACF Atente para a notação correta da família h-\pni, para que não pareça uma subtração
+%%% ACF Atente para a notação correta da família h-\phi, para que não pareça uma subtração
 A nova família de divergências ficou conhecida como família $h$-$\phi$. 
 
 Sabemos que, por meio de medidas de divergência, é possível se obter expressões para distâncias entre distribuições de probabilidade que, por sua vez, recebem a denominação de distâncias estocásticas ou simplesmente distâncias. 

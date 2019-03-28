@@ -32,9 +32,9 @@ pdfview = {XYZ null null null}
 
 \orientador{Prof.\ Dr.\ Alejandro Cesar Frery Orgambide}{}{Instituto de Computação}{Universidade Federal de Alagoas}
 
-\examinador{A decidir}{}{A decidir}{A decidir}
+\examinador{Prof. \ Dr. \ Jorge Artur Peçanha de Miranda Coelho}{}{Faculdade de Medicina}{Universidade Federal de Alagoas}
 
-\examinadorDois{A decidir}{}{A decidir}{A decidir}
+\examinadorDois{Profa. \ Dra. \ Eliana Silva de Almeida}{}{Instituto de Computação}{Universidade Federal de Alagoas}
 
 \dataMesAno{Abril}{2019}
 
@@ -46,12 +46,21 @@ pdfview = {XYZ null null null}
 
 \begin{agradecimentos}
 
-A decidir
+Primeiramente à Deus por todas as bençãos e por iluminar sempre o meu caminho;
+
+Aos meus pais, por todo o apoio fornecido, pelos conselhos e aprendizado, pela educação que me proporcionaram e por toda a paciência e dedicação, buscando sempre o melhor para o meu desenvolvimento pessoal e acadêmico;
+
+Aos meus amigos, que sempre estiveram presentes em momentos de lazer, alegria, descontração e também de aprendizado. À minha namorada pelo companheirismo e apoio em todos os momentos, bons e ruins, que vivenciei durante a faculdade.
+Ao meu irmão pelos momentos de alegria e diversão que vivenciamos, inclusive os que ocorreram a distância.
+
+Ao meu orientador, Prof. Dr. Alejandro Frery, pelos valiosos ensinamentos e orientações que, com certeza, me auxiliaram a evoluir academicamente e a pensar, de fato, como um pesquisador.
+
+Por fim, e não menos importante, a banca examinadora pela leitura atenta do trabalho, questionamentos e sugestões de melhoria.
 
 
 \vspace{2em}
-\begin{epigraph}{Autor, \textit{Obra}}
-`` A decidir ''
+\begin{epigraph}{Paulo Coelho}
+`` ...Aceite com sabedoria o fato de que o caminho está cheio de contradições. Há momentos de alegria e desespero, confiança e falta de fé, mas vale a pena seguir adiante... ''
 \end{epigraph}
 
 
@@ -59,35 +68,29 @@ A decidir
 \newpage
 \thispagestyle{empty}
 \vspace*{\fill}
-\begin{epigraph}{Autor, \textit{Obra}}
-`` A decidir ''
+\begin{epigraph}{Augusto Cury, \textit{Você é insubstituível}}
+`` Sem sonhos, a vida não tem brilho. Sem metas, os sonhos não têm alicerces. Sem prioridades, os sonhos não se tornam reais. Sonhe, trace metas, estabeleça prioridades e corra riscos para executar seus sonhos. Melhor é errar por tentar do que errar por se omitir! ''
 \end{epigraph}
 
 \begin{resumo}
 
-Conforme \citet{FreryMinute2004}, o sensoriamento remoto por microondas pode ser usado para obter informações sobre cenas inacessíveis e/ou não observáveis.
-%%% ACF É mais adequado citar um livro de sensoriamento remoto com SAR do que esse artigo, que é bem específico
+Conforme \citet{SensoriamentoRemotoBook}, sensoriamento remoto consiste no uso de sensores de radiação eletromagnética com o objetivo de estudar eventos, fenômenos e processos que ocorrem na superfície da Terra.
 Radares de abertura sintética (SAR -- \textit{Synthetic Aperture Radar}) são usados para monitorar regiões terrestres inacessíveis ou com intensa cobertura de nuvens, como a Amazônia e os polos.
 %
-%%% ACF "Desta maneira" não cabe, pois não há uma concatenação lógica entre as duas partes
-Dessa forma, a modelagem estatística é essencial para a interpretação de imagens SAR. 
-Tem como objetivo descrever essas imagens através de métodos estatísticos e revelar as suas características. 
-Diversos modelos estatísticos foram desenvolvidos para descrever dados de imagens SAR, sendo o principal deles o Modelo Multiplicativo que foi utilizado neste trabalho. 
+A modelagem estatística é essencial para a interpretação de imagens SAR e possui como objetivo descrever essas imagens através de métodos estatísticos e revelar as suas características.
+Diversos modelos estatísticos foram desenvolvidos para descrever dados de imagens SAR, sendo o principal deles o Modelo Multiplicativo que foi utilizado neste trabalho.
 Tais imagens são formadas detectando o eco do alvo (\textit{backscatter}) e, nesse processo, um ruído é introduzido devido a fenômenos de interferência. 
 A esse ruído damos o nome de \textit{speckle}. 
 As propriedades desse ruído são bem descritas pelo Modelo Multiplicativo.
 %
 Vale ressaltar que para utilizar métodos para a interpretação de imagens SAR, uma adequada distribuição estatística deve ser adotada para modelagem dos dados. 
-É nesse contexto que esse trabalho se insere, já que visa o desenvolvimento de rotinas para simulação e estimação de modelos para imagens SAR, direcionando o foco para a Lei $G^{0}$ que constitui o Modelo Universal para dados ruidosos, focando em especial nos dados SAR em intensidade.
-%%% ACF Apoie-se em uma referência para dizer que é um "modelo universal".
+É nesse contexto que esse trabalho se insere, já que visa o desenvolvimento de rotinas para simulação e estimação de modelos para imagens SAR, direcionando o foco para a Lei $G^{0}$ que, segundo \citet{FreryMinute2004}, constitui o Modelo Universal para dados ruidosos. Em especial, foram tratados dados SAR em intensidade. 
 %
-Para atingir os objetivos, foi implementada a função de densidade de probabilidade da distribuição $G_I^0$, além de uma função para gerar variáveis aleatórias que seguem essa distribuição, visto que ambas são fundamentais para realizar simulações. 
+Para atingir os objetivos, foi implementada a função de densidade de probabilidade da distribuição $G_I^0$ que modela dados SAR em intensidade, além de funções para gerar variáveis aleatórias que seguem essa distribuição, visto que ambas são fundamentais para realizar simulações. 
 Além disso, do ponto de vista inferencial, foram estudados e implementados quatro algoritmos de estimação do parâmetro que indexa a distribuição $G_I^{0}$ para modelar dados SAR: Máxima Verossimilhança, Momentos Fracionários, Log-Cumulantes e Distâncias Estocásticas.
 %
-%%% ACF A frase a seguir não está clara: a quem se refere "as mais adequadas"?
-Após a implementação desses algoritmos, estudos foram realizados para prover integração em um método unificado que seja capaz de aplicar as mais adequadas para cada caso com a mínima intervenção possível do usuário utilizando a plataforma \texttt{R}. 
-%%% ACF Problema de concordância de número e de gênero
-Foram executados uma bateria de testes e, de fato, a rotina de estimação implementada funcionou corretamente em todos os casos testados, além de fornecer para o usuário estimativas precisas.
+Após a implementação desses algoritmos, estudos foram realizados para prover a integração dos mesmos em um método unificado que seja capaz de aplicar os mais adequados para cada caso considerado com a mínima intervenção possível do usuário utilizando a plataforma \texttt{R}. 
+Um conjunto de testes foi executado e, de fato, a rotina de estimação implementada funcionou corretamente em todos os casos testados, além de fornecer para o usuário estimativas precisas.
 
 \vspace{2em}
 \textbf{Palavras-chave}: Estatística Computacional; Imagens SAR; Linguagem \texttt R.
@@ -98,15 +101,22 @@ Foram executados uma bateria de testes e, de fato, a rotina de estimação imple
 \begin{abstract}
 %%% ACF Refazer após correção do resumo
 
-According to \citet{FreryMinute2004}, microwave remote sensing can be used to obtain information about inaccessible and / or unobservable scenes. Synthetic aperture radars (SARs) are used to monitor inaccessible terrestrial regions such as the Amazon, the poles, and so on.
+According to \citet{SensoriamentoRemotoBook}, remote sensing consists of the use of electromagnetic radiation sensors in order to study events, phenomena and processes that occur on the Earth's surface. Synthetic aperture radar (SAR) is used to monitor inaccessible or heavily clouded land regions such as the Amazon and the poles.
 %
-Thus, statistical modeling is essential for the interpretation of SAR images. It aims to describe these images through statistical methods and reveal their characteristics. Several statistical models were developed to describe data from SAR images, the main one being the Multiplicative Model that is studied in this work. The images are formed by detecting the echo of the target (\textit{backscatter}) and, in this process, a noise is introduced due to interference phenomena. To this noise, we give the name of \ textit {speckle}. The properties of this noise are well described by the Multiplicative Model.
+Statistical modeling is essential for the interpretation of SAR images and aims to describe these images through statistical methods and reveal their characteristics.
+Several statistical models were developed to describe data from SAR images, the main one being the Multiplicative Model that was used in this work.
+Such images are formed by detecting the echo of the target (\textit{backscatter}) and, in this process, a noise is introduced due to interference phenomena.
+To this noise we give the name of \ textit {speckle}.
+The properties of this noise are well described by the Multiplicative Model.
 %
-It is worth mentioning that to use methods for the interpretation of SAR images, an adequate statistical distribution must be adopted for modeling. It is in this context that this work is inserted, since it aims at the development of routines for simulation and estimation of models for SAR images, directing the focus to $G_I^{0}$ law that constitutes the Universal Model for noisy data, focusing in particular on SAR data in intensity .
+It is worth mentioning that to use methods for the interpretation of SAR images, an adequate statistical distribution must be adopted for data modeling.
+It is in this context that this work is inserted, since it aims at the development of routines for simulation and estimation of models for SAR images, directing the focus to the Law $G^0$, which according to \citet{FreryMinute2004}, constitutes the Universal model for noisy data. In particular, SAR data were treated in intensity.
 %
-To achieve the objectives, the probability density function of the $G_I^0 $ distribution was implemented, as well as a function to generate random variables that follow this distribution, since both are fundamental for simulations. In addition, from the inferential point of view, we have studied and implemented $4$ algorithms for estimating the parameter that indexes the $G_I0$ distribution to model SAR data: Maximum Likelihood, Moments, Log-Cumulators, and Stochastic Distances.
+To achieve the objectives, the probability density function of the $G_I^0$ distribution that models SAR data in intensity, as well as functions to generate random variables following this distribution, is implemented as both are fundamental for simulations.
+In addition, from the inferential point of view, we have studied and implemented four algorithms for estimating the parameter that indexes the $G_I^0$ distribution to model SAR data: Maximum Likelihood, Fractional Moments, Log-Cumulators, and Stochastic Distances.
 %
-After implementation of these algorithms, studies were carried out to provide integration in a unified method that is able to apply the most appropriate ones for each case with the minimum possible intervention of the user using the R platform. A battery of tests was performed and, in fact, the implemented routine worked correctly in all cases tested, in addition to providing accurate user estimates.
+After the implementation of these algorithms, studies were carried out to provide the integration of the same in a unified method that is able to apply the most appropriate for each case considered with the minimum possible intervention of the user using the \texttt{R} platform.
+A set of tests was run, and in fact, the deployed estimation routine worked correctly in all cases tested, as well as providing accurate estimates to the user.
 
 \vspace{2em}
 \textbf{Keywords}: Computational Statistics; SAR Images; Language \texttt R.

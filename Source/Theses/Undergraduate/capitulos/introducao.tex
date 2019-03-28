@@ -5,7 +5,7 @@
 Ao longo dos últimos anos, dados de sensoriamento remoto, e dados de radar em particular, tornaram-se uma ferramenta essencial para estudos ambientais. 
 Nesse contexto, o sensoriamento remoto por satélite ou aerotransportado pode fornecer mapeamento em larga escala de áreas impactadas por um desastre, contribuindo significativamente para a consciência situacional, monitorando o evento e os serviços de apoio à decisão. 
 
-De acordo com \citet{Frery99}, um dos maiores desafios hoje em dia é a compreensão precisa do ambiente terrestre, no que diz respeito ao uso da terra, mudanças na cobertura da terra e exploração e conservação dos recursos naturais. Esse conhecimento é essencial para as ações do governo em prol de um desenvolvimento sustentável, o que implica em melhorar a qualidade de vida sem degradar o meio ambiente. 
+De acordo com \citet{Frery99}, um dos maiores desafios hoje em dia é a compreensão precisa do ambiente terrestre, no que diz respeito ao uso da Terra, mudanças na cobertura da Terra e exploração e conservação dos recursos naturais. Esse conhecimento é essencial para as ações do governo em prol de um desenvolvimento sustentável, o que implica em melhorar a qualidade de vida sem degradar o meio ambiente. 
 Nesse sentido, países de dimensão continental como o Brasil necessitam de informações em grande escala as quais, por sua vez, podem ser fornecidas através de sensoriamento remoto. 
 É nesse contexto de âmbito ambiental que as imagens de radar de abertura sintética (SAR) se inserem.
 
@@ -22,11 +22,11 @@ Logo, é menos afetado do que os sensores ópticos.
 
 Vista a relevância do imageamento SAR, ressalta-se a importância da utilização de ferramentas estatísticas para resolver alguns problemas relacionados a imagens devido a sua natureza estocástica. 
 Excelentes resultados frequentemente obtidos com essa abordagem estatística estimularam o desenvolvimento de uma grande quantidade de métodos e técnicas. 
-Nesse contexto, segundo o trabalho de \citet{Gao2010StatisticalMO} a modelagem estatística é essencial para a interpretação de imagens SAR e envolve vários campos, como reconhecimento de padrões, processamento de imagens, análise de sinais, teoria da probabilidade, análise de características de espalhamento eletromagnético de alvos, entre outros. 
+Nesse contexto, segundo o trabalho de \citet{Gao2010StatisticalMO}, a modelagem estatística é essencial para a interpretação de imagens SAR e envolve vários campos, como reconhecimento de padrões, processamento de imagens, análise de sinais, teoria da probabilidade, análise de características de espalhamento eletromagnético de alvos, entre outros. 
 Ainda neste trabalho são discutidos em detalhes vários modelos estatísticos para esse tipo de dado.
 
 Conforme \citet{Mejail2002}, dentre os modelos estatísticos disponíveis, o modelo multiplicativo é o principal deles sendo altamente preciso e bem sucedido, baseando-se no pressuposto de que o campo aleatório observado (retorno) $Z$ é o resultado do produto de dois campos aleatórios independentes e não observados: $X$ e $Y$. 
-Este modelo foi amplamente estudado neste trabalho que visa o desenvolvimento de técnicas de simulação e de estimação de parâmetros no contexto das imagens SAR, tratando especialmente da Lei $G^{0}$ que segue o Modelo Multiplicativo e é um caso especial do modelo $G$ apresentado por \citet{Clutter1997} que provou ser modelo universal interessante para dados SAR, tanto em intensidade quanto em amplitude.
+Este modelo foi amplamente estudado no presente trabalho que objetiva o desenvolvimento de rotinas de simulação e de estimação de parâmetros no contexto das imagens SAR, tratando especialmente da Lei $G^{0}$ que segue o Modelo Multiplicativo e é um caso especial do modelo $G$ apresentado por \citet{Clutter1997}. Essa Lei, de acordo com \citet{FreryMinute2004}, constitui um Modelo Universal interessante para dados SAR, tanto em intensidade (detecção quadrática) quanto em amplitude (detecção linear).
 %%% ACF Use alguma referência para o "modelo universal".
 
 Este trabalho foca na na distribuição $G_I^0$ (com o subscrito $I$ indicando dados SAR em intensidade) que, como será discutido em detalhes na etapa de Fundamentação, possui seus parâmetros interpretáveis, sendo de bastante relevância conhecê-los para obter características importantes da região imageada, como por exemplo a rugosidade do alvo (textura). 
@@ -36,8 +36,8 @@ Além da parte inferencial, este trabalho também propõe contribuições do pon
 
 Ainda nesse contexto, há dois elementos críticos nessa linha de pesquisa que certamente possuem potencial para dar origem a um bom trabalho:
 \begin{itemize}
-\item a necessidade de tornar as técnicas acessíveis a usuários não especializados, e
-\item a necessidade de otimizar o desenvolvimento de novas técnicas.
+    \item a necessidade de tornar as técnicas acessíveis a usuários não especializados, e
+    \item a necessidade de otimizar o desenvolvimento de novas técnicas.
 \end{itemize}
 
 O primeiro ponto pode ser solucionado por meio do desenvolvimento de métodos que ``encapsulem'' diversos algoritmos e forneçam ao usuário, de forma transparente, o retorno da execução com a mínima intervenção possível do mesmo. 
@@ -53,9 +53,8 @@ O principal desafio deste trabalho, nesse contexto, consiste de construir uma ú
 \section{Solução proposta}
 
 %%% ACF Mudei a notação do vetor para negrito; deixe todo o texto consistente
-A solução proposta parte do pressuposto que há dados disponíveis em uma amostra $\bm z = (z_1, z_2, \dots, z_n)$ e um modelo para eles $D(\theta)$, com $\theta \in \Theta \subset \mathbb{R}^{p}$ o espaço paramétrico. 
+A solução proposta parte do pressuposto que há dados disponíveis em uma amostra $\bm z = (z_1, z_2, \dots, z_n)$ e um modelo para eles $\bm D(\theta)$, com $\theta \in \Theta \subset \mathbb{R}^{p}$ como espaço paramétrico. 
 %%% ACF Por que entrou a entropia? Irá precisar dela?
-O modelo $D(\theta)$ induz a única forma de entropia $H$ e, para calcularmos uma estimativa da entropia $H(\theta)$ a partir da amostra $\bm z$ é necessário estimar o parâmetro $\theta$. 
 Como já explicado, o modelo estudado nesse trabalho para dados SAR é proveniente da distribuição $G^0$, proposta por \citet{Clutter1997}. 
 Existem na literatura várias técnicas para estimar $\theta$ a partir da amostra $\bm z$: 
 Momentos fracionários \citep{Mejail2002}, 
@@ -63,13 +62,12 @@ Máxima verossimilhança \citep{FreryMinute2004},
 Log-momentos ou Log-cumulantes \citep{krylov2013,nicolas2002} e 
 estimadores baseados em Distâncias Estocásticas \citep{Cassetti2013,FreryStochasticDistances2015}. 
 Cada uma dessas técnicas está associada a diferentes algoritmos de estimação, e resulta mais adequada para uma diversidade de situações diferentes (pequenas amostras, textura da região, entre outras). 
-Como já dito, o principal objetivo é implementar uma rotina que, de forma transparante, colete do usuário uma dada amostra, execute a melhor técnica a depender da situação em função apenas dos dados de entrada e retorne a estimativa do parâmetro para o mesmo.
+Como já dito, o principal objetivo e desafio desse trabalho é implementar uma rotina que, de forma transparante, colete do usuário os parâmetros necessários para gerar uma dada amostra, execute a melhor técnica a depender da situação em função apenas dos dados de entrada e retorne a estimativa do parâmetro para o mesmo. Apesar de focar na parte de inferência, o presente trabalho também fornece rotinas visando a parte de simulação.
 
 
 \section{Contribuições}
 
 As contribuições deste trabalho são:
-
 \begin{itemize}
 \item A melhor compreensão, por parte do usuário, de informações a respeito da modelagem estatística baseada na distribuição $G_I^0$, trazendo o foco para a parte de simulação e estimação; para tanto, será entregue ao usuário uma biblioteca de funções especializadas em simulação e inferência em modelos para imagens SAR. 
 \item A implementação de uma rotina amigável e tolerante a falhas ao usuário com o mínimo de parâmetros de entrada visando a execução do algoritmo de estimação mais apropriado a depender da situação e o posterior retorno do estimador calculado. 
