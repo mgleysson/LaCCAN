@@ -8,7 +8,7 @@
     DOI={10.1098/rsta.2015.0118},
     number={2056},
     journal={Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences},
-    publisher={The Royal Society},
+isher={The Royal Society},
     year={2015},
 }
 
@@ -144,10 +144,10 @@
 }
 
 @Article{nicolas2002,
-  author  = {Nicolas, J. M},
+  author  = {Nicolas, J. M.},
   journal = {Traitement du Signal},
   pages   = {139--167},
-  title   = {Introduction aux statistiques de deuxième espèce: Application des logs-moments et des logs-cumulants à l’analyse des lois d’images radar},
+  title   = {Introduction aux statistiques de deuxième espèce: Application des logs-moments et des logs-cumulants à l'analyse des lois d'images radar},
   volume  = {19},
   year    = {2002},
   number  = {3},
@@ -268,7 +268,7 @@ doi = {10.1007/BF01025868}
 
 @Article{Wang2017,
     author="Wang, C. and Wen, X. and Xu, H.",
-    title="A robust estimator of parameters for {$\mathcal{G}_I^0$}-modeled SAR imagery based on random weighting method",
+    title="A robust estimator of parameters for {$\mathcal{G}_I^0$}-modeled {SAR} imagery based on random weighting method",
     journal="EURASIP Journal on Advances in Signal Processing",
     year="2017",
     month="Feb",
@@ -295,7 +295,7 @@ doi = {10.1007/BF01025868}
 
 @inproceedings{Cassetti2013,
     author = {Cassetti, J. and Gambini, J. and Frery, A. C.},
-    title = {Parameter estimation in SAR imagery using stochastic distances},
+    title = {Parameter estimation in {SAR} imagery using stochastic distances},
     booktitle = {Proceedings of The 4th Asia-Pacific Conference on Synthetic Aperture Radar (APSAR)},
     address = {Tsukuba, Japan},
     pages = {573--576},
@@ -313,11 +313,14 @@ doi = {10.1007/BF01025868}
 
 %%% PÁGINAS WEB %%%
 
-@misc{RCore,
-    author = {R Core Team, .},
-    title = {R: A Language and Environment for Statistical Computing.},
-    year = 2017
-}
+@Manual{RCore,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2019},
+    url = {https://www.R-project.org/},
+  }
 
 @misc{PoISARpro,
     author = {ESA},
@@ -338,7 +341,7 @@ doi = {10.1007/BF01025868}
 }
 
 @book{Soetaert2009,
- author = {Soetaert, K. and Herman, P.M.J.},
+ author = {Soetaert, K. and Herman, P. M. J.},
  title = {A Practical Guide to Ecological Modelling: Using R As a Simulation Platform},
  year = {2009},
  isbn = {1402086237, 9781402086236},
@@ -371,7 +374,7 @@ publisher = {CRC Press},
 @Book{SensoriamentoRemotoBook,
     Title                    = {Sensoriamento Remoto: princípios e aplicações},
     Author                   = {Novo,  E. M. L. M.},
-    Publisher                = {ed. Edgard Blucher},
+	publisher =  {Blucher},
     Year                     = {2010},
     Pages                    = {388},
     edition = {4st},
@@ -398,8 +401,22 @@ publisher = {CRC Press},
 
 @MastersThesis{dissert_torres,
   author       = {Torres, L. J. T. M.}, 
-  title        = {Um novo algoritmo para filtragem de \textit{Speeckle} em imagens SAR de Intensidade baseado em Distâncias Estocásticas},
+  title        = {Um novo algoritmo para filtragem de \textit{Speckle} em imagens {SAR} de Intensidade baseado em Distâncias Estocásticas},
   school       = {Universidade Federal de Alagoas},
   year         = {2012},
   note        = {Dissertação de Mestrado}
+}
+
+
+@Article{BustosFreryLucini:Mestimators:2001,
+  author   = {O. H. Bustos and M. M. Lucini and A. C. Frery},
+  journal  = {EURASIP Journal on Advances in Signal Processing},
+  pages    = {105--114},
+  title    = {M-Estimators of Roughness and Scale for {GA0}-Modelled {SAR} Imagery},
+  volume   = {2002},
+  year     = {2002},
+  number   = {1},
+  abstract = {The GA0 distribution is assumed as the universal model for multilook amplitude SAR imagery data under the Multiplicative Model. This distribution has two unknown parameters related to the roughness and the scale of the signal, that can be used in image analysis and processing. It can be seen that Maximum Likelihood and moment estimators for its parameters can be influenced by small percentages of ``outliers''; hence, it is of outmost importance to find Robust Estimators for these parameters. One of the best-known classes of robust techniques is that of M-estimators, which are an extension of the Maximum Likelihood estimation method. In this work we derive the M-estimators for the parameters of the GA0 distribution, and compare them with maximum likelihood estimators with a Monte Carlo experience. It is checked that this robust technique is superior to the classical approach under the presence of corner reflectors, a common source of contamination in SAR images. Numerical issues are addressed, and a practical example is provided.},
+  doi      = {10.1155/S1110865702000392},
+  groups   = {Journals},
 }

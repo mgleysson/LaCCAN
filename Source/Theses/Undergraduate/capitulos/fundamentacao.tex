@@ -198,12 +198,12 @@ Nesse caso, a função de verossimilhança é $\mathcal L((\alpha, \gamma); Z) =
 
 Assim, a função de log-verossimilhança ($\log \mathcal L$) é escrita como
 \begin{equation}
-    \log \mathcal L((\alpha, \gamma); Z) = N\log \frac{L^{L}\Gamma(L-\alpha)}{\gamma^{\alpha}\Gamma(-\alpha)\Gamma(L)} +  (L-1)\sum_{i=1}^{N}\log Z_i - (L-\alpha)\sum_{i=1}^{N}\log (\gamma + Z_iL). \label{eq:logVer}
+    \log \mathcal L((\alpha, \gamma); \bm Z) = N\log \frac{L^{L}\Gamma(L-\alpha)}{\gamma^{\alpha}\Gamma(-\alpha)\Gamma(L)} +  (L-1)\sum_{i=1}^{N}\log Z_i - (L-\alpha)\sum_{i=1}^{N}\log (\gamma + Z_iL). \label{eq:logVer}
 \end{equation}
 
 A partir da função acima, podemos escrever a função de log-verossimilhança reduzida, excluindo os termos que não dependem de $\alpha$ e $\gamma$:
 \begin{equation}
-    \ell ((\alpha, \gamma); Z) = N\log\Gamma(L-\alpha) - N\alpha \log\gamma - N\log\Gamma(-\alpha) - (L-\alpha)\sum_{i=1}^{N}\log(\gamma +Z_iL). \label{eq:logVerRed}
+    \ell ((\alpha, \gamma); \bm Z) = N\log\Gamma(L-\alpha) - N\alpha \log\gamma - N\log\Gamma(-\alpha) - (L-\alpha)\sum_{i=1}^{N}\log(\gamma +Z_iL). \label{eq:logVerRed}
 \end{equation}
 
 O sistema de equações representado em \eqref{eq:gradient} é, em nosso caso, dado por
@@ -267,7 +267,7 @@ e
 \begin{equation}
     \zeta = \frac{M_{1/2}^2\Gamma(L)\Gamma(L+1)}{M_{1}\Gamma^2(L+1/2)}.
 \end{equation}
-Dessa forma, encontrando o valor de $\widehat{\alpha}$ e o substituindo na equação \eqref{eq:m12} ou na equação \eqref{eq:m1}, obtemos o estimador $\widehat{\gamma}$.
+Dessa forma, encontrando o valor de $\widehat{\alpha}$ e o substituindo na equação~\eqref{eq:m12} ou na equação~\eqref{eq:m1}, obtemos o estimador $\widehat{\gamma}$.
 
 Como já mencionado, podemos simplificar o processo de estimação do parâmetro $\gamma$, obtendo-o este de tal forma que o valor esperado $E(Z)$ tenha valor unitário e, assim, definimos ele em função do parâmetro $\alpha$. Como já citado antes o valor de $\gamma^{*}$ vale $-\alpha - 1$. Contudo, abaixo está o cálculo a partir de \eqref{eq:moments} que levou a essa conclusão:
 \begin{equation}
@@ -354,19 +354,17 @@ Para a distribuição $G_I^0$, a função $\phi_{Z}(s)$ é obtida por meio da eq
 \end{equation}
 
 Utilizando a expressão acima obtida para $\phi_{G_I^0}(s)$ na equação dada em \eqref{eq:logcumV}, obtém-se o seguinte sistema de equações:
-\begin{equation}
-    \begin{matrix}
-        \widetilde{k}_{1} = \log \left ( \frac{\gamma}{L} \right ) + \Psi^{0}(L) - \Psi^{0}(-\alpha)  \\ 
-        \widetilde{k}_{2} = \Psi^{1}(L) - \Psi^{1}(-\alpha)
-    \end{matrix}
-\end{equation}
+\begin{align}
+        \widetilde{k}_{1} &= \log \left ( \frac{\gamma}{L} \right ) + \Psi^{0}(L) - \Psi^{0}(-\alpha)  \\ 
+        \widetilde{k}_{2} &= \Psi^{1}(L) - \Psi^{1}(-\alpha),
+\end{align}
 em que $\Psi^{0}(.)$ e $\Psi^{1}(.)$ correspondem às funções \textit{digama} e \textit{trigama}, respectivamente.
 
 Portanto, para estimar o vetor de parâmetros dado por $\theta = (\alpha, \gamma)$ da distribuição $G_I^0$, basta aplicarmos as duas primeiras equações do sistema dado em \eqref{eq:logcum123} que representam os valores de $\widetilde{k}_{1}$ e $\widetilde{k}_{2}$ e as equações encontradas logo acima. Por fim, para estimar os parâmetros, basta substituir os valores de $\widetilde{m}_{1}$ e $\widetilde{m}_{2}$ pelos correspondentes log-momentos amostrais dados pela equação \eqref{eq:log_momAmostrais}. 
 
 Assumindo a simplificação feita de que $\gamma^{*} = -\alpha - 1$, o estimador Log-cumulante do parâmetro $\alpha$ da $G_I^0$ é dado pela solução de $\widehat{\widetilde{k}_{1}} = \log \frac{1-\widehat{\alpha}}{L} + \Psi^{0}(L) - \Psi^{0}(-\alpha)$. Como sabemos que $\widehat{\widetilde{k}}_{1} = \widehat{\widetilde{m}}_{1} = n^{-1}\sum_{i=1}^{n}\log z_i$, então para encontrar o estimador $\widehat{\alpha}$ pelo MLC basta encontrar a solução para:
 \begin{equation}
-    \frac{1}{n}\sum_{i=1}^{n}\log z_i - \log \left ( \frac{-\widehat{\alpha}-1}{L} \right ) - \Psi^{0}(L) + \Psi^{0}(-\alpha) = 0
+    \frac{1}{n}\sum_{i=1}^{n}\log z_i - \log \left ( \frac{-\widehat{\alpha}-1}{L} \right ) - \Psi^{0}(L) + \Psi^{0}(-\alpha) = 0,
     \label{eq:alphaEst_logCum}
 \end{equation}
 
@@ -412,7 +410,7 @@ Conforme estudo feito no livro de \citet{StatisticalInferenceBasedonDivergenceMe
     \begin{enumerate}
         \item \textit{Definitividade}: $d_\phi^h(X, Y) = 0 \Leftrightarrow X = Y$;
         \item \textit{Não-Negatividade}: Se $X \neq Y$, então temos $d_\phi^h(X, Y)$ \text{>} $0$;
-        \item \textit{Simetria}: $d_\phi^h(X, Y) = d_\phi^h(Y, X)$
+        \item \textit{Simetria}: $d_\phi^h(X, Y) = d_\phi^h(Y, X)$.
     \end{enumerate}
 \end{quote}
 
@@ -446,7 +444,7 @@ Seja $\bm z = (z_1, z_2, \dots, z_n)$ uma amostra aleatória de $n$ observaçõe
 
 Nesse cenário, o estimador para o parâmetro $\alpha$ baseado na minimização da distância Triangular entre a densidade empírica dos dados $\widehat{f}$ e a densidade do modelo $f_{G_I^0}$, denotado por $\widehat{\alpha}_{T}$, é dado pelo cálculo da seguinte equação:
 \begin{equation}
-    \widehat{\alpha}_{T} = \arg\min_{-20 \leq \alpha \leq -1} d_T(f_{G_I^0}(\alpha, \gamma_0^{*}, L_0), \widehat{f}(z)) .
+    \widehat{\alpha}_{T} = \arg\min_{-20 \leq \alpha \leq -1} d_T(f_{G_I^0}(\alpha, \gamma_0^{*}, L_0), \widehat{f}(\bm z)) .
     \label{eq: minDT}
 \end{equation}
 em que $\gamma_0^{*}$ e $L_0$ são previamente conhecidos e $d_T$ é dada pela equação da distância Triangular já descrita anteriormente. 
