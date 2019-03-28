@@ -22,12 +22,12 @@ Para que tal ferramenta seja aplicada na análise de dados é de suma importânc
 
 \section{Protótipos dos algoritmos de estimação e simulação}
 
-Esta etapa destinou-se à implementação de protótipos dos algoritmos de estimação estudados: Máxima Verossimilhança, Momentos, Log-Cumulantes e baseado em Distâncias Estocásticas. Ademais, algoritmos referentes à simulação também foram implementados. Após as implementações feitas, os protótipos foram submetidos a testes de acurácia e robustez com conjuntos de dados de propriedades conhecidas para que houvesse a validação dos algoritmos desenvolvidos de modo a garantir o seu correto funcionamento. 
+Esta etapa destinou-se à implementação de protótipos dos algoritmos de estimação estudados: Máxima Verossimilhança, Momentos, Log-Cumulantes e baseado em Distâncias Estocásticas. Ademais, algoritmos referentes à simulação também foram implementados, mais precisamente a função de densidade de probabilidade e dois métodos de geração de variáveis aleatórias relativos ao modelo $G_I^0$ que posteriormente foram comparados mediante o tempo de execução. Após as implementações feitas, os protótipos foram submetidos a testes de acurácia e robustez com conjuntos de dados de propriedades conhecidas para que houvesse a validação dos algoritmos desenvolvidos de modo a garantir o seu correto funcionamento. 
 
 Nesta etapa, o experimento ou método de Monte Carlo foi utilizado para análise dos dados gerados. Amostragens aleatórias massivas (várias replicações) foram geradas para obter os resultados numéricos, isto é, sucessivas simulações foram realizadas em um determinado número de vezes. 
 No capítulo~\ref{cap:resultados} o experimento Monte Carlo feito neste trabalho será melhor explicado. Este tipo de método é utilizado em simulações estocásticas com diversas aplicações em áreas como a física, matemática e biologia \citep{busto92}. Diante disso, esta técnica tem sido utilizado há bastante tempo como forma de obter aproximações numéricas de funções complexas em que não é viável, ou é mesmo impossível, obter uma solução analítica ou, pelo menos, determinística.
 
-\section{Integração dos algoritmos desenvolvidos}
+\section{Integração dos algoritmos de estimação desenvolvidos}
 
 O objetivo principal deste trabalho consiste em gerar uma rotina que tenha todos os algoritmos de estimação integrados. Dessa forma, a integração dessas técnicas em um método unificado foi feita verificando a aplicação de cada uma para cada caso, como por exemplo, diante dos estudos realizados na literatura e resultados obtidos na prática, a estimação de Log-Cumulantes pode ser bem apropriada para o caso de pequenas amostras.
 
